@@ -96,6 +96,10 @@ return {
 	end,
 
 	load = function(self)
+		missCounter = 0
+		noteCounter = 0
+		altScore = 0
+
 		for i = 1, 4 do
 			notMissed[i] = true
 		end
