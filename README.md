@@ -7,6 +7,8 @@ Friday Night Funkin' Vasion is a modification of [Friday Night Funkin' Rewritten
 
 Features with Funkin' Vasion
 * Better menu
+* Slightly better input
+* Accuracy counter + Miss counter
 
 
 Friday Night Funkin' Rewritten features:
