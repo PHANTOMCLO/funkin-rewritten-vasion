@@ -30,6 +30,11 @@ local inputList = {
 	"gameRight"
 }
 
+
+local missCounter = 0
+local noteCounter = 0
+local altScore = 0
+
 local ratingTimers = {}
 
 local useAltAnims
@@ -118,6 +123,8 @@ return {
 		boyfriendNotes = {}
 		health = 50
 		score = 0
+		missCounter = 0
+		altScore = 0
 
 		sprites.leftArrow = love.filesystem.load("sprites/pixel/left-arrow.lua")
 		sprites.downArrow = love.filesystem.load("sprites/pixel/down-arrow.lua")
@@ -681,6 +688,7 @@ return {
 
 					combo = 0
 					health = health - 2
+					missCounter = missCounter + 1
 				end
 			end
 
@@ -713,12 +721,15 @@ return {
 								if notePos <= 6 then -- "Sick"
 									score = score + 350
 									ratingAnim = "sick"
+									altScore = altScore + 100
 								elseif notePos <= 14 then -- "Good"
 									score = score + 200
 									ratingAnim = "good"
+									altScore = altScore + 66
 								elseif notePos <= 18 then -- "Bad"
 									score = score + 100
 									ratingAnim = "bad"
+									altScore = altScore + 33
 								else -- "Shit"
 									if settings.kadeInput then
 										success = false
@@ -727,6 +738,7 @@ return {
 									end
 									ratingAnim = "shit"
 								end
+								altScore = altScore + 1
 								combo = combo + 1
 
 								rating:animate(ratingAnim, false)
@@ -760,6 +772,7 @@ return {
 									health = health + 1
 
 									success = true
+									noteCounter = noteCounter + 1
 								end
 							else
 								break
@@ -778,6 +791,7 @@ return {
 					score = score - 10
 					combo = 0
 					health = health - 2
+					missCounter = missCounter + 1
 				end
 			end
 
@@ -879,6 +893,8 @@ return {
 						if (not settings.downscroll and boyfriendNotes[i][j].y - musicPos <= 112) or (settings.downscroll and boyfriendNotes[i][j].y - musicPos >= -112) then
 							local animName = boyfriendNotes[i][j]:getAnimName()
 
+							
+
 							if settings.downscroll then
 								if animName == "hold" or animName == "end" then
 									graphics.setColor(1, 1, 1, math.min(0.5, (75 - (boyfriendNotes[i][j].y - musicPos)) / 30))
@@ -925,9 +941,33 @@ return {
 			enemyIcon:draw()
 
 			if settings.downscroll then
-				love.graphics.print("Score: " .. score, 0, -50)
+				if noteCounter + missCounter <= 0 then
+					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -100, -50)
+					else
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -100, -50)
+					end
+				else
+					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -100, -50)
+					else
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. math.floor((altScore / (noteCounter + missCounter))) .. "%", -100, -50)
+					end
+				end
 			else
-				love.graphics.print("Score: " .. score, 0, 50)
+				if noteCounter + missCounter <= 0 then
+					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -100, 50)
+					else
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -100, 50)
+					end
+				else
+					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -100, 50)
+					else
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. math.floor((altScore / (noteCounter + missCounter))) .. "%", -100, 50)
+					end
+				end
 			end
 
 			graphics.setColor(1, 1, 1, countdownFade[1])
