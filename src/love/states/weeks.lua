@@ -30,6 +30,10 @@ local inputList = {
 	"gameRight"
 }
 
+local missCounter = 0
+local noteCounter = 0
+local altScore = 0
+
 local ratingTimers = {}
 
 local useAltAnims
@@ -121,6 +125,8 @@ return {
 		boyfriendNotes = {}
 		health = 50
 		score = 0
+		missCounter = 0
+		altScore = 0
 
 		sprites.leftArrow = love.filesystem.load("sprites/left-arrow.lua")
 		sprites.downArrow = love.filesystem.load("sprites/down-arrow.lua")
@@ -711,6 +717,7 @@ return {
 
 					combo = 0
 					health = health - 2
+					missCounter = missCounter + 1
 				end
 			end
 
@@ -743,18 +750,22 @@ return {
 								if notePos <= 30 then -- "Sick"
 									score = score + 350
 									ratingAnim = "sick"
+									altScore = altScore + 100
 								elseif notePos <= 70 then -- "Good"
 									score = score + 200
 									ratingAnim = "good"
+									altScore = altScore + 66
 								elseif notePos <= 90 then -- "Bad"
 									score = score + 100
 									ratingAnim = "bad"
+									altScore = altScore + 33
 								else -- "Shit"
 									if settings.kadeInput then
 										success = false
 									else
 										score = score + 50
 									end
+									altScore = altScore + 1
 									ratingAnim = "shit"
 								end
 								combo = combo + 1
@@ -788,6 +799,7 @@ return {
 									self:safeAnimate(boyfriend, curAnim, false, 3)
 
 									health = health + 1
+									noteCounter = noteCounter + 1
 
 									success = true
 								end
@@ -810,6 +822,7 @@ return {
 					score = score - 10
 					combo = 0
 					health = health - 2
+					missCounter = missCounter + 1
 				end
 			end
 
@@ -951,13 +964,37 @@ return {
 
 			boyfriendIcon:draw()
 			enemyIcon:draw()
-
+			graphics.setColor(0, 0, 0)
 			if settings.downscroll then
-				love.graphics.print("Score: " .. score, 300, -350)
+				if noteCounter + missCounter <= 0 then
+					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, -350)
+					else
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, -350)
+					end
+				else
+					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -225, -350)
+					else
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. math.floor((altScore / (noteCounter + missCounter))) .. "%", -225, -350)
+					end
+				end
 			else
-				love.graphics.print("Score: " .. score, 300, 400)
+				if noteCounter + missCounter <= 0 then
+					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, 400)
+					else
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, 400)
+					end
+				else
+					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -225, 400)
+					else
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. math.floor((altScore / (noteCounter + missCounter))) .. "%", -225, 400)
+					end
+				end
 			end
-
+			graphics.setColor(1, 1, 1)
 			graphics.setColor(1, 1, 1, countdownFade[1])
 			countdown:draw()
 			graphics.setColor(1, 1, 1)
