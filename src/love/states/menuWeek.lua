@@ -80,7 +80,7 @@ return {
 	enter = function(self, previous)
         bfDanceLines:animate("boyfriend", true)
 		gfDanceLines:animate("girlfriend", true)
-		enemyDanceLines:animate("none", true)
+		enemyDanceLines:animate("week1", true)
 		songNum = 0
 		weekNum = 1
 		trackNames = "\nTutorial"
@@ -127,35 +127,39 @@ return {
 
 	update = function(self, dt)
 
+
 		function menuFunc()
+			if weekNum ~= 7 then
+				enemyDanceLines.sizeX, enemyDanceLines.sizeY = 0.5, 0.5
+			elseif weekNum == 7 then
+				enemyDanceLines.sizeX, enemyDanceLines.sizeY = 1, 1
+			end
+
 			if weekNum == 1 then
 				trackNames = "\nTutorial"
 				menuDesc = "LEARN TO FUNK"
 			elseif weekNum == 2 then
-				enemyDanceLines:animate("daddy dearest", true)
 				trackNames = "\nBopeebo\nFresh\nDad-Battle"
 				menuDesc = "DADDY DEAREST"
 			elseif weekNum == 3 then
-				enemyDanceLines:animate("spooky", true)
 				trackNames = "\nSpookeez\nSouth\nMonster"
 				menuDesc = "SPOOKY MONTH"
 			elseif weekNum == 4 then
-				enemyDanceLines:animate("pico", true)
 				trackNames = "\nPico\nPhilly\nBlammed"
 				menuDesc = "PICO"
 			elseif weekNum == 5 then
-				enemyDanceLines:animate("mommy mearest", true)
 				trackNames = "\nSatin-Panties\nHigh\nM.I.L.F"
 				menuDesc = "MOMMY MUST MURDER"
 			elseif weekNum == 6 then
-				enemyDanceLines:animate("parents", true)
 				trackNames = "\nCocoa\nEggnog\nWinter-Horrorland"
 				menuDesc = "RED SNOW"
 			elseif weekNum == 7 then
-				enemyDanceLines:animate("senpai", true)
 				trackNames = "\nSenpai\nRoses\nThorns"
 				menuDesc = "HATING SIMULATOR FT. MOAWLING"
 			end
+
+			enemyDanceLines:animate("week" .. weekNum, true)
+
 		end
 		
 		enemyDanceLines:update(dt)
@@ -170,11 +174,7 @@ return {
 			difficultyAnim:animate("hard", true)
 		end
 
-		if weekNum ~= 7 then
-			enemyDanceLines.sizeX, enemyDanceLines.sizeY = 0.5, 0.5
-		elseif weekNum == 7 then
-			enemyDanceLines.sizeX, enemyDanceLines.sizeY = 1, 1
-		end
+		
 
 		difficultyAnim:update(dt)
 
