@@ -63,19 +63,18 @@ The settings file can be found in the following places on the following systems:
 * Nintendo Switch - `./funkin-rewritten/settings.ini`
 
 # Progress
-**Menus** - 50% Complete
-* A proper menu has not been implemented yet. For now, a placeholder menu has been implemented.
+**Menus** - 90% Complete
+* The menu is almost done just need to clean up some code and add transitions
 
 **Game Engine** - 90% Complete
 * Engine is in close parity with the original game's Week 6 update.
 * No pause menu yet.
-* No "3-2-1-Go!" intro yet.
 
 **Weeks** - ~6/8 Complete
 * Tutorial + Weeks 1-5 are implemented.
 * Week 3's train is not implemented yet.
 * Week 4's passing car is not implemented yet.
-* Weeks 6-7 are not implemented yet.
+* Weeks 7 is not implemented yet.
 
 # License
 *Friday Night Funkin' Rewritten* is licensed under the terms of the GNU General Public License v3, with the exception of most of the images, music, and sounds, which are proprietary. While FNF Rewritten's code is FOSS, use its assets at your own risk.
