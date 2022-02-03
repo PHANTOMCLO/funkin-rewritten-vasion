@@ -95,6 +95,8 @@ return {
 
 		countdownFade = {}
 		countdown = love.filesystem.load("sprites/countdown.lua")()
+
+		
 	end,
 
 	load = function(self)
@@ -595,6 +597,7 @@ return {
 				end
 			end
 		end
+		
 		absMusicTime = math.abs(musicTime)
 		musicThres = math.floor(absMusicTime / 100) -- Since "musicTime" isn't precise, this is needed
 
@@ -968,7 +971,6 @@ return {
 
 			boyfriendIcon:draw()
 			enemyIcon:draw()
-			graphics.setColor(0, 0, 0)
 			if settings.downscroll then
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
@@ -998,7 +1000,6 @@ return {
 					end
 				end
 			end
-			graphics.setColor(1, 1, 1)
 			graphics.setColor(1, 1, 1, countdownFade[1])
 			countdown:draw()
 			graphics.setColor(1, 1, 1)

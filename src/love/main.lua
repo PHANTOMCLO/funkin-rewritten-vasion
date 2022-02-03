@@ -16,6 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ------------------------------------------------------------------------------]]
+if love.system.getOS() == "Windows" and love.filesystem.isFused() then
+	useDiscordRPC = true
+	discordRPC = require "lib.discordRPC"
+	appId = require "lib.applicationID"
+end
 
 function love.load()
 	local curOS = love.system.getOS()
@@ -93,11 +98,48 @@ function love.load()
 
 	musicTime = 0
 	health = 0
+	if useDiscordRPC then
+		discordRPC.initialize(appId, true)
+		local now = os.time(os.date("*t"))
+		presence = {
+			state = "Press Enter",
+			details = "In the menu",
+			largeImageKey = "logo",
+			startTimestamp = now,
+		}
+		nextPresenceUpdate = 0
+	end
 
 	if curOS == "Web" then
 		Gamestate.switch(clickStart)
 	else
 		Gamestate.switch(menu)
+	end
+end
+if useDiscordRPC then
+	function discordRPC.ready(userId, username, discriminator, avatar)
+		print(string.format("Discord: ready (%s, %s, %s, %s)", userId, username, discriminator, avatar))
+	end
+
+	function discordRPC.disconnected(errorCode, message)
+		print(string.format("Discord: disconnected (%d: %s)", errorCode, message))
+	end
+
+	function discordRPC.errored(errorCode, message)
+		print(string.format("Discord: error (%d: %s)", errorCode, message))
+	end
+
+	function discordRPC.joinGame(joinSecret)
+		print(string.format("Discord: join (%s)", joinSecret))
+	end
+
+	function discordRPC.spectateGame(spectateSecret)
+		print(string.format("Discord: spectate (%s)", spectateSecret))
+	end
+
+	function discordRPC.joinRequest(userId, username, discriminator, avatar)
+		print(string.format("Discord: join request (%s, %s, %s, %s)", userId, username, discriminator, avatar))
+		discordRPC.respond(userId, "yes")
 	end
 end
 
@@ -137,6 +179,13 @@ function love.update(dt)
 		graphics.screenBase(love.graphics.getWidth(), love.graphics.getHeight())
 		love.graphics.setFont(font)
 	end
+	if useDiscordRPC then
+		if nextPresenceUpdate < love.timer.getTime() then
+			discordRPC.updatePresence(presence)
+			nextPresenceUpdate = love.timer.getTime() + 2.0
+		end
+		discordRPC.runCallbacks()
+	end
 
 	Timer.update(dt)
 end
@@ -170,5 +219,10 @@ function love.draw()
 	-- Debug output
 	if settings.showDebug then
 		love.graphics.print(status.getDebugStr(settings.showDebug), 5, 5, nil, 0.5, 0.5)
+	end
+end
+function love.quit()
+	if useDiscordRPC then
+		discordRPC.shutdown()
 	end
 end

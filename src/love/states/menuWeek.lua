@@ -89,6 +89,16 @@ return {
 		cam.sizeX, cam.sizeY = 0.9, 0.9
 		camScale.x, camScale.y = 0.9, 0.9
 
+		if useDiscordRPC then
+			presence = {
+				state = "Choosing A Week",
+				details = "In the Week Select Menu",
+				largeImageKey = "logo",
+				startTimestamp = now,
+			}
+			nextPresenceUpdate = 0
+		end
+
 
 
 		switchMenu(1)
@@ -109,6 +119,16 @@ return {
 			graphics.fadeOut(
 				0.5,
 				function()
+					if useDiscordRPC then
+						presence = {
+							state = "Selected a week",
+							details = "Playing a week",
+							largeImageKey = "logo",
+							startTimestamp = now,
+						}
+						nextPresenceUpdate = 0
+					end
+					
 					songAppend = difficultyStrs[songDifficulty]
 
 					storyMode = true
