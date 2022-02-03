@@ -9,6 +9,7 @@ Features with Funkin' Vasion
 * Better menu
 * Slightly better judgements
 * Accuracy counter + Miss counter
+* Discord RPC
 
 
 Friday Night Funkin' Rewritten features:
