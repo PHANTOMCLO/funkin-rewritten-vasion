@@ -38,19 +38,18 @@ local confirmSound = love.audio.newSource("sounds/menu/confirm.ogg", "static")
 local music = love.audio.newSource("music/menu/menu.ogg", "stream")
 
 local function switchMenu(menu)
-		function confirmFunc()
-            status.setLoading(true)
-			Gamestate.switch(menuSelect)
-            status.setLoading(false)
-		end
-		function backFunc()
-			graphics.fadeOut(0.5, love.event.quit)
-		end
+	
+	function confirmFunc()
+        status.setLoading(true)
+		Gamestate.switch(menuSelect)
+        status.setLoading(false)
+	end
+	function backFunc()
+		graphics.fadeOut(0.5, love.event.quit)
+	end
 
 	menuState = 1
 end
-
-
 
 logo.x, logo.y = -350, -125
 

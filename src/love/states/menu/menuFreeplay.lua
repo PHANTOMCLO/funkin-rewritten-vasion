@@ -27,7 +27,7 @@ local weekNum = 1
 local songNum, songAppend
 local songDifficulty = 2
 
-local titleBG = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/title-bg")))
+local menuBG = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/title-bg")))
 
 
 local menuNames = {
@@ -328,7 +328,7 @@ return {
 		love.graphics.push()
 			love.graphics.translate(graphics.getWidth() / 2, graphics.getHeight() / 2)
 
-			titleBG:draw()
+			menuBG:draw()
 
 			love.graphics.push()
 				love.graphics.scale(cam.sizeX, cam.sizeY)

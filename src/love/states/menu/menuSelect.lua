@@ -135,7 +135,9 @@ return {
                     Gamestate.switch(menuFreeplay)
                     status.setLoading(false)
                 elseif menuButton == 3 then
-                    love.window.showMessageBox("lol", "Not implemented yet :P")
+                    status.setLoading(true)
+                    Gamestate.switch(menuSettings)
+                    status.setLoading(false)
                 end
 			elseif input:pressed("back") then
 				audio.playSound(selectSound)

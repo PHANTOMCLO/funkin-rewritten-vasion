@@ -31,6 +31,7 @@ function love.load()
 	lovesize = require "lib.lovesize"
 	Gamestate = require "lib.gamestate"
 	Timer = require "lib.timer"
+	lume = require "lib.lume"
 
 	-- Load modules
 	status = require "modules.status"
@@ -44,14 +45,17 @@ function love.load()
 	-- Load states
 	clickStart = require "states.click-start"
 	debugMenu = require "states.debug-menu"
-	menu = require "states.menu"
-	menuWeek = require "states.menuWeek"
-	menuSelect = require "states.menuSelect"
-	menuFreeplay = require "states.menuFreeplay"
-	weeks = require "states.weeks"
-	weeksPixel = require "states.weeks-pixel"
 
-	
+	-- Load weeks
+	menu = require "states.menu.menu"
+	menuWeek = require "states.menu.menuWeek"
+	menuSelect = require "states.menu.menuSelect"
+	menuFreeplay = require "states.menu.menuFreeplay"
+	menuSettings = require "states.menu.menuSettings"
+
+	-- Load weeks
+	weeks = require "states.weeks.weeks"
+	weeksPixel = require "states.weeks.weeks-pixel"
 
 	-- Load substates
 	gameOver = require "substates.game-over"
@@ -67,6 +71,35 @@ function love.load()
 		require "weeks.week5",
 		require "weeks.week6"
 	}
+
+	if love.filesystem.getInfo("settings.data") then
+		file = love.filesystem.read("settings.data")
+        data = lume.deserialize(file)
+		settings.hardwareCompression = data.saveSettingsMoment.hardwareCompression
+		settings.downscroll = data.saveSettingsMoment.downscroll
+		settings.ghostTapping = data.saveSettingsMoment.ghostTapping
+		settings.showDebug = data.saveSettingsMoment.showDebug
+		graphics.setImageType(data.saveSettingsMoment.setImageType)
+	else
+		settings.hardwareCompression = false
+		graphics.setImageType("dds")
+		settings.downscroll = false
+		settings.ghostTapping = false
+		settings.showDebug = false
+		data = {}
+        data.saveSettingsMoment = {
+            hardwareCompression = settings.hardwareCompression,
+			downscroll = settings.downscroll,
+			ghostTapping = settings.ghostTapping,
+			showDebug = settings.showDebug,
+			setImageType = "dds"
+        }
+		serialized = lume.serialize(data)
+		love.filesystem.write("settings.data", serialized)
+		love.window.showMessageBox("SETTING UPDATE!", "Due to FNFR Vasions update. Keybinds/Video modes can be created in settings.ini and settings can now be changed via the settings menu")
+	
+		love.filesystem.write("settings.data", serialized)
+	end
 
 	-- LÖVE init
 	if curOS == "OS X" then
@@ -127,19 +160,6 @@ if useDiscordRPC then
 
 	function discordRPC.errored(errorCode, message)
 		print(string.format("Discord: error (%d: %s)", errorCode, message))
-	end
-
-	function discordRPC.joinGame(joinSecret)
-		print(string.format("Discord: join (%s)", joinSecret))
-	end
-
-	function discordRPC.spectateGame(spectateSecret)
-		print(string.format("Discord: spectate (%s)", spectateSecret))
-	end
-
-	function discordRPC.joinRequest(userId, username, discriminator, avatar)
-		print(string.format("Discord: join request (%s, %s, %s, %s)", userId, username, discriminator, avatar))
-		discordRPC.respond(userId, "yes")
 	end
 end
 

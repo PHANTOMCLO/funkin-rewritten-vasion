@@ -699,7 +699,7 @@ return {
 			if input:pressed(curInput) then
 				local success = false
 
-				if settings.kadeInput then
+				if settings.ghostTapping then
 					success = true
 				end
 
@@ -735,7 +735,7 @@ return {
 									ratingAnim = "bad"
 									altScore = altScore + 33
 								else -- "Shit"
-									if settings.kadeInput then
+									if settings.ghostTapping then
 										success = false
 									else
 										score = score + 50
@@ -768,7 +768,7 @@ return {
 
 								table.remove(boyfriendNote, i)
 
-								if not settings.kadeInput or success then
+								if not settings.ghostTapping or success then
 									boyfriendArrow:animate("confirm", false)
 
 									self:safeAnimate(boyfriend, curAnim, false, 3)
