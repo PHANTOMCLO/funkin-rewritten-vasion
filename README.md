@@ -7,10 +7,11 @@ Friday Night Funkin' Vasion is a modification of [Friday Night Funkin' Rewritten
 
 Features with Funkin' Vasion
 * Better menu
+* Custom keybinds ([read here for more available binds](https://love2d.org/wiki/KeyConstant))
+* A Settings menu
 * Slightly better judgements
 * Accuracy counter + Miss counter
 * Discord RPC
-
 
 Friday Night Funkin' Rewritten features:
 * A rewritten engine focused on performance and playability
@@ -58,10 +59,10 @@ If using a controller on a PC, a controller with an Xbox button layout is recomm
 
 # Settings
 The settings file can be found in the following places on the following systems:
-* Windows - `%APPDATA%\funkin-rewritten\settings.ini`
-* macOS - `~/Library/Application Support/funkin-rewritten/settings.ini`
-* Linux - `~/.local/share/love/funkin-rewritten/settings.ini`
-* Nintendo Switch - `./funkin-rewritten/settings.ini`
+* Windows - `%APPDATA%\funkin-rewritten\settings.ini` & `%APPDATA%\funkin-rewritten\settings.data`
+* macOS - `~/Library/Application Support/funkin-rewritten/settings.ini` & `~/Library/Application Support/funkin-rewritten/settings.data`
+* Linux - `~/.local/share/love/funkin-rewritten/settings.ini` & `~/.local/share/love/funkin-rewritten/settings.data`
+* Nintendo Switch - `./funkin-rewritten/settings.ini` & `./funkin-rewritten/settings.data`
 
 # Progress
 **Menus** - 90% Complete
