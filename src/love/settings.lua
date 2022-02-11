@@ -97,11 +97,6 @@ if curOS == "NX" then
 	customBindUp = ini.readKey(settingsIni, "Keybinds", "up")
 	customBindRight = ini.readKey(settingsIni, "Keybinds", "right")
 
-	if ini.readKey(settingsIni, "Advanced", "showDebug") == "fps" or ini.readKey(settingsIni, "Advanced", "showDebug") == "detailed" then
-		settings.showDebug = ini.readKey(settingsIni, "Advanced", "showDebug")
-	else
-		settings.showDebug = false
-	end
 elseif curOS == "Web" then -- For love.js, we won't bother creating and reading a settings file that can't be edited, we'll just preset some settings
 	love.window.setMode(1280, 720) -- Due to shared code, lovesize will be used even though the resolution will never change :/
 	settings.hardwareCompression = false
