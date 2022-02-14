@@ -110,10 +110,6 @@ local function switchMenu(menu)
 	elseif menu == 3 then
 		
 	elseif menu == 2 then
-		function tempMenu()
-			graphics.setColor(0, 0, 0)
-			love.graphics.printf("Welcome to the temporary freeplay menu", -640, 0, 853, "center", nil, 1.5, 1.5)
-		end
 		function leftFunc()
 			if menuState == 3 then
 				songDifficulty = (songDifficulty > 1) and songDifficulty - 1 or 3
@@ -333,10 +329,6 @@ return {
 			love.graphics.push()
 				love.graphics.scale(cam.sizeX, cam.sizeY)
 
-
-
-				
-				tempMenu()
 				drawFunc()
 			love.graphics.pop()
 		love.graphics.pop()
