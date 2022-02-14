@@ -35,53 +35,7 @@ local function switchMenu(menu)
 		Gamestate.switch(menuSelect)
         status.setLoading(false)
 	end
-    function confirmFunc()
-        if settingSelect == 1 then
-            if settings.downscroll then
-                settings.downscroll = false
-            else
-                settings.downscroll = true
-            end
-        elseif settingSelect == 2 then
-            if settings.ghostTapping then
-                settings.ghostTapping = false
-            else
-                settings.ghostTapping = true
-            end
-        elseif settingSelect == 3 then
-            if settings.hardwareCompression then
-                settings.hardwareCompression = false
-            else
-                settings.hardwareCompression = true
-            end
-        elseif settingSelect == 4 then
-            if not settings.showDebug then
-                settings.showDebug = "fps"
-            elseif settings.showDebug == "fps" then
-                settings.showDebug = "detailed" 
-            elseif settings.showDebug == "detailed" then
-                settings.showDebug = false
-            end
-        else
-            data = {}
-            if settings.hardwareCompression then
-                imageTyppe = "dds" 
-            else
-                imageTyppe = "png"
-            end
-            data.saveSettingsMoment = {
-                hardwareCompression = settings.hardwareCompression,
-			    downscroll = settings.downscroll,
-			    ghostTapping = settings.ghostTapping,
-			    showDebug = settings.showDebug,
-                setImageType = imageTyppe
-            }
-		    serialized = lume.serialize(data)
-		    love.filesystem.write("settings.data", serialized)
-            love.window.showMessageBox("Settings Saved!", "Settings saved. Funkin Vasion will now restart to make sure your settings saved")
-            love.event.quit("restart")
-        end
-    end
+    
 end
 
 return {
@@ -112,6 +66,73 @@ return {
 	update = function(self, dt)
 		if not graphics.isFading() then
 			if input:pressed("confirm") then
+                function confirmFunc()
+                    if settingSelect == 1 then
+                        if settings.downscroll then
+                            settings.downscroll = false
+                        else
+                            settings.downscroll = true
+                        end
+                    elseif settingSelect == 2 then
+                        if settings.ghostTapping then
+                            settings.ghostTapping = false
+                        else
+                            settings.ghostTapping = true
+                        end
+                    elseif settingSelect == 3 then
+                        if settings.hardwareCompression then
+                            settings.hardwareCompression = false
+                        else
+                            settings.hardwareCompression = true
+                        end
+                    elseif settingSelect == 4 then
+                        if not settings.showDebug then
+                            settings.showDebug = "fps"
+                        elseif settings.showDebug == "fps" then
+                            settings.showDebug = "detailed" 
+                        elseif settings.showDebug == "detailed" then
+                            settings.showDebug = false
+                        end
+                    else
+                        
+                        if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression  then
+                            data = {}
+                            if settings.hardwareCompression then
+                                imageTyppe = "dds" 
+                            else
+                                imageTyppe = "png"
+                            end
+                            data.saveSettingsMoment = {
+                                hardwareCompression = settings.hardwareCompression,
+                                downscroll = settings.downscroll,
+                                ghostTapping = settings.ghostTapping,
+                                showDebug = settings.showDebug,
+                                setImageType = imageTyppe
+                            }
+                            serialized = lume.serialize(data)
+                            love.filesystem.write("settings.data", serialized)
+                            love.window.showMessageBox("Settings Saved!", "Settings saved. Funkin Vasion will now restart to make sure your settings saved")
+                            love.event.quit("restart")
+                        else
+                            data = {}
+                            if settings.hardwareCompression then
+                                imageTyppe = "dds" 
+                            else
+                                imageTyppe = "png"
+                            end
+                            data.saveSettingsMoment = {
+                                hardwareCompression = settings.hardwareCompression,
+                                downscroll = settings.downscroll,
+                                ghostTapping = settings.ghostTapping,
+                                showDebug = settings.showDebug,
+                                setImageType = imageTyppe
+                            }
+                            serialized = lume.serialize(data)
+                            love.filesystem.write("settings.data", serialized)
+                            Gamestate.switch(menuSelect)
+                        end
+                    end
+                end
 				audio.playSound(confirmSound)
 
                 confirmFunc()
@@ -145,11 +166,14 @@ return {
                 graphics.setColor(1,1,0)
                 love.graphics.print("Downscroll = " .. tostring(settings.downscroll), -628, -100)
                 love.graphics.print("\n\nGhost Tapping = " .. tostring(settings.ghostTapping), -628, -100)
-                love.graphics.print("\n\n\n\nHardware Compression = " .. tostring(settings.hardwareCompression), -628, -100)
+                love.graphics.print("\n\n\n\nHardware Compression = " .. tostring(settings.hardwareCompression) .. "  (RESTART REQUIRED)", -628, -100) 
                 love.graphics.print("\n\n\n\n\n\nShow Debug = " .. tostring(settings.showDebug), -628, -100)
                 love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -100)
-
-                love.graphics.print("\n\n\n\n\n\n\n\n\n\nSave settings & Restart", -628, -100)
+                if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
+                    love.graphics.print("\n\n\n\n\n\n\n\n\n\nSave settings & Restart", -628, -100)
+                else
+                    love.graphics.print("\n\n\n\n\n\n\n\n\n\nSave settings", -628, -100)
+                end
                 
 
                 graphics.setColor(1,1,1)
