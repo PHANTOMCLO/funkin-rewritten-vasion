@@ -81,7 +81,7 @@ function love.load()
 		settings.showDebug = data.saveSettingsMoment.showDebug
 		graphics.setImageType(data.saveSettingsMoment.setImageType)
 	else
-		settings.hardwareCompression = false
+		settings.hardwareCompression = true
 		graphics.setImageType("dds")
 		settings.downscroll = false
 		settings.ghostTapping = false
