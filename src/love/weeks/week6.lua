@@ -17,6 +17,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ------------------------------------------------------------------------------]]
 
+--[[
+
+
+I AM SO SORRY MODDERS FOR MY SHIT CODE
+
+:(
+
+I made this code at like 1am lmfao
+
+]]
+
 local canvas, font
 
 local song, difficulty
@@ -39,8 +50,84 @@ return {
 		song = songNum
 		difficulty = songAppend
 
+		if storyMode then
+			doingDialogue = true
+			dialogueBox = love.filesystem.load("sprites/week6/dialogueBox.lua")()
+			senpaiPortrait = love.filesystem.load("sprites/week6/senpaiPortrait.lua")()
+			bfPortrait = love.filesystem.load("sprites/week6/bfPortrait.lua")()
+
+			dialogueBox:animate("anim", false)
+			bfPortrait:animate("anim", false)
+			senpaiPortrait:animate("anim", false)
+
+			dialogueBox.x, dialogueBox.y = 125, 90
+			bfPortrait.x, bfPortrait.y = 125, 90
+			senpaiPortrait.x, senpaiPortrait.y = 125, 90
+			if song ~= 3 then
+				dialogueMusic = love.audio.newSource("music/pixel/Lunchbox.ogg", "static")
+				dialogueMusic:setLooping(true)
+
+				dialogueMusic:play()
+			else
+				dialogueMusic = love.audio.newSource("music/pixel/LunchboxScary.ogg", "static")
+				dialogueMusic:setLooping(true)
+				dialogueMusic:play()
+			end
+		end
+
 		cam.sizeX, cam.sizeY = 1, 1
 		camScale.x, camScale.y = 1, 1
+
+		function setDialogue(strList)
+			dialogueList = strList
+			curDialogue = 1
+			timer = 0
+			progress = 1
+			output = ""
+			isDone = false
+		end
+		
+		function doDialogue(dt)
+			local fullDialogue = dialogueList[curDialogue]
+			
+			timer = timer + dt
+			
+			if timer >= 0.05 then
+				if progress < string.len(fullDialogue) then
+					sounds["text"]:play()
+
+					progress = progress + 1
+
+					output = string.sub(fullDialogue, 1, math.floor(progress))
+
+					timer = 0
+				else
+					timer = 0
+				end
+			end
+		end
+
+		function advanceDialogue()
+			local fullDialogue = dialogueList[curDialogue]
+
+			if progress < string.len(fullDialogue) then
+				progress = string.len(fullDialogue)
+				output = string.sub(fullDialogue, 1, math.floor(progress))
+			else
+				if curDialogue < #dialogueList then
+					sounds["continue"]:play()
+					
+					curDialogue = curDialogue + 1
+					timer = 0
+					progress = 1
+					output = ""
+				else
+					sounds["continue"]:play()
+
+					isDone = true
+				end
+			end
+		end
 
 		if song ~= 3 then
 			sky = graphics.newImage(love.graphics.newImage(graphics.imagePath("week6/sky")))
@@ -65,17 +152,63 @@ return {
 	end,
 
 	load = function(self)
+		if storyMode then
+			doingDialogue = true
+		else
+			doingDialogue = false
+		end
 		if song == 3 then
 			school = love.filesystem.load("sprites/week6/evil-school.lua")()
 			enemy = love.filesystem.load("sprites/week6/spirit.lua")()
 
+			scaryDialogueBox = love.filesystem.load("sprites/week6/scaryDialogueBox.lua")()
+			spiritPortait = graphics.newImage(love.graphics.newImage(graphics.imagePath("week6/spiritFaceForward")))
+			spiritPortait.x, spiritPortait.y = 70, 50
+			scaryDialogueBox.x, scaryDialogueBox.y = 125, 90
+			if storyMode then
+				dialogueMusic = love.audio.newSource("music/pixel/lunchboxScary.ogg", "static")
+				dialogueMusic:setLooping(true)
+				dialogueMusic:play()
+			end
+
+			setDialogue(
+				{
+					"Direct contact with real humans, after being trapped in here for so long...",
+					"and HER of all people.",
+					"I'll make her father pay for what he's done to me and all the others,,,,",
+					"I'll beat you and make you take my place.",
+					"You don't mind your bodies being borrowed right? It's only fair..."
+				}
+			)
 			enemyIcon:animate("spirit", false)
 		elseif song == 2 then
 			enemy = love.filesystem.load("sprites/week6/senpai-angry.lua")()
 
+			angrySenpaiBox = love.filesystem.load("sprites/week6/angrySenpaiBox.lua")()
+			angrySenpaiBox.x, angrySenpaiBox.y = 125, 90
+
+			setDialogue(
+				{
+					"Not bad for an ugly worm.",
+					"But this time I'll rip your nuts off right after your girlfriend finishes gargling mine.",
+					"Bop beep be be skdoo bep"
+				}
+			)
+			if storyMode then
+				angry_text_box = love.audio.newSource("sounds/pixel/ANGRY_TEXT_BOX.ogg", "static")
+				angry_text_box:play()
+			end
+
 			freaks:animate("dissuaded", true)
 		else
 			enemy = love.filesystem.load("sprites/week6/senpai.lua")()
+			setDialogue(
+				{
+					"Ah, a new fair maiden has come in search of true love!",
+					"A serenade between gentlemen shall decide where her beautiful heart shall reside.",
+					"Beep bo bop"
+				}
+			)
 		end
 
 		weeksPixel:load()
@@ -92,9 +225,13 @@ return {
 		end
 		enemy.x, enemy.y = -50, 0
 
+		if storyMode then
+			dialogueMusic:play()
+		end
 		self:initUI()
-
-		weeksPixel:setupCountdown()
+		if not storyMode then
+			weeksPixel:setupCountdown()
+		end
 	end,
 
 	initUI = function(self)
@@ -122,7 +259,30 @@ return {
 			freaks:update(dt)
 		end
 
-		if not (countingDown or graphics.isFading()) and not (inst:isPlaying() and voices:isPlaying()) then
+		if doingDialogue then
+			doDialogue(dt)
+			if song == 1 then
+				senpaiPortrait:update(dt)
+			elseif song == 2 then
+				angrySenpaiBox:update(dt)
+			elseif song == 3 then
+				scaryDialogueBox:update(dt)
+			end
+			bfPortrait:update(dt)
+			dialogueBox:update(dt)
+			if input:pressed("confirm") then
+				if not isDone then
+					advanceDialogue()
+				end
+			end
+			if isDone then
+				dialogueMusic:stop()
+				doingDialogue = false
+				weeksPixel:setupCountdown()
+			end
+		end
+
+		if not doingDialogue and not (countingDown or graphics.isFading()) and not (inst:isPlaying() and voices:isPlaying()) then
 			if storyMode and song < 3 then
 				song = song + 1
 
@@ -184,7 +344,30 @@ return {
 				weeksPixel:drawRating()
 			love.graphics.pop()
 
-			weeksPixel:drawUI()
+			if not doingDialogue then
+				weeksPixel:drawUI()
+			end
+			if doingDialogue then -- Doing this cuz i'm stupid as shit
+				if song == 1 then
+					dialogueBox:draw()
+					if curDialogue ~= 3 then
+						senpaiPortrait:draw()
+					else
+						bfPortrait:draw()
+					end
+				elseif song == 2 then
+					if curDialogue ~= 3 then
+						angrySenpaiBox:draw()
+					else
+						dialogueBox:draw()
+						bfPortrait:draw()
+					end
+				elseif song == 3 then
+					scaryDialogueBox:draw()
+					spiritPortait:draw()
+				end
+				love.graphics.printf(output, 35, 95, 182, "left")
+			end
 		love.graphics.setCanvas()
 		graphics.screenBase(love.graphics.getWidth(), love.graphics.getHeight())
 
