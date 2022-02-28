@@ -12,6 +12,7 @@ Features with Funkin' Vasion
 * Slightly better judgements
 * Accuracy counter + Miss counter
 * Discord RPC
+* Week 6 dialogue
 
 Friday Night Funkin' Rewritten features:
 * A rewritten engine focused on performance and playability
