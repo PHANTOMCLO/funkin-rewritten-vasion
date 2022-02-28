@@ -11,7 +11,7 @@ Features with Funkin' Vasion:
 * A Settings menu
 * Slightly better judgements
 * Accuracy counter + Miss counter
-* Discord RPC
+* Discord RPC (Windows only)
 * Week 6 dialogue
 
 Friday Night Funkin' Rewritten features:
