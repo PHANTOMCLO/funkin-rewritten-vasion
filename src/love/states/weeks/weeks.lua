@@ -59,6 +59,7 @@ return {
 		images = {
 			icons = love.graphics.newImage(graphics.imagePath("icons")),
 			notes = love.graphics.newImage(graphics.imagePath("notes")),
+			notesplashes = love.graphics.newImage(graphics.imagePath("noteSplashes")),
 			numbers = love.graphics.newImage(graphics.imagePath("numbers"))
 		}
 
@@ -69,6 +70,7 @@ return {
 
 		girlfriend = love.filesystem.load("sprites/girlfriend.lua")()
 		boyfriend = love.filesystem.load("sprites/boyfriend.lua")()
+
 
 		rating = love.filesystem.load("sprites/rating.lua")()
 
@@ -107,6 +109,7 @@ return {
 		noteCounter = 0
 		altScore = 0
 		doingAnim = false -- for week 4 stuff
+		hitSick = false
 		
 		for i = 1, 4 do
 			notMissed[i] = true
@@ -144,10 +147,15 @@ return {
 
 		local curInput = inputList[i]
 
-		sprites.leftArrow = love.filesystem.load("sprites/left-arrow.lua")
-		sprites.downArrow = love.filesystem.load("sprites/down-arrow.lua")
-		sprites.upArrow = love.filesystem.load("sprites/up-arrow.lua")
-		sprites.rightArrow = love.filesystem.load("sprites/right-arrow.lua")
+		sprites.leftArrow = love.filesystem.load("sprites/notes/left-arrow.lua")
+		sprites.downArrow = love.filesystem.load("sprites/notes/down-arrow.lua")
+		sprites.upArrow = love.filesystem.load("sprites/notes/up-arrow.lua")
+		sprites.rightArrow = love.filesystem.load("sprites/notes/right-arrow.lua")
+
+		leftArrowSplash = love.filesystem.load("sprites/notes/noteSplashes.lua")()
+		downArrowSplash = love.filesystem.load("sprites/notes/noteSplashes.lua")()
+		upArrowSplash = love.filesystem.load("sprites/notes/noteSplashes.lua")()
+		rightArrowSplash = love.filesystem.load("sprites/notes/noteSplashes.lua")()
 
 		enemyArrows = {
 			sprites.leftArrow(),
@@ -155,7 +163,7 @@ return {
 			sprites.upArrow(),
 			sprites.rightArrow()
 		}
-		boyfriendArrows= {
+		boyfriendArrows = {
 			sprites.leftArrow(),
 			sprites.downArrow(),
 			sprites.upArrow(),
@@ -163,14 +171,26 @@ return {
 		}
 
 		for i = 1, 4 do
-			enemyArrows[i].x = -925 + 165 * i
-			boyfriendArrows[i].x = 100 + 165 * i
+			enemyArrows[i].x = -925 + 165 * i 
+			boyfriendArrows[i].x = 100 + 165 * i 
+			leftArrowSplash.x = 100 + 165 * 1 - 20
+			downArrowSplash.x = 100 + 165 * 2 - 20
+			upArrowSplash.x =  100 + 165 * 3 - 20
+			rightArrowSplash.x = 100 + 165 * 4 - 20
 			if settings.downscroll then
 				enemyArrows[i].y = 400
 				boyfriendArrows[i].y = 400
+				leftArrowSplash.y = 400
+				downArrowSplash.y = 400
+				upArrowSplash.y = 400
+				rightArrowSplash.y = 400
 			else
 				enemyArrows[i].y = -400
 				boyfriendArrows[i].y = -400
+				leftArrowSplash.y = -400
+				downArrowSplash.y = -400
+				upArrowSplash.y = -400
+				rightArrowSplash.y = -400
 			end
 
 			enemyNotes[i] = {}
@@ -650,6 +670,10 @@ return {
 		girlfriend:update(dt)
 		enemy:update(dt)
 		boyfriend:update(dt)
+		leftArrowSplash:update(dt)
+		rightArrowSplash:update(dt)
+		upArrowSplash:update(dt)
+		downArrowSplash:update(dt)
 
 		if not doingWeek4 then
 			if musicThres ~= oldMusicThres and math.fmod(absMusicTime, 120000 / bpm) < 100 then
@@ -746,6 +770,8 @@ return {
 
 					if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
 
+					hitSick = false
+
 					combo = 0
 					health = health - 2
 					missCounter = missCounter + 1
@@ -763,6 +789,7 @@ return {
 
 				if settings.ghostTapping then
 					success = true
+					hitSick = false
 				end
 
 				boyfriendArrow:animate("press", false)
@@ -789,16 +816,19 @@ return {
 									ratingAnim = "sick"
 									altScore = altScore + 100.00
 									sicks = sicks + 1
+									hitSick = true
 								elseif notePos <= 75 then -- "Good"
 									score = score + 200
 									ratingAnim = "good"
 									altScore = altScore + 66.66
 									goods = goods + 1
+									hitSick = false
 								elseif notePos <= 95 then -- "Bad"
 									score = score + 100
 									ratingAnim = "bad"
 									altScore = altScore + 33.33
 									bads = bads + 1
+									hitSick = false
 								else -- "Shit"
 									if settings.ghostTapping then
 										success = false
@@ -808,6 +838,7 @@ return {
 									altScore = altScore + 1.11
 									ratingAnim = "shit"
 									shits = shits + 1
+									hitSick = false
 								end
 
 								combo = combo + 1
@@ -861,6 +892,8 @@ return {
 					if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
 
 					self:safeAnimate(boyfriend, "miss " .. curAnim, false, 3)
+
+					hitSick = false
 
 					score = score - 10
 					combo = 0
@@ -944,6 +977,27 @@ return {
 				enemyArrows[i]:draw()
 				graphics.setColor(1, 1, 1)
 				boyfriendArrows[i]:draw()
+				if hitSick then
+					if input:pressed("gameLeft") then
+						leftArrowSplash:animate("left")
+					elseif input:pressed("gameRight") then
+						rightArrowSplash:animate("right")
+					elseif input:pressed("gameUp") then
+						upArrowSplash:animate("up")
+					elseif input:pressed("gameDown") then
+						downArrowSplash:animate("down")
+					end
+				end
+				if leftArrowSplash:isAnimated() then
+					leftArrowSplash:draw()
+				elseif rightArrowSplash:isAnimated() then
+					rightArrowSplash:draw()
+				elseif upArrowSplash:isAnimated() then
+					upArrowSplash:draw()
+				elseif downArrowSplash:isAnimated() then
+					downArrowSplash:draw()
+				end
+				
 
 				love.graphics.push()
 					love.graphics.translate(0, -musicPos)

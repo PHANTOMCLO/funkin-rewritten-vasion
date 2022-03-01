@@ -79,6 +79,11 @@ return {
 		healthBarColorEnemy = {175,102,206}
 		healthBarColorPlayer = {49,176,209}
 
+		leftArrowSplash = love.filesystem.load("sprites/notes/noteSplashes.lua")()
+		downArrowSplash = love.filesystem.load("sprites/notes/noteSplashes.lua")()
+		upArrowSplash = love.filesystem.load("sprites/notes/noteSplashes.lua")()
+		rightArrowSplash = love.filesystem.load("sprites/notes/noteSplashes.lua")()
+
 		if song ~= 3 then
 			walls = graphics.newImage(love.graphics.newImage(graphics.imagePath("week5/walls")))
 			escalator = graphics.newImage(love.graphics.newImage(graphics.imagePath("week5/escalator")))
@@ -338,6 +343,27 @@ return {
 					enemyArrows[i]:draw()
 					graphics.setColor(1, 1, 1)
 					boyfriendArrows[i]:draw()
+
+					if hitSick then
+						if input:pressed("gameLeft") then
+							leftArrowSplash:animate("left")
+						elseif input:pressed("gameRight") then
+							rightArrowSplash:animate("right")
+						elseif input:pressed("gameUp") then
+							upArrowSplash:animate("up")
+						elseif input:pressed("gameDown") then
+							downArrowSplash:animate("down")
+						end
+					end
+					if leftArrowSplash:isAnimated() then
+						leftArrowSplash:draw()
+					elseif rightArrowSplash:isAnimated() then
+						rightArrowSplash:draw()
+					elseif upArrowSplash:isAnimated() then
+						upArrowSplash:draw()
+					elseif downArrowSplash:isAnimated() then
+						downArrowSplash:draw()
+					end
 
 					love.graphics.push()
 						love.graphics.translate(0, -musicPos)
