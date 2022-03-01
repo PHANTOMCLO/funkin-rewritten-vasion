@@ -103,6 +103,14 @@ function love.load()
 		settings.showDebug = false
 		settings.sideJudgements = false
 		data = {}
+		data.saveSettingsMoment = {
+			hardwareCompression = settings.hardwareCompression,
+			downscroll = settings.downscroll,
+			ghostTapping = settings.ghostTapping,
+			showDebug = settings.showDebug,
+			setImageType = "dds",
+			sideJudgements = settings.sideJudgements
+		}
 		if data.saveSettingsMoment.sideJudgements == nil then
 			data.saveSettingsMoment.sideJudgements = false
 			data.saveSettingsMoment = {
