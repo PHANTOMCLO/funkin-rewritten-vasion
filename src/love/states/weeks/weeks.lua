@@ -960,7 +960,7 @@ return {
 				love.graphics.setLineWidth(1)
 				graphics.setColor(1, 1, 1)
 			else
-				graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
+				graphics.setColor(healthBarColorEnemy[1]/255, healthBarColorEnemy[2]/255, healthBarColorEnemy[3]/255)
 				love.graphics.rectangle("fill", -500, 350, 1000, 25)
 				graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
 				love.graphics.rectangle("fill", 500, 350, -health * 10, 25)
