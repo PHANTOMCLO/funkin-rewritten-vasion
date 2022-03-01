@@ -67,6 +67,9 @@ return {
 		song = songNum
 		difficulty = songAppend
 
+		healthBarColorEnemy = {175,102,206}
+		healthBarColorPlayer = {49,176,209}
+
 		if song ~= 3 then
 			walls = graphics.newImage(love.graphics.newImage(graphics.imagePath("week5/walls")))
 			escalator = graphics.newImage(love.graphics.newImage(graphics.imagePath("week5/escalator")))

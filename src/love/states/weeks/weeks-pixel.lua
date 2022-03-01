@@ -83,6 +83,8 @@ return {
 		enemyIcon = sprites["icons"]()
 		boyfriendIcon = sprites["icons"]()
 
+		healthBarColorPlayer = {123,214,246}
+
 		if settings.downscroll then
 			enemyIcon.y = -55
 			boyfriendIcon.y = -55
@@ -927,9 +929,9 @@ return {
 			end
 
 			if settings.downscroll then
-				graphics.setColor(1, 0, 0)
+				graphics.setColor(healthBarColorEnemy[1]/255, healthBarColorEnemy[2]/255, healthBarColorEnemy[3]/255)
 				love.graphics.rectangle("fill", -60, -55, 120, 5)
-				graphics.setColor(0, 1, 0)
+				graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
 				love.graphics.rectangle("fill", 60, -55, math.floor(-health * 1.2), 5)
 				graphics.setColor(0, 0, 0)
 				love.graphics.setLineWidth(2)
@@ -937,9 +939,9 @@ return {
 				love.graphics.setLineWidth(1)
 				graphics.setColor(1, 1, 1)
 			else
-				graphics.setColor(1, 0, 0)
+				graphics.setColor(healthBarColorEnemy[1]/255, healthBarColorEnemy[2]/255, healthBarColorEnemy[3]/255)
 				love.graphics.rectangle("fill", -60, 45, 120, 5)
-				graphics.setColor(0, 1, 0)
+				graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
 				love.graphics.rectangle("fill", 60, 45, math.floor(-health * 1.2), 5)
 				graphics.setColor(0, 0, 0)
 				love.graphics.setLineWidth(2)
@@ -952,6 +954,10 @@ return {
 			enemyIcon:draw()
 
 			if settings.downscroll then
+				local convertedAcc = string.format(
+					"%.2f%%",
+					(altScore / (noteCounter + missCounter))
+				)
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -100, -50)
@@ -962,10 +968,14 @@ return {
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -100, -50)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. math.floor((altScore / (noteCounter + missCounter))) .. "%", -100, -50)
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc, -100, -50)
 					end
 				end
 			else
+				local convertedAcc = string.format(
+					"%.2f%%",
+					(altScore / (noteCounter + missCounter))
+				)
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -100, 50)
@@ -976,7 +986,7 @@ return {
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -100, 50)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. math.floor((altScore / (noteCounter + missCounter))) .. "%", -100, 50)
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc, -100, 50)
 					end
 				end
 			end

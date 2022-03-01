@@ -141,6 +141,8 @@ return {
 
 			sky.y = 1
 			school.y = 1
+
+			healthBarColorEnemy = {255,170,111}
 		end
 
 		boyfriend.x, boyfriend.y = 50, 30
@@ -181,6 +183,8 @@ return {
 				}
 			)
 			enemyIcon:animate("spirit", false)
+
+			healthBarColorEnemy = {255,60,110}
 		elseif song == 2 then
 			enemy = love.filesystem.load("sprites/week6/senpai-angry.lua")()
 

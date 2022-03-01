@@ -93,6 +93,8 @@ return {
 		enemyIcon.sizeX, enemyIcon.sizeY = 1.5, 1.5
 		boyfriendIcon.sizeX, boyfriendIcon.sizeY = -1.5, 1.5
 
+		healthBarColorPlayer = {49,176,209}
+
 		countdownFade = {}
 		countdown = love.filesystem.load("sprites/countdown.lua")()
 
@@ -757,22 +759,22 @@ return {
 								if notePos <= 35 then -- "Sick"
 									score = score + 350
 									ratingAnim = "sick"
-									altScore = altScore + 100
+									altScore = altScore + 100.00
 								elseif notePos <= 75 then -- "Good"
 									score = score + 200
 									ratingAnim = "good"
-									altScore = altScore + 66
+									altScore = altScore + 66.66
 								elseif notePos <= 95 then -- "Bad"
 									score = score + 100
 									ratingAnim = "bad"
-									altScore = altScore + 33
+									altScore = altScore + 33.33
 								else -- "Shit"
 									if settings.ghostTapping then
 										success = false
 									else
 										score = score + 50
 									end
-									altScore = altScore + 1
+									altScore = altScore + 1.11
 									ratingAnim = "shit"
 								end
 								combo = combo + 1
@@ -948,9 +950,9 @@ return {
 			end
 
 			if settings.downscroll then
-				graphics.setColor(1, 0, 0)
+				graphics.setColor(healthBarColorEnemy[1]/255, healthBarColorEnemy[2]/255, healthBarColorEnemy[3]/255)
 				love.graphics.rectangle("fill", -500, -400, 1000, 25)
-				graphics.setColor(0, 1, 0)
+				graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
 				love.graphics.rectangle("fill", 500, -400, -health * 10, 25)
 				graphics.setColor(0, 0, 0)
 				love.graphics.setLineWidth(10)
@@ -958,9 +960,9 @@ return {
 				love.graphics.setLineWidth(1)
 				graphics.setColor(1, 1, 1)
 			else
-				graphics.setColor(1, 0, 0)
+				graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
 				love.graphics.rectangle("fill", -500, 350, 1000, 25)
-				graphics.setColor(0, 1, 0)
+				graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
 				love.graphics.rectangle("fill", 500, 350, -health * 10, 25)
 				graphics.setColor(0, 0, 0)
 				love.graphics.setLineWidth(10)
@@ -972,6 +974,10 @@ return {
 			boyfriendIcon:draw()
 			enemyIcon:draw()
 			if settings.downscroll then
+				local convertedAcc = string.format(
+					"%.2f%%",
+					(altScore / (noteCounter + missCounter))
+				)
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, -350)
@@ -982,10 +988,14 @@ return {
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -225, -350)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. math.floor((altScore / (noteCounter + missCounter))) .. "%", -225, -350)
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc, -225, -350)
 					end
 				end
 			else
+				local convertedAcc = string.format(
+					"%.2f%%",
+					(altScore / (noteCounter + missCounter))
+				)
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, 400)
@@ -996,7 +1006,7 @@ return {
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -225, 400)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. math.floor((altScore / (noteCounter + missCounter))) .. "%", -225, 400)
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc, -225, 400)
 					end
 				end
 			end

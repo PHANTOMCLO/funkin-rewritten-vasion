@@ -59,6 +59,9 @@ return {
 		song = songNum
 		difficulty = songAppend
 
+		healthBarColorEnemy = {216,85,142}
+		healthBarColorPlayer = {49,176,209}
+
 		sunset = graphics.newImage(love.graphics.newImage(graphics.imagePath("week4/sunset")))
 
 		bgLimo = love.filesystem.load("sprites/week4/bg-limo.lua")()
