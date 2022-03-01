@@ -26,7 +26,8 @@ newlinesMoment = {
     "\n\n",
     "\n\n\n\n",
     "\n\n\n\n\n\n",
-    "\n\n\n\n\n\n\n\n\n\n"
+    "\n\n\n\n\n\n\n\n",
+    "\n\n\n\n\n\n\n\n\n\n\n"
 }
 
 local function switchMenu(menu)
@@ -93,9 +94,14 @@ return {
                         elseif settings.showDebug == "detailed" then
                             settings.showDebug = false
                         end
-                    else
-                        
-                        if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression  then
+                    elseif settingSelect == 5 then
+                        if not settings.sideJudgements then
+                            settings.sideJudgements = true
+                        else
+                            settings.sideJudgements = false
+                        end
+                    elseif settingSelect == 6 then
+                        if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
                             data = {}
                             if settings.hardwareCompression then
                                 imageTyppe = "dds" 
@@ -107,7 +113,8 @@ return {
                                 downscroll = settings.downscroll,
                                 ghostTapping = settings.ghostTapping,
                                 showDebug = settings.showDebug,
-                                setImageType = imageTyppe
+                                setImageType = imageTyppe,
+                                sideJudgements = settings.sideJudgements
                             }
                             serialized = lume.serialize(data)
                             love.filesystem.write("settings.data", serialized)
@@ -125,7 +132,8 @@ return {
                                 downscroll = settings.downscroll,
                                 ghostTapping = settings.ghostTapping,
                                 showDebug = settings.showDebug,
-                                setImageType = imageTyppe
+                                setImageType = imageTyppe,
+                                sideJudgements = settings.sideJudgements
                             }
                             serialized = lume.serialize(data)
                             love.filesystem.write("settings.data", serialized)
@@ -144,10 +152,10 @@ return {
                 if settingSelect ~= 1 then
                     settingSelect = settingSelect - 1
                 else
-                    settingSelect = 5
+                    settingSelect = 6
                 end
             elseif input:pressed("down") then
-                if settingSelect ~= 5 then
+                if settingSelect ~= 6 then
                     settingSelect = settingSelect + 1
                 else
                     settingSelect = 1
@@ -168,11 +176,12 @@ return {
                 love.graphics.print("\n\nGhost Tapping = " .. tostring(settings.ghostTapping), -628, -100)
                 love.graphics.print("\n\n\n\nHardware Compression = " .. tostring(settings.hardwareCompression) .. "  (RESTART REQUIRED)", -628, -100) 
                 love.graphics.print("\n\n\n\n\n\nShow Debug = " .. tostring(settings.showDebug), -628, -100)
+                love.graphics.print("\n\n\n\n\n\n\n\nSide Judgements = " .. tostring(settings.sideJudgements), -628, -100)
                 love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -100)
                 if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
-                    love.graphics.print("\n\n\n\n\n\n\n\n\n\nSave settings & Restart", -628, -100)
+                    love.graphics.print("\n\n\n\n\n\n\n\n\n\n\nSave settings & Restart", -628, -100)
                 else
-                    love.graphics.print("\n\n\n\n\n\n\n\n\n\nSave settings", -628, -100)
+                    love.graphics.print("\n\n\n\n\n\n\n\n\n\n\nSave settings", -628, -100)
                 end
                 
 

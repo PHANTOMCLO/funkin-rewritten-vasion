@@ -106,6 +106,7 @@ return {
 		missCounter = 0
 		noteCounter = 0
 		altScore = 0
+		doingAnim = false -- for week 4 stuff
 		
 		for i = 1, 4 do
 			notMissed[i] = true
@@ -136,6 +137,12 @@ return {
 		score = 0
 		missCounter = 0
 		altScore = 0
+		sicks = 0
+		goods = 0
+		bads = 0
+		shits = 0
+
+		local curInput = inputList[i]
 
 		sprites.leftArrow = love.filesystem.load("sprites/left-arrow.lua")
 		sprites.downArrow = love.filesystem.load("sprites/down-arrow.lua")
@@ -644,17 +651,31 @@ return {
 		enemy:update(dt)
 		boyfriend:update(dt)
 
-		if musicThres ~= oldMusicThres and math.fmod(absMusicTime, 120000 / bpm) < 100 then
-			if spriteTimers[1] == 0 then
-				girlfriend:animate("idle", false)
+		if not doingWeek4 then
+			if musicThres ~= oldMusicThres and math.fmod(absMusicTime, 120000 / bpm) < 100 then
+				if spriteTimers[1] <= 0 then
+					girlfriend:animate("idle", false)
 
+					girlfriend:setAnimSpeed(14.4 / (60 / bpm))
+				end
+				if spriteTimers[2] <= 0 then
+					self:safeAnimate(enemy, "idle", false, 2)
+				end
+				if spriteTimers[3] <= 0 then
+					self:safeAnimate(boyfriend, "idle", false, 3)
+				end
+			end
+		else
+			if not (boyfriend:isAnimated() or holdingInput) and not doingAnim then
+				boyfriend:animate("idle", true)
+				doingAnim = true
+			end
+			if not enemy:isAnimated() then
+				enemy:animate("idle", true)
+			end
+			if not girlfriend:isAnimated() then
 				girlfriend:setAnimSpeed(14.4 / (60 / bpm))
-			end
-			if spriteTimers[2] == 0 then
-				self:safeAnimate(enemy, "idle", false, 2)
-			end
-			if spriteTimers[3] == 0 then
-				self:safeAnimate(boyfriend, "idle", false, 3)
+				girlfriend:animate("idle", true)
 			end
 		end
 
@@ -731,6 +752,12 @@ return {
 				end
 			end
 
+			if input:down(curInput) then
+				holdingInput = true
+			else
+				holdingInput = false
+			end
+
 			if input:pressed(curInput) then
 				local success = false
 
@@ -761,14 +788,17 @@ return {
 									score = score + 350
 									ratingAnim = "sick"
 									altScore = altScore + 100.00
+									sicks = sicks + 1
 								elseif notePos <= 75 then -- "Good"
 									score = score + 200
 									ratingAnim = "good"
 									altScore = altScore + 66.66
+									goods = goods + 1
 								elseif notePos <= 95 then -- "Bad"
 									score = score + 100
 									ratingAnim = "bad"
 									altScore = altScore + 33.33
+									bads = bads + 1
 								else -- "Shit"
 									if settings.ghostTapping then
 										success = false
@@ -777,6 +807,7 @@ return {
 									end
 									altScore = altScore + 1.11
 									ratingAnim = "shit"
+									shits = shits + 1
 								end
 
 								combo = combo + 1
@@ -808,6 +839,7 @@ return {
 									boyfriendArrow:animate("confirm", false)
 
 									self:safeAnimate(boyfriend, curAnim, false, 3)
+									doingAnim = false
 
 									health = health + 1
 									noteCounter = noteCounter + 1
@@ -1017,15 +1049,15 @@ return {
 				)
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0%", -200, -350)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, -350)
 					else
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0%", -200, -350)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, -350)
 					end
 				else
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -200, -350)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -250, -350)
 					else
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -200, -350)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -250, -350)
 					end
 				end
 			else
@@ -1035,18 +1067,32 @@ return {
 				)
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0%", -200, 400)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, 400)
 					else
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0%", -200, 400)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, 400)
 					end
 				else
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100% | PERFECT!!!", -200, 400)
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100% | PERFECT!!!", -250, 400)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc .. " | " .. ratingText, -200, 400)
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc .. " | " .. ratingText, -250, 400)
 					end
 				end
 			end
+
+			if settings.sideJudgements then
+				love.graphics.printf(
+					"Sicks: " .. sicks ..
+					"\nGoods: " .. goods ..
+					"\nBads: " .. bads ..
+					"\nShits: " .. shits,
+					-900,  -- to lazy for math lol
+					0, 
+					750, -- annoying limit and i don't want to test if it works with nil 
+					"left"
+				)
+			end
+
 		love.graphics.pop()
 	end,
 

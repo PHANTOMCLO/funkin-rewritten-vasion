@@ -30,6 +30,8 @@ return {
 		enemyFrameTimer = 0
 		boyfriendFrameTimer = 0
 
+		doingWeek4 = true
+
 		sounds = {
 			countdown = {
 				three = love.audio.newSource("sounds/countdown-3.ogg", "static"),

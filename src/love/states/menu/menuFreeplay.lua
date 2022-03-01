@@ -145,6 +145,11 @@ local function switchMenu(menu)
 						else
 							week5Playing = false
 						end
+						if weekNum == 5 then
+							doingWeek4 = true
+						else
+							doingWeek4 = false
+						end
 
 						Gamestate.switch(weekData[weekNum], songNum, songAppend)
 
@@ -234,6 +239,11 @@ function confirmFunc()
 					week5Playing = true
 				else
 					week5Playing = false
+				end
+				if weekNum == 5 then
+					doingWeek4 = true
+				else
+					doingWeek4 = false
 				end
 
 				Gamestate.switch(weekData[weekNum], songNum, songAppend)

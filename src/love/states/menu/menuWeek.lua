@@ -133,6 +133,11 @@ return {
 					else
 						week5Playing = false
 					end
+					if weekNum == 5 then
+						doingWeek4 = true
+					else
+						doingWeek4 = false
+					end
 					
 					songAppend = difficultyStrs[songDifficulty]
 

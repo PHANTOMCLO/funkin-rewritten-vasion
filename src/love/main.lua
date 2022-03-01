@@ -80,20 +80,44 @@ function love.load()
 		settings.ghostTapping = data.saveSettingsMoment.ghostTapping
 		settings.showDebug = data.saveSettingsMoment.showDebug
 		graphics.setImageType(data.saveSettingsMoment.setImageType)
+		if data.saveSettingsMoment.sideJudgements == nil then
+			data.saveSettingsMoment.sideJudgements = false
+			data.saveSettingsMoment = {
+				hardwareCompression = settings.hardwareCompression,
+				downscroll = settings.downscroll,
+				ghostTapping = settings.ghostTapping,
+				showDebug = settings.showDebug,
+				setImageType = "dds",
+				sideJudgements = settings.sideJudgements
+			}
+			serialized = lume.serialize(data)
+			love.filesystem.write("settings.data", serialized)
+		else
+			settings.sideJudgements = data.saveSettingsMoment.sideJudgements
+		end
 	else
 		settings.hardwareCompression = true
 		graphics.setImageType("dds")
 		settings.downscroll = false
 		settings.ghostTapping = false
 		settings.showDebug = false
+		settings.sideJudgements = false
 		data = {}
-        data.saveSettingsMoment = {
-            hardwareCompression = settings.hardwareCompression,
-			downscroll = settings.downscroll,
-			ghostTapping = settings.ghostTapping,
-			showDebug = settings.showDebug,
-			setImageType = "dds"
-        }
+		if data.saveSettingsMoment.sideJudgements == nil then
+			data.saveSettingsMoment.sideJudgements = false
+			data.saveSettingsMoment = {
+				hardwareCompression = settings.hardwareCompression,
+				downscroll = settings.downscroll,
+				ghostTapping = settings.ghostTapping,
+				showDebug = settings.showDebug,
+				setImageType = "dds",
+				sideJudgements = settings.sideJudgements
+			}
+			serialized = lume.serialize(data)
+			love.filesystem.write("settings.data", serialized)
+		else
+			settings.sideJudgements = data.saveSettingsMoment.sideJudgements
+		end
 		serialized = lume.serialize(data)
 		love.filesystem.write("settings.data", serialized)
 		love.window.showMessageBox("SETTING UPDATE!", "Due to FNFR Vasions update. Keybinds/Video modes can be created in settings.ini and settings can now be changed via the settings menu")
