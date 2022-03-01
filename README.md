@@ -5,13 +5,14 @@ Friday Night Funkin' Rewritten is a rewrite of [Friday Night Funkin'](https://ni
 
 Friday Night Funkin' Vasion is a modification of [Friday Night Funkin' Rewritten](https://github.com/HTV04/funkin-rewritten/releases) and should not be treated as an official download for it.
 
-Features with Funkin' Vasion
+Features with Funkin' Vasion:
 * Better menu
 * Custom keybinds ([read here for more available binds](https://love2d.org/wiki/KeyConstant))
 * A Settings menu
 * Slightly better judgements
 * Accuracy counter + Miss counter
-* Discord RPC
+* Discord RPC (Windows only)
+* Week 6 dialogue
 
 Friday Night Funkin' Rewritten features:
 * A rewritten engine focused on performance and playability
