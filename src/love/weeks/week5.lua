@@ -25,6 +25,8 @@ local topBop, bottomBop, santa
 
 local scaryIntro = false
 
+week5Playing = true
+
 return {
 	enter = function(self, from, songNum, songAppend)
 		cam.sizeX, cam.sizeY = 0.7, 0.7
@@ -34,6 +36,8 @@ return {
 		noteCounter = 0
 		altScore = 0
 		uiTextColour = {0,0,0}
+
+		week5Playing = true
 
 		bpm = 100
 		useAltAnims = false
@@ -373,14 +377,10 @@ return {
 					love.graphics.pop()
 				end
 
-				
-
 				boyfriendIcon:draw()
 				enemyIcon:draw()
 
-				graphics.setColor(0, 0, 0)
 				weeks:drawHealthBar()
-				graphics.setColor(1, 1, 1)
 
 				graphics.setColor(1, 1, 1, countdownFade[1])
 				countdown:draw()
@@ -394,6 +394,8 @@ return {
 		escalator = nil
 
 		santa = nil
+
+		week5Playing = false
 
 		uiTextColour = {1,1,1}
 

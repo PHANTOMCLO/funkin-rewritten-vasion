@@ -102,6 +102,7 @@ return {
 	end,
 
 	load = function(self)
+		uiTextColour = {1,1,1}
 		missCounter = 0
 		noteCounter = 0
 		altScore = 0
@@ -777,6 +778,7 @@ return {
 									altScore = altScore + 1.11
 									ratingAnim = "shit"
 								end
+
 								combo = combo + 1
 
 								rating:animate(ratingAnim, false)
@@ -948,10 +950,17 @@ return {
 					graphics.setColor(1, 1, 1)
 				love.graphics.pop()
 			end
+			graphics.setColor(1, 1, 1, countdownFade[1])
+			countdown:draw()
+			graphics.setColor(1, 1, 1)
 		love.graphics.pop()
 	end,
-		drawHealthBar = function()
-			love.graphics.push()
+	drawHealthBar = function()
+		love.graphics.push()
+			if not week5Playing then
+				love.graphics.translate(lovesize.getWidth() / 2, lovesize.getHeight() / 2)
+				love.graphics.scale(0.7, 0.7)
+			end
 			if settings.downscroll then
 				graphics.setColor(healthBarColorEnemy[1]/255, healthBarColorEnemy[2]/255, healthBarColorEnemy[3]/255)
 				love.graphics.rectangle("fill", -500, -400, 1000, 25)
@@ -977,6 +986,30 @@ return {
 			boyfriendIcon:draw()
 			enemyIcon:draw()
 			love.graphics.setColor(uiTextColour[1],uiTextColour[2],uiTextColour[3])
+			accForRatingText = (altScore / (noteCounter + missCounter))
+			if accForRatingText >= 100 then
+				ratingText = "PERFECT!!!"
+			elseif accForRatingText >= 90 then
+				ratingText = "Great!"
+			elseif accForRatingText >= 70 then
+				ratingText = "Good!"
+			elseif accForRatingText >= 69 then
+				ratingText = "Nice!"
+			elseif accForRatingText >= 60 then
+				ratingText = "Okay"
+			elseif accForRatingText >= 50 then
+				ratingText = "Meh..."
+			elseif accForRatingText >= 40 then
+				ratingText = "Could be better..."
+			elseif accForRatingText >= 30 then
+				ratingText = "It's an issue of skill."
+			elseif accForRatingText >= 20 then
+				ratingText = "Bad."
+			elseif accForRatingText >= 10 then
+				ratingText = "How."
+			elseif accForRatingText >= 0 then
+				ratingText = "Bruh."
+			end
 			if settings.downscroll then
 				local convertedAcc = string.format(
 					"%.2f%%",
@@ -984,15 +1017,15 @@ return {
 				)
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, -350)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0%", -200, -350)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, -350)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0%", -200, -350)
 					end
 				else
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -225, -350)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -200, -350)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc, -225, -350)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -200, -350)
 					end
 				end
 			else
@@ -1002,21 +1035,18 @@ return {
 				)
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, 400)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0%", -200, 400)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -225, 400)
+						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0%", -200, 400)
 					end
 				else
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100%", -225, 400)
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100% | PERFECT!!!", -200, 400)
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc, -225, 400)
+						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc .. " | " .. ratingText, -200, 400)
 					end
 				end
 			end
-			graphics.setColor(1, 1, 1, countdownFade[1])
-			countdown:draw()
-			graphics.setColor(1, 1, 1)
 		love.graphics.pop()
 	end,
 

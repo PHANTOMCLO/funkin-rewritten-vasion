@@ -221,10 +221,10 @@ return {
 				boyfriend:draw()
 			love.graphics.pop()
 			weeks:drawRating(1)
+			
 		love.graphics.pop()
-
-		weeks:drawUI()
 		weeks:drawHealthBar()
+		weeks:drawUI()
 	end,
 
 	leave = function()
