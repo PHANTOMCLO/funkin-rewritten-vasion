@@ -30,6 +30,11 @@ return {
 		cam.sizeX, cam.sizeY = 0.7, 0.7
 		camScale.x, camScale.y = 0.7, 0.7
 
+		missCounter = 0
+		noteCounter = 0
+		altScore = 0
+		uiTextColour = {0,0,0}
+
 		bpm = 100
 		useAltAnims = false
 
@@ -272,6 +277,7 @@ return {
 			end
 
 			weeks:updateUI(dt)
+			
 		end
 	end,
 
@@ -367,40 +373,14 @@ return {
 					love.graphics.pop()
 				end
 
-				if settings.downscroll then
-					graphics.setColor(healthBarColorEnemy[1]/255, healthBarColorEnemy[2]/255, healthBarColorEnemy[3]/255)
-					love.graphics.rectangle("fill", -500, -400, 1000, 25)
-					graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
-					love.graphics.rectangle("fill", 500, -400, -health * 10, 25)
-					graphics.setColor(0, 0, 0)
-					love.graphics.setLineWidth(10)
-					love.graphics.rectangle("line", -500, -400, 1000, 25)
-					love.graphics.setLineWidth(1)
-					graphics.setColor(1, 1, 1)
-				else
-					graphics.setColor(healthBarColorEnemy[1]/255, healthBarColorEnemy[2]/255, healthBarColorEnemy[3]/255)
-					love.graphics.rectangle("fill", -500, 350, 1000, 25)
-					graphics.setColor(healthBarColorPlayer[1]/255, healthBarColorPlayer[2]/255, healthBarColorPlayer[3]/255) -- add /255 after each one if you use 255 RGB values
-					love.graphics.rectangle("fill", 500, 350, -health * 10, 25)
-					graphics.setColor(0, 0, 0)
-					love.graphics.setLineWidth(10)
-					love.graphics.rectangle("line", -500, 350, 1000, 25)
-					love.graphics.setLineWidth(1)
-					graphics.setColor(1, 1, 1)
-				end
+				
 
 				boyfriendIcon:draw()
 				enemyIcon:draw()
 
-				if settings.downscroll then
-					graphics.setColor(0, 0, 0)
-					love.graphics.print("Score: " .. score, 300, -350)
-					graphics.setColor(1, 1, 1)
-				else
-					graphics.setColor(0, 0, 0)
-					love.graphics.print("Score: " .. score, 300, 400)
-					graphics.setColor(1, 1, 1)
-				end
+				graphics.setColor(0, 0, 0)
+				weeks:drawHealthBar()
+				graphics.setColor(1, 1, 1)
 
 				graphics.setColor(1, 1, 1, countdownFade[1])
 				countdown:draw()
@@ -414,6 +394,8 @@ return {
 		escalator = nil
 
 		santa = nil
+
+		uiTextColour = {1,1,1}
 
 		weeks:leave()
 	end

@@ -224,6 +224,7 @@ return {
 		love.graphics.pop()
 
 		weeks:drawUI()
+		weeks:drawHealthBar()
 	end,
 
 	leave = function()

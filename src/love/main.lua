@@ -33,6 +33,8 @@ function love.load()
 	Timer = require "lib.timer"
 	lume = require "lib.lume"
 
+	local uiTextColour = {1,1,1}
+
 	-- Load modules
 	status = require "modules.status"
 	audio = require "modules.audio"

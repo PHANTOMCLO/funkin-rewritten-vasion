@@ -948,7 +948,10 @@ return {
 					graphics.setColor(1, 1, 1)
 				love.graphics.pop()
 			end
-
+		love.graphics.pop()
+	end,
+		drawHealthBar = function()
+			love.graphics.push()
 			if settings.downscroll then
 				graphics.setColor(healthBarColorEnemy[1]/255, healthBarColorEnemy[2]/255, healthBarColorEnemy[3]/255)
 				love.graphics.rectangle("fill", -500, -400, 1000, 25)
@@ -973,6 +976,7 @@ return {
 
 			boyfriendIcon:draw()
 			enemyIcon:draw()
+			love.graphics.setColor(uiTextColour[1],uiTextColour[2],uiTextColour[3])
 			if settings.downscroll then
 				local convertedAcc = string.format(
 					"%.2f%%",
