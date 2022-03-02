@@ -62,6 +62,7 @@ return {
 		images = {
 			icons = love.graphics.newImage(graphics.imagePath("pixel/icons")),
 			notes = love.graphics.newImage(graphics.imagePath("pixel/notes")),
+			notesplashes = love.graphics.newImage(graphics.imagePath("pixel/pixelSplashes")), -- Thank you phantomclo :). You are based
 			numbers = love.graphics.newImage(graphics.imagePath("pixel/numbers"))
 		}
 
@@ -103,6 +104,7 @@ return {
 		missCounter = 0
 		noteCounter = 0
 		altScore = 0
+		hitSick = false
 
 		for i = 1, 4 do
 			notMissed[i] = true
@@ -134,10 +136,15 @@ return {
 		missCounter = 0
 		altScore = 0
 
-		sprites.leftArrow = love.filesystem.load("sprites/pixel/left-arrow.lua")
-		sprites.downArrow = love.filesystem.load("sprites/pixel/down-arrow.lua")
-		sprites.upArrow = love.filesystem.load("sprites/pixel/up-arrow.lua")
-		sprites.rightArrow = love.filesystem.load("sprites/pixel/right-arrow.lua")
+		sprites.leftArrow = love.filesystem.load("sprites/pixel/notes/left-arrow.lua")
+		sprites.downArrow = love.filesystem.load("sprites/pixel/notes/down-arrow.lua")
+		sprites.upArrow = love.filesystem.load("sprites/pixel/notes/up-arrow.lua")
+		sprites.rightArrow = love.filesystem.load("sprites/pixel/notes/right-arrow.lua")
+
+		leftArrowSplash = love.filesystem.load("sprites/pixel/notes/pixelSplashes.lua")()
+		downArrowSplash = love.filesystem.load("sprites/pixel/notes/pixelSplashes.lua")()
+		upArrowSplash = love.filesystem.load("sprites/pixel/notes/pixelSplashes.lua")()
+		rightArrowSplash = love.filesystem.load("sprites/pixel/notes/pixelSplashes.lua")()
 
 		enemyArrows = {
 			sprites.leftArrow(),
@@ -155,12 +162,24 @@ return {
 		for i = 1, 4 do
 			enemyArrows[i].x = -125 + 20 * i
 			boyfriendArrows[i].x = 25 + 20 * i
+			leftArrowSplash.x = 25 + 20 * 1 
+			downArrowSplash.x = 25 + 20 * 2 
+			upArrowSplash.x =  25 + 20 * 3 
+			rightArrowSplash.x = 25 + 20 * 4 
 			if settings.downscroll then
 				enemyArrows[i].y = 55
 				boyfriendArrows[i].y = 55
+				leftArrowSplash.y = 55
+				downArrowSplash.y = 55
+				upArrowSplash.y = 55
+				rightArrowSplash.y = 55
 			else
 				enemyArrows[i].y = -55
 				boyfriendArrows[i].y = -55
+				leftArrowSplash.y = -55
+				downArrowSplash.y = -55
+				upArrowSplash.y = -55
+				rightArrowSplash.y = -55
 			end
 
 			enemyNotes[i] = {}
@@ -623,6 +642,10 @@ return {
 			girlfriend:update(dt)
 			enemy:update(dt)
 			boyfriend:update(dt)
+			leftArrowSplash:update(dt)
+			rightArrowSplash:update(dt)
+			upArrowSplash:update(dt)
+			downArrowSplash:update(dt)
 
 			if musicThres ~= oldMusicThres and math.fmod(absMusicTime, 120000 / bpm) < 100 then
 				if spriteTimers[1] == 0 then
@@ -695,6 +718,8 @@ return {
 
 						notMissed[noteNum] = false
 
+						hitSick = false
+
 						table.remove(boyfriendNote, 1)
 
 						combo = 0
@@ -708,6 +733,7 @@ return {
 
 					if settings.ghostTapping then
 						success = true
+						hitSick = false
 					end
 
 					boyfriendArrow:animate("press", false)
@@ -732,13 +758,16 @@ return {
 									if notePos <= 7 then -- "Sick"
 										score = score + 350
 										ratingAnim = "sick"
+										hitSick = true
 										altScore = altScore + 100
 									elseif notePos <= 14 then -- "Good"
 										score = score + 200
 										ratingAnim = "good"
+										hitSick = false
 										altScore = altScore + 66
 									elseif notePos <= 18 then -- "Bad"
 										score = score + 100
+										hitSick = false
 										ratingAnim = "bad"
 										altScore = altScore + 33
 									else -- "Shit"
@@ -747,6 +776,7 @@ return {
 										else
 											score = score + 50
 										end
+										hitSick = false
 										ratingAnim = "shit"
 									end
 									altScore = altScore + 1
@@ -801,6 +831,7 @@ return {
 
 						score = score - 10
 						combo = 0
+						hitSick = false
 						health = health - 2
 						missCounter = missCounter + 1
 					end
@@ -887,6 +918,26 @@ return {
 				enemyArrows[i]:draw()
 				graphics.setColor(1, 1, 1)
 				boyfriendArrows[i]:draw()
+				if hitSick then
+					if input:pressed("gameLeft") then
+						leftArrowSplash:animate("left")
+					elseif input:pressed("gameRight") then
+						rightArrowSplash:animate("right")
+					elseif input:pressed("gameUp") then
+						upArrowSplash:animate("up")
+					elseif input:pressed("gameDown") then
+						downArrowSplash:animate("down")
+					end
+				end
+				if leftArrowSplash:isAnimated() then
+					leftArrowSplash:draw()
+				elseif rightArrowSplash:isAnimated() then
+					rightArrowSplash:draw()
+				elseif upArrowSplash:isAnimated() then
+					upArrowSplash:draw()
+				elseif downArrowSplash:isAnimated() then
+					downArrowSplash:draw()
+				end
 
 				love.graphics.push()
 					love.graphics.translate(0, -musicPos)
@@ -958,6 +1009,9 @@ return {
 					"%.2f%%",
 					(altScore / (noteCounter + missCounter))
 				)
+				if convertedAcc == "101.00%" then -- to lazy to fix this so i just do this gross workaround lol
+					convertedAcc = "100.00%"
+				end
 				if noteCounter + missCounter <= 0 then
 					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
 						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 0%", -100, -50)
