@@ -37,7 +37,11 @@ I made this code at like 1am lmfao
 	JUST SIZE EVERYTHING UP BY 7 LOL
 
 	EXAMPLE: enemy.sizeX, enemy.sizeY = 7, 7
-	
+
+	I WILL MAKE IT SO YOU *CAN* CHOOSE THE weeks-pixel ONE AS A SETTING...
+	IT WILL BE SET TO TRUE BY DEFAULT...
+	YOU CAN ENABLE/DISABLE IN main.lua (It's not an actual setting cuz like yeah modders/porters choice to use the one like original FNF or the FNFR version)
+
 ]]--
 
 local canvas, font
