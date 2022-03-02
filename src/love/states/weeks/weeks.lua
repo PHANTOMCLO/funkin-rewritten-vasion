@@ -173,10 +173,10 @@ return {
 		for i = 1, 4 do
 			enemyArrows[i].x = -925 + 165 * i 
 			boyfriendArrows[i].x = 100 + 165 * i 
-			leftArrowSplash.x = 100 + 165 * 1 - 20
-			downArrowSplash.x = 100 + 165 * 2 - 20
-			upArrowSplash.x =  100 + 165 * 3 - 20
-			rightArrowSplash.x = 100 + 165 * 4 - 20
+			leftArrowSplash.x = 100 + 165 * 1 - 15
+			downArrowSplash.x = 100 + 165 * 2 - 15
+			upArrowSplash.x =  100 + 165 * 3 - 15
+			rightArrowSplash.x = 100 + 165 * 4 - 15
 			if settings.downscroll then
 				enemyArrows[i].y = 400
 				boyfriendArrows[i].y = 400
