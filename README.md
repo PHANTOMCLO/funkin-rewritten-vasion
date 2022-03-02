@@ -13,6 +13,7 @@ Features with Funkin' Vasion:
 * Accuracy counter + Miss counter
 * Discord RPC (Windows only)
 * Week 6 dialogue
+* Note splashes (taken from psych engine shhhhh)
 
 Friday Night Funkin' Rewritten features:
 * A rewritten engine focused on performance and playability
