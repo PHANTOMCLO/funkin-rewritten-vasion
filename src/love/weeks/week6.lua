@@ -28,6 +28,18 @@ I made this code at like 1am lmfao
 
 ]]
 
+--[[
+
+	WIP. MAKE WEEK6 WORK WITH NORMAL weeks.lua
+
+	MAKING IT EASIER FOR SHIT AND STUFF
+
+	JUST SIZE EVERYTHING UP BY 7 LOL
+
+	EXAMPLE: enemy.sizeX, enemy.sizeY = 7, 7
+	
+]]--
+
 local canvas, font
 
 local song, difficulty
