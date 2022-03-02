@@ -22,5 +22,5 @@ function love.conf(t)
 	t.version = "11.3"
 	--t.console = true
 
-	t.window.title = "Friday Night Funkin' Vasion Rewritten v1.1.0"
+	t.window.title = "Friday Night Funkin' Vasion Rewritten v1.3.1"
 end
