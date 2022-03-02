@@ -1,5 +1,5 @@
 return graphics.newSprite(
-	love.graphics.newImage(graphics.imagePath("pixel/pixelsplashes")),
+	images.notesplashes,
 	-- Automatically generated from splash.xml
 	{
 		{x = 0, y = 0, width = 29, height = 29, offsetX = 0, offsetY = 0, offsetWidth = 29, offsetHeight = 29}, -- 1: splash blue0000
