@@ -30,13 +30,36 @@ newlinesMoment = {
     "\n\n\n\n\n\n\n\n\n\n\n"
 }
 
+settingsDescriptions = { -- The big spaces are so it lines up lol
+    "Downscroll:" ..
+    "\n      \"Downscroll\" makes arrows scroll down instead of up, and also\n      moves some aspects of the UI around",
+
+    "Ghost Tapping:" ..
+    "\n       \"Ghost Tapping\" disables anti-spam, but counts \"Shit\" inputs as\n       misses" ..
+    "\n\n       NOTE: Currently unfinished, some aspects of this input mode\n       still need to be implemented, like mash violations",
+
+    "Hardware Compression:" ..
+    "\n       \"Hardware Compression\" Use hardware-compressed image formats\n       to save RAM, disabling this will make the game eat your RAM\n       for breakfast (and increase load times)" ..
+    "\n\n       WARNING: Don't disable this on 32-bit versions of the game,\n       or the game will quickly run out of memory and crash (thanks\n       to the 2 GB RAM cap)",
+
+    "Side Judgements" ..
+    "\n       \"Side Judgements\" Shows your Sicks/Goods/Bads/Shits on the left\n       side of the screen." ..
+    "\n\n       ONLY FOR WEEKS 1-5",
+
+    "Show Debug" ..
+    "\n       \"Show Debug\" Shows debug info on the screen" ..
+    "\n\n       \"fps\" ONLY shows your FPS" ..
+    "\n\n       \"detailed\" shows things for debugging. (E.g. Music time,\n       Health, etc)",
+
+    ""
+}
+
 local function switchMenu(menu)
 	function backFunc()
 		status.setLoading(true)
 		Gamestate.switch(menuSelect)
         status.setLoading(false)
-	end
-    
+    end
 end
 
 return {
@@ -87,18 +110,18 @@ return {
                             settings.hardwareCompression = true
                         end
                     elseif settingSelect == 4 then
+                        if not settings.sideJudgements then
+                            settings.sideJudgements = true
+                        else
+                            settings.sideJudgements = false
+                        end
+                    elseif settingSelect == 5 then
                         if not settings.showDebug then
                             settings.showDebug = "fps"
                         elseif settings.showDebug == "fps" then
                             settings.showDebug = "detailed" 
                         elseif settings.showDebug == "detailed" then
                             settings.showDebug = false
-                        end
-                    elseif settingSelect == 5 then
-                        if not settings.sideJudgements then
-                            settings.sideJudgements = true
-                        else
-                            settings.sideJudgements = false
                         end
                     elseif settingSelect == 6 then
                         if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
@@ -162,6 +185,11 @@ return {
                 end
 			end
 		end
+        if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
+            isRestartNeeded = "(RESTART REQUIRED)"
+        else
+            isRestartNeeded = ""
+        end
 	end,
 
 	draw = function(self)
@@ -174,18 +202,23 @@ return {
                 graphics.setColor(1,1,0)
                 love.graphics.print("Downscroll = " .. tostring(settings.downscroll), -628, -100)
                 love.graphics.print("\n\nGhost Tapping = " .. tostring(settings.ghostTapping), -628, -100)
-                love.graphics.print("\n\n\n\nHardware Compression = " .. tostring(settings.hardwareCompression) .. "  (RESTART REQUIRED)", -628, -100) 
-                love.graphics.print("\n\n\n\n\n\nShow Debug = " .. tostring(settings.showDebug), -628, -100)
-                love.graphics.print("\n\n\n\n\n\n\n\nSide Judgements = " .. tostring(settings.sideJudgements), -628, -100)
+                love.graphics.print("\n\n\n\nHardware Compression = " .. tostring(settings.hardwareCompression) .. " " .. isRestartNeeded, -628, -100) 
+                love.graphics.print("\n\n\n\n\n\nSide Judgements = " .. tostring(settings.sideJudgements), -628, -100)
+                love.graphics.print("\n\n\n\n\n\n\n\nShow Debug = " .. tostring(settings.showDebug), -628, -100)
                 love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -100)
                 if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
                     love.graphics.print("\n\n\n\n\n\n\n\n\n\n\nSave settings & Restart", -628, -100)
                 else
                     love.graphics.print("\n\n\n\n\n\n\n\n\n\n\nSave settings", -628, -100)
                 end
-                
 
-                graphics.setColor(1,1,1)
+                if settingSelect ~= 6 then
+                    love.graphics.setColor(0,0,0,0.4)
+                    love.graphics.rectangle("fill", -400, 175, 800, 300)
+                    love.graphics.setColor(1,1,1)
+                    love.graphics.printf(settingsDescriptions[settingSelect], -390, 185, 1000, "left", nil, 0.8, 0.8)
+                end
+
 				love.graphics.scale(cam.sizeX, cam.sizeY)
 
 				love.graphics.pop()

@@ -13,7 +13,7 @@ Features with Funkin' Vasion:
 * Accuracy counter + Miss counter
 * Discord RPC (Windows only)
 * Week 6 dialogue
-* Note splashes (taken from psych engine shhhhh)
+* Note splashes 
 
 Friday Night Funkin' Rewritten features:
 * A rewritten engine focused on performance and playability
@@ -137,6 +137,8 @@ After running a build method, its release ZIP will be located at `./build/releas
 Follow the official instructions for LÖVE game distribution for your platform: https://love2d.org/wiki/Game_Distribution
 
 # Special Thanks
+* [PHANTOMCLO](https://twitter.com/PHANTOMCLO) for the pixel note splashes
+* [Keoiki](https://twitter.com/Keoiki_) For the Note splashes used in weeks 1-5 (I AM SO SORRY IF THIS IS THE WRONG ACCOUNT)
 * KadeDev for [FNFDataAPI](https://github.com/KadeDev/FNFDataAPI), which was refrenced while developing the chart-reading system
 * The developers of [BeatFever Mania](https://github.com/Sulunia/beatfever) for their music time interpolation code
 * The developers of the [LÖVE](https://love2d.org/) framework, for making Funkin' Rewritten possible
