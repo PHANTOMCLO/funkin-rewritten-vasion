@@ -211,6 +211,8 @@ return {
 			end
 		end
 
+		fakeBoyfriend = love.filesystem.load("sprites/pixel/boyfriend.lua")()
+
 		if song ~= 3 then
 			sky = graphics.newImage(love.graphics.newImage(graphics.imagePath("week6/sky")))
 			school = graphics.newImage(love.graphics.newImage(graphics.imagePath("week6/school")))
@@ -235,6 +237,7 @@ return {
 
 		girlfriend.x, girlfriend.y = 30, -50
 		boyfriend.x, boyfriend.y = 300, 190
+		fakeBoyfriend.x, fakeBoyfriend.y = 300, 190
 
 		self:load()
 	end,
@@ -473,6 +476,8 @@ return {
 		weeks:week6Downscale()
 		pixel = false
 		font = love.graphics.newFont("fonts/vcr.ttf", 24)
+
+		love.graphics.setDefaultFilter("linear")
 
 		weeks:leave()
 	end
