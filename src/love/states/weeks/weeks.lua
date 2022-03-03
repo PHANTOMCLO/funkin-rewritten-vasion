@@ -103,6 +103,28 @@ return {
 		
 	end,
 
+	week6Upscale = function()
+		enemy.sizeX, enemy.sizeY = 7, 7
+		boyfriend.sizeX, boyfriend.sizeY = 7, 7
+		girlfriend.sizeX, girlfriend.sizeY = 7, 7
+		countdown.sizeX, countdown.sizeY = 7, 7
+		rating.sizeX, rating.sizeY = 7, 7
+		for i = 1, 3 do
+			numbers[i].sizeX, numbers[i].sizeY = 6.5, 6.5
+		end
+	end,
+
+	week6Downscale = function()
+		enemy.sizeX, enemy.sizeY = 1, 1
+		boyfriend.sizeX, boyfriend.sizeY = 1, 1
+		girlfriend.sizeX, girlfriend.sizeY = 1, 1
+		countdown.sizeX, countdown.sizeY = 1, 1
+		rating.sizeX, rating.sizeY = 1, 1
+		for i = 1, 3 do
+			numbers[i].sizeX, numbers[i].sizeY = 0.5, 0.5
+		end
+	end,
+
 	load = function(self)
 		uiTextColour = {1,1,1}
 		missCounter = 0
@@ -119,8 +141,14 @@ return {
 		cam.x, cam.y = -boyfriend.x + 100, -boyfriend.y + 75
 
 		rating.x = girlfriend.x
-		for i = 1, 3 do
-			numbers[i].x = girlfriend.x - 100 + 50 * i
+		if not pixel then
+			for i = 1, 3 do
+				numbers[i].x = girlfriend.x - 100 + 50 * i
+			end
+		else
+			for i = 1, 3 do
+				numbers[i].x = girlfriend.x - 100 + 58 * i
+			end
 		end
 
 		ratingVisibility = {0}
@@ -130,6 +158,80 @@ return {
 		boyfriend:animate("idle")
 
 		graphics.fadeIn(0.5)
+	end,
+
+	pixelInitUI = function(self)
+		events = {}
+		enemyNotes = {}
+		boyfriendNotes = {}
+		health = 50
+		score = 0
+		missCounter = 0
+		altScore = 0
+		sicks = 0
+		goods = 0
+		bads = 0
+		shits = 0
+
+		local curInput = inputList[i]
+
+		sprites.leftArrow = love.filesystem.load("sprites/pixel/notes/left-arrow.lua")
+		sprites.downArrow = love.filesystem.load("sprites/pixel/notes/down-arrow.lua")
+		sprites.upArrow = love.filesystem.load("sprites/pixel/notes/up-arrow.lua")
+		sprites.rightArrow = love.filesystem.load("sprites/pixel/notes/right-arrow.lua")
+
+		leftArrowSplash = love.filesystem.load("sprites/pixel/notes/pixelSplashes.lua")()
+		downArrowSplash = love.filesystem.load("sprites/pixel/notes/pixelSplashes.lua")()
+		upArrowSplash = love.filesystem.load("sprites/pixel/notes/pixelSplashes.lua")()
+		rightArrowSplash = love.filesystem.load("sprites/pixel/notes/pixelSplashes.lua")()
+
+		enemyArrows = {
+			sprites.leftArrow(),
+			sprites.downArrow(),
+			sprites.upArrow(),
+			sprites.rightArrow()
+		}
+		boyfriendArrows = {
+			sprites.leftArrow(),
+			sprites.downArrow(),
+			sprites.upArrow(),
+			sprites.rightArrow()
+		}
+
+		leftArrowSplash.sizeX, leftArrowSplash.sizeY = 7, 7
+		rightArrowSplash.sizeX, rightArrowSplash.sizeY = 7, 7
+		upArrowSplash.sizeX, upArrowSplash.sizeY = 7, 7
+		downArrowSplash.sizeX, downArrowSplash.sizeY = 7, 7
+
+		for i = 1, 4 do
+			enemyArrows[i].x = -925 + 165 * i 
+			boyfriendArrows[i].x = 100 + 165 * i 
+			leftArrowSplash.x = 100 + 165 * 1 - 15
+			downArrowSplash.x = 100 + 165 * 2 - 15
+			upArrowSplash.x =  100 + 165 * 3 - 15
+			rightArrowSplash.x = 100 + 165 * 4 - 15
+			if settings.downscroll then
+				enemyArrows[i].y = 400
+				boyfriendArrows[i].y = 400
+				leftArrowSplash.y = 400
+				downArrowSplash.y = 400
+				upArrowSplash.y = 400
+				rightArrowSplash.y = 400
+			else
+				enemyArrows[i].y = -400
+				boyfriendArrows[i].y = -400
+				leftArrowSplash.y = -400
+				downArrowSplash.y = -400
+				upArrowSplash.y = -400
+				rightArrowSplash.y = -400
+			end
+
+			enemyArrows[i].sizeX, enemyArrows[i].sizeY = 7, 7
+			boyfriendArrows[i].sizeX, boyfriendArrows[i].sizeY = 7, 7
+
+			enemyNotes[i] = {}
+			boyfriendNotes[i] = {}
+		end
 	end,
 
 	initUI = function(self)
@@ -266,8 +368,11 @@ return {
 								end
 
 								c = #enemyNotes[id]
-
-								enemyNotes[id][c].offsetY = -10
+								if pixel then
+									enemyNotes[id][c].offsetY = 0
+								else
+									enemyNotes[id][c].offsetY = -10
+								end
 								enemyNotes[id][c].sizeY = -1
 
 								enemyNotes[id][c]:animate("end", false)
@@ -298,7 +403,11 @@ return {
 
 								c = #boyfriendNotes[id]
 
-								boyfriendNotes[id][c].offsetY = -10
+								if pixel then
+									boyfriendNotes[id][c].offsetY = 0
+								else
+									boyfriendNotes[id][c].offsetY = -10
+								end
 								boyfriendNotes[id][c].sizeY = -1
 
 								boyfriendNotes[id][c]:animate("end", false)
@@ -331,7 +440,11 @@ return {
 
 								c = #boyfriendNotes[id]
 
-								boyfriendNotes[id][c].offsetY = -10
+								if pixel then
+									boyfriendNotes[id][c].offsetY = 0
+								else
+									boyfriendNotes[id][c].offsetY = -10
+								end
 								boyfriendNotes[id][c].sizeY = -1
 
 								boyfriendNotes[id][c]:animate("end", false)
@@ -362,7 +475,11 @@ return {
 
 								c = #enemyNotes[id]
 
-								enemyNotes[id][c].offsetY = -10
+								if pixel then
+									enemyNotes[id][c].offsetY = 0
+								else
+									enemyNotes[id][c].offsetY = -10
+								end
 								enemyNotes[id][c].sizeY = -1
 
 								enemyNotes[id][c]:animate("end", false)
@@ -397,7 +514,11 @@ return {
 
 								c = #enemyNotes[id]
 
-								enemyNotes[id][c].offsetY = -10
+								if pixel then
+									enemyNotes[id][c].offsetY = 0
+								else
+									enemyNotes[id][c].offsetY = -10
+								end
 
 								enemyNotes[id][c]:animate("end", false)
 							end
@@ -427,7 +548,11 @@ return {
 
 								c = #boyfriendNotes[id]
 
-								boyfriendNotes[id][c].offsetY = -10
+								if pixel then
+									boyfriendNotes[id][c].offsetY = 0
+								else
+									boyfriendNotes[id][c].offsetY = -10
+								end
 
 								boyfriendNotes[id][c]:animate("end", false)
 							end
@@ -459,7 +584,11 @@ return {
 
 								c = #boyfriendNotes[id]
 
-								boyfriendNotes[id][c].offsetY = -10
+								if pixel then
+									boyfriendNotes[id][c].offsetY = 0
+								else
+									boyfriendNotes[id][c].offsetY = -10
+								end
 
 								boyfriendNotes[id][c]:animate("end", false)
 							end
@@ -484,7 +613,11 @@ return {
 									enemyNotes[id][c].x = x
 									enemyNotes[id][c].y = -400 + (noteTime + k) * 0.6 * speed
 									if k > chart[i].sectionNotes[j].noteLength - 71 / speed then
-										enemyNotes[id][c].offsetY = -10
+										if pixel then
+											enemyNotes[id][c].offsetY = 0
+										else
+											enemyNotes[id][c].offsetY = -10
+										end
 
 										enemyNotes[id][c]:animate("end", false)
 									else
@@ -494,7 +627,11 @@ return {
 
 								c = #enemyNotes[id]
 
-								enemyNotes[id][c].offsetY = -10
+								if pixel then
+									enemyNotes[id][c].offsetY = 0
+								else
+									enemyNotes[id][c].offsetY = -10
+								end
 
 								enemyNotes[id][c]:animate("end", false)
 							end
@@ -577,7 +714,11 @@ return {
 							{0},
 							"linear",
 							function()
-								countdown:animate("go")
+								if not pixel then
+									countdown:animate("go")
+								else
+									countdown:animate("date")
+								end
 								countdownFade[1] = 1
 								audio.playSound(sounds.countdown.go)
 								Timer.tween(
@@ -768,7 +909,9 @@ return {
 
 					table.remove(boyfriendNote, 1)
 
-					if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
+					if not pixel then
+						if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
+					end
 
 					hitSick = false
 
@@ -889,7 +1032,9 @@ return {
 
 					notMissed[noteNum] = false
 
-					if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
+					if not pixel then
+						if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
+					end
 
 					self:safeAnimate(boyfriend, "miss " .. curAnim, false, 3)
 
@@ -1009,6 +1154,9 @@ return {
 							if animName == "hold" or animName == "end" then
 								graphics.setColor(1, 1, 1, 0.5)
 							end
+							if pixel then
+								enemyNotes[i][j].sizeX, enemyNotes[i][j].sizeY = 7, 7
+							end
 							enemyNotes[i][j]:draw()
 							graphics.setColor(1, 1, 1)
 						end
@@ -1029,6 +1177,9 @@ return {
 								else
 									graphics.setColor(1, 1, 1, math.min(1, (500 + (boyfriendNotes[i][j].y - musicPos)) / 75))
 								end
+							end
+							if pixel then
+								boyfriendNotes[i][j].sizeX, boyfriendNotes[i][j].sizeY = 7, 7
 							end
 							boyfriendNotes[i][j]:draw()
 						end
@@ -1096,57 +1247,112 @@ return {
 			elseif accForRatingText >= 0 then
 				ratingText = "Bruh."
 			end
-			if settings.downscroll then
-				local convertedAcc = string.format(
-					"%.2f%%",
-					(altScore / (noteCounter + missCounter))
-				)
-				if noteCounter + missCounter <= 0 then
-					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, -350)
+			if not pixel then
+				if settings.downscroll then
+					local convertedAcc = string.format(
+						"%.2f%%",
+						(altScore / (noteCounter + missCounter))
+					)
+					if noteCounter + missCounter <= 0 then
+						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, -350)
+						else
+							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, -350)
+						end
 					else
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, -350)
+						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -250, -350)
+						else
+							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -250, -350)
+						end
 					end
 				else
-					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -250, -350)
+					local convertedAcc = string.format(
+						"%.2f%%",
+						(altScore / (noteCounter + missCounter))
+					)
+					if noteCounter + missCounter <= 0 then
+						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, 400)
+						else
+							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, 400)
+						end
 					else
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -250, -350)
+						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+							love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100% | PERFECT!!!", -250, 400)
+						else
+							love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc .. " | " .. ratingText, -250, 400)
+						end
 					end
+				end
+
+				if settings.sideJudgements then
+					love.graphics.printf(
+						"Sicks: " .. sicks ..
+						"\nGoods: " .. goods ..
+						"\nBads: " .. bads ..
+						"\nShits: " .. shits,
+						-900,  -- to lazy for math lol
+						0, 
+						750, -- annoying limit and i don't want to test if it works with nil 
+						"left"
+					)
 				end
 			else
-				local convertedAcc = string.format(
-					"%.2f%%",
-					(altScore / (noteCounter + missCounter))
-				)
-				if noteCounter + missCounter <= 0 then
-					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, 400)
+				if settings.downscroll then
+					local convertedAcc = string.format(
+						"%.2f%%",
+						(altScore / (noteCounter + missCounter))
+					)
+					if noteCounter + missCounter <= 0 then
+						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+						else
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+						end
 					else
-						love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, 400)
+						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+						else
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -1750, -350, 1000, "center", nil, 3.5, 3.5)
+						end
 					end
 				else
-					if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100% | PERFECT!!!", -250, 400)
+					local convertedAcc = string.format(
+						"%.2f%%",
+						(altScore / (noteCounter + missCounter))
+					)
+					if noteCounter + missCounter <= 0 then
+						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, 400, 1000, "center", 0, 3.5, 3.5)
+						else
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, 400, 1000, "center", 0, 3.5, 3.5)
+						end
 					else
-						love.graphics.print("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc .. " | " .. ratingText, -250, 400)
+						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+							love.graphics.printf("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: 100% | PERFECT!!!", -1750, 400, 1000, "center", 0, 3.5, 3.5)
+						else
+							love.graphics.printf("Score: " .. score .. " Misses: " .. missCounter .. " Accuracy: " .. convertedAcc .. " | " .. ratingText, -1750, 400, 1000, "center", 0, 3.5, 3.5)
+						end
 					end
 				end
-			end
 
-			if settings.sideJudgements then
-				love.graphics.printf(
-					"Sicks: " .. sicks ..
-					"\nGoods: " .. goods ..
-					"\nBads: " .. bads ..
-					"\nShits: " .. shits,
-					-900,  -- to lazy for math lol
-					0, 
-					750, -- annoying limit and i don't want to test if it works with nil 
-					"left"
-				)
+				if settings.sideJudgements then
+					love.graphics.printf(
+						"Sicks: " .. sicks ..
+						"\nGoods: " .. goods ..
+						"\nBads: " .. bads ..
+						"\nShits: " .. shits,
+						-900,
+						0, 
+						750, -- annoying limit and i don't want to test if it works with nil 
+						"left",
+						0,
+						3.5,
+						3.5
+					)
+				end
 			end
-
 		love.graphics.pop()
 	end,
 

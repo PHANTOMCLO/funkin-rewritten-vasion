@@ -61,16 +61,30 @@ function love.load()
 	gameOver = require "substates.game-over"
 	gameOverPixel = require "substates.game-over-pixel"
 
+	useOriginalPixel = true
+
 	-- Load week data
-	weekData = {
-		require "weeks.tutorial",
-		require "weeks.week1",
-		require "weeks.week2",
-		require "weeks.week3",
-		require "weeks.week4",
-		require "weeks.week5",
-		require "weeks.week6"
-	}
+	if useOriginalPixel then
+		weekData = {
+			require "weeks.tutorial",
+			require "weeks.week1",
+			require "weeks.week2",
+			require "weeks.week3",
+			require "weeks.week4",
+			require "weeks.week5",
+			require "weeks.pixel.original.week6" -- Use a pixel engine like the original FNF
+		}
+	else
+		weekData = {
+			require "weeks.tutorial",
+			require "weeks.week1",
+			require "weeks.week2",
+			require "weeks.week3",
+			require "weeks.week4",
+			require "weeks.week5",
+			require "weeks.pixel.fnfr.week6" -- Use FNFR's pixel engine
+		}
+	end
 
 	if love.filesystem.getInfo("settings.data") then
 		file = love.filesystem.read("settings.data")
