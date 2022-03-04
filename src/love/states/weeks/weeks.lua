@@ -817,16 +817,18 @@ return {
 			upArrowSplash:update(dt)
 			downArrowSplash:update(dt)
 
-			if not (boyfriend:isAnimated() or holdingInput) and not doingAnim then
-				boyfriend:animate("idle", true)
-				doingAnim = true
-			end
-			if not enemy:isAnimated() then
-				enemy:animate("idle", true)
-			end
-			if not girlfriend:isAnimated() then
-				girlfriend:setAnimSpeed(14.4 / (60 / bpm))
-				girlfriend:animate("idle", true)
+			if musicThres ~= oldMusicThres and math.fmod(absMusicTime, 120000 / bpm) < 100 then
+				if spriteTimers[1] == 0 then
+					girlfriend:animate("idle", false)
+	
+					girlfriend:setAnimSpeed(14.4 / (60 / bpm))
+				end
+				if spriteTimers[2] == 0 then
+					self:safeAnimate(enemy, "idle", false, 2)
+				end
+				if spriteTimers[3] == 0 then
+					self:safeAnimate(boyfriend, "idle", false, 3)
+				end
 			end
 
 			for i = 1, 3 do
