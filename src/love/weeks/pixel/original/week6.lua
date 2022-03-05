@@ -254,8 +254,6 @@ return {
 
 			scaryDialogueBox = love.filesystem.load("sprites/week6/scaryDialogueBox.lua")()
 			spiritPortait = graphics.newImage(love.graphics.newImage(graphics.imagePath("week6/spiritFaceForward")))
-			spiritPortait.x, spiritPortait.y = 650, 375
-			scaryDialogueBox.x, scaryDialogueBox.y = 650, 375
 			if storyMode then
 				dialogueMusic = love.audio.newSource("music/pixel/lunchboxScary.ogg", "static")
 				dialogueMusic:setLooping(true)
@@ -264,6 +262,9 @@ return {
 
 			spiritPortait.sizeX, spiritPortait.sizeY = 6, 6
 			scaryDialogueBox.sizeX, scaryDialogueBox.sizeY = 6, 6
+
+			spiritPortait.x, spiritPortait.y = 400, 250
+			scaryDialogueBox.x, scaryDialogueBox.y = 650, 375
 
 			school.sizeX, school.sizeY = 7, 7
 
@@ -283,7 +284,7 @@ return {
 			enemy = love.filesystem.load("sprites/week6/senpai-angry.lua")()
 
 			angrySenpaiBox = love.filesystem.load("sprites/week6/angrySenpaiBox.lua")()
-			angrySenpaiBox.x, angrySenpaiBox.y = 125, 90
+			angrySenpaiBox.x, angrySenpaiBox.y = 650, 375
 
 			angrySenpaiBox.sizeX, angrySenpaiBox.sizeY = 6, 6
 

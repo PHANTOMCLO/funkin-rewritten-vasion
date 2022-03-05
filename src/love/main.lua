@@ -62,6 +62,7 @@ function love.load()
 	gameOverPixel = require "substates.game-over-pixel"
 
 	useOriginalPixel = true
+	uiTextColour = {1,1,1}
 
 	-- Load week data
 	if useOriginalPixel then
@@ -284,7 +285,11 @@ function love.draw()
 
 	-- Debug output
 	if settings.showDebug then
-		love.graphics.print(status.getDebugStr(settings.showDebug), 5, 5, nil, 0.5, 0.5)
+		if not pixel then -- Make debug text readable in pixel week
+			love.graphics.print(status.getDebugStr(settings.showDebug), 5, 5, nil, 0.5, 0.5)
+		else
+			love.graphics.print(status.getDebugStr(settings.showDebug), 5, 5, nil, 1.8, 1.8)
+		end
 	end
 end
 function love.quit()

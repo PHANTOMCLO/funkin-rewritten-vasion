@@ -126,7 +126,6 @@ return {
 	end,
 
 	load = function(self)
-		uiTextColour = {1,1,1}
 		missCounter = 0
 		noteCounter = 0
 		altScore = 0
@@ -369,7 +368,7 @@ return {
 
 								c = #enemyNotes[id]
 								if pixel then
-									enemyNotes[id][c].offsetY = 0
+									enemyNotes[id][c].offsetY = -1
 								else
 									enemyNotes[id][c].offsetY = -10
 								end
@@ -404,7 +403,7 @@ return {
 								c = #boyfriendNotes[id]
 
 								if pixel then
-									boyfriendNotes[id][c].offsetY = 0
+									boyfriendNotes[id][c].offsetY = -1
 								else
 									boyfriendNotes[id][c].offsetY = -10
 								end
@@ -441,7 +440,7 @@ return {
 								c = #boyfriendNotes[id]
 
 								if pixel then
-									boyfriendNotes[id][c].offsetY = 0
+									boyfriendNotes[id][c].offsetY = -1
 								else
 									boyfriendNotes[id][c].offsetY = -10
 								end
@@ -476,7 +475,7 @@ return {
 								c = #enemyNotes[id]
 
 								if pixel then
-									enemyNotes[id][c].offsetY = 0
+									enemyNotes[id][c].offsetY = -1
 								else
 									enemyNotes[id][c].offsetY = -10
 								end
@@ -515,7 +514,7 @@ return {
 								c = #enemyNotes[id]
 
 								if pixel then
-									enemyNotes[id][c].offsetY = 0
+									enemyNotes[id][c].offsetY = -1
 								else
 									enemyNotes[id][c].offsetY = -10
 								end
@@ -549,7 +548,7 @@ return {
 								c = #boyfriendNotes[id]
 
 								if pixel then
-									boyfriendNotes[id][c].offsetY = 0
+									boyfriendNotes[id][c].offsetY = -1
 								else
 									boyfriendNotes[id][c].offsetY = -10
 								end
@@ -585,7 +584,7 @@ return {
 								c = #boyfriendNotes[id]
 
 								if pixel then
-									boyfriendNotes[id][c].offsetY = 0
+									boyfriendNotes[id][c].offsetY = -1
 								else
 									boyfriendNotes[id][c].offsetY = -10
 								end
@@ -614,7 +613,7 @@ return {
 									enemyNotes[id][c].y = -400 + (noteTime + k) * 0.6 * speed
 									if k > chart[i].sectionNotes[j].noteLength - 71 / speed then
 										if pixel then
-											enemyNotes[id][c].offsetY = 0
+											enemyNotes[id][c].offsetY = -1
 										else
 											enemyNotes[id][c].offsetY = -10
 										end
@@ -628,7 +627,7 @@ return {
 								c = #enemyNotes[id]
 
 								if pixel then
-									enemyNotes[id][c].offsetY = 0
+									enemyNotes[id][c].offsetY = -1
 								else
 									enemyNotes[id][c].offsetY = -10
 								end
@@ -1251,15 +1250,15 @@ return {
 					)
 					if noteCounter + missCounter <= 0 then
 						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, -350)
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, -350, 800, "center")
 						else
-							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, -350)
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, -350, 800, "center")
 						end
 					else
 						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -250, -350)
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -385, -350, 800, "center")
 						else
-							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -250, -350)
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -385, -350, 800, "center")
 						end
 					end
 				else
@@ -1269,15 +1268,15 @@ return {
 					)
 					if noteCounter + missCounter <= 0 then
 						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, 400)
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, 400, 800, "center")
 						else
-							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -250, 400)
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, 400, 800, "center")
 						end
 					else
 						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -250, 400)
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -385, 400, 800, "center")
 						else
-							love.graphics.print("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -250, 400)
+							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -385, 400, 800, "center")
 						end
 					end
 				end
@@ -1294,7 +1293,7 @@ return {
 						"left"
 					)
 				end
-			else
+			else -- Due to resizing the pixel text, I need to reposition it all
 				if settings.downscroll then
 					local convertedAcc = string.format(
 						"%.2f%%",
