@@ -864,6 +864,9 @@ return {
 				if not enemyArrow:isAnimated() then
 					enemyArrow:animate("off", false)
 				end
+				if not boyfriendArrow:isAnimated() then
+					boyfriendArrow:animate("off", false)
+				end
 
 				if #enemyNote > 0 then
 					if (not settings.downscroll and enemyNote[1].y - musicPos <= -400) or (settings.downscroll and enemyNote[1].y - musicPos >= 400) then
@@ -892,167 +895,190 @@ return {
 				if #boyfriendNote > 0 then
 					if not countingDown then
 						if (not settings.downscroll and boyfriendNote[1].y - musicPos < -500) or (settings.downscroll and boyfriendNote[1].y - musicPos > 500) then
-							if inst then voices:setVolume(0) end
+							if not settings.botPlay then
+								if inst then voices:setVolume(0) end
 
-							notMissed[noteNum] = false
+								notMissed[noteNum] = false
 
-							table.remove(boyfriendNote, 1)
+								table.remove(boyfriendNote, 1)
 
-							if not pixel then
-								if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
+								if not pixel then
+									if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
+								end
+
+								hitSick = false
+
+								combo = 0
+								
+								health = health - 2
+								missCounter = missCounter + 1
 							end
-
-							hitSick = false
-
-							combo = 0
-							health = health - 2
-							missCounter = missCounter + 1
 						end
 					end
 				end
 
-				if input:down(curInput) then
-					holdingInput = true
-				else
-					holdingInput = false
-				end
-
-				if input:pressed(curInput) then
-					local success = false
-
-					if settings.ghostTapping then
-						success = true
-						hitSick = false
+				if not settings.botPlay then
+					if input:down(curInput) then
+						holdingInput = true
+					else
+						holdingInput = false
 					end
 
-					boyfriendArrow:animate("press", false)
+					if input:pressed(curInput) then
+						local success = false
 
-					if #boyfriendNote > 0 then
-						for i = 1, #boyfriendNote do
-							if boyfriendNote[i] and boyfriendNote[i]:getAnimName() == "on" then
-								if (not settings.downscroll and boyfriendNote[i].y - musicPos <= -280) or (settings.downscroll and boyfriendNote[i].y - musicPos >= 280) then
-									local notePos
-									local ratingAnim
+						if settings.ghostTapping then
+							success = true
+							hitSick = false
+						end
 
-									notMissed[noteNum] = true
+						boyfriendArrow:animate("press", false)
 
-									if settings.downscroll then
-										notePos = math.abs(400 - (boyfriendNote[i].y - musicPos))
-									else
-										notePos = math.abs(-400 - (boyfriendNote[i].y - musicPos))
-									end
+						if #boyfriendNote > 0 then
+							for i = 1, #boyfriendNote do
+								if boyfriendNote[i] and boyfriendNote[i]:getAnimName() == "on" then
+									if (not settings.downscroll and boyfriendNote[i].y - musicPos <= -280) or (settings.downscroll and boyfriendNote[i].y - musicPos >= 280) then
+										local notePos
+										local ratingAnim
 
-									voices:setVolume(1)
+										notMissed[noteNum] = true
 
-									if notePos <= 35 then -- "Sick"
-										score = score + 350
-										ratingAnim = "sick"
-										altScore = altScore + 100.00
-										sicks = sicks + 1
-										hitSick = true
-									elseif notePos <= 75 then -- "Good"
-										score = score + 200
-										ratingAnim = "good"
-										altScore = altScore + 66.66
-										goods = goods + 1
-										hitSick = false
-									elseif notePos <= 95 then -- "Bad"
-										score = score + 100
-										ratingAnim = "bad"
-										altScore = altScore + 33.33
-										bads = bads + 1
-										hitSick = false
-									else -- "Shit"
-										if settings.ghostTapping then
-											success = false
+										if settings.downscroll then
+											notePos = math.abs(400 - (boyfriendNote[i].y - musicPos))
 										else
-											score = score + 50
+											notePos = math.abs(-400 - (boyfriendNote[i].y - musicPos))
 										end
-										altScore = altScore + 1.11
-										ratingAnim = "shit"
-										shits = shits + 1
-										hitSick = false
+
+										voices:setVolume(1)
+
+										if notePos <= 35 then -- "Sick"
+											score = score + 350
+											ratingAnim = "sick"
+											altScore = altScore + 100.00
+											sicks = sicks + 1
+											hitSick = true
+										elseif notePos <= 75 then -- "Good"
+											score = score + 200
+											ratingAnim = "good"
+											altScore = altScore + 66.66
+											goods = goods + 1
+											hitSick = false
+										elseif notePos <= 95 then -- "Bad"
+											score = score + 100
+											ratingAnim = "bad"
+											altScore = altScore + 33.33
+											bads = bads + 1
+											hitSick = false
+										else -- "Shit"
+											if settings.ghostTapping then
+												success = false
+											else
+												score = score + 50
+											end
+											altScore = altScore + 1.11
+											ratingAnim = "shit"
+											shits = shits + 1
+											hitSick = false
+										end
+
+										combo = combo + 1
+
+										rating:animate(ratingAnim, false)
+										numbers[1]:animate(tostring(math.floor(combo / 100 % 10), false))
+										numbers[2]:animate(tostring(math.floor(combo / 10 % 10), false))
+										numbers[3]:animate(tostring(math.floor(combo % 10), false))
+
+										for i = 1, 5 do
+											if ratingTimers[i] then Timer.cancel(ratingTimers[i]) end
+										end
+
+										ratingVisibility[1] = 1
+										rating.y = girlfriend.y - 50
+										for i = 1, 3 do
+											numbers[i].y = girlfriend.y + 50
+										end
+
+										ratingTimers[1] = Timer.tween(2, ratingVisibility, {0})
+										ratingTimers[2] = Timer.tween(2, rating, {y = girlfriend.y - 100}, "out-elastic")
+										ratingTimers[3] = Timer.tween(2, numbers[1], {y = girlfriend.y + love.math.random(-10, 10)}, "out-elastic")
+										ratingTimers[4] = Timer.tween(2, numbers[2], {y = girlfriend.y + love.math.random(-10, 10)}, "out-elastic")
+										ratingTimers[5] = Timer.tween(2, numbers[3], {y = girlfriend.y + love.math.random(-10, 10)}, "out-elastic")
+
+										table.remove(boyfriendNote, i)
+
+										if not settings.ghostTapping or success then
+											boyfriendArrow:animate("confirm", false)
+
+											self:safeAnimate(boyfriend, curAnim, false, 3)
+											doingAnim = false
+
+											health = health + 1
+											noteCounter = noteCounter + 1
+
+											success = true
+										end
+									else
+										break
+									end
+								end
+							end
+						end
+
+						if not success then
+							if not countingDown then
+								if not settings.botPlay then
+									audio.playSound(sounds.miss[love.math.random(3)])
+
+									notMissed[noteNum] = false
+
+									if not pixel then
+										if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
 									end
 
-									combo = combo + 1
+									self:safeAnimate(boyfriend, "miss " .. curAnim, false, 3)
 
-									rating:animate(ratingAnim, false)
-									numbers[1]:animate(tostring(math.floor(combo / 100 % 10), false))
-									numbers[2]:animate(tostring(math.floor(combo / 10 % 10), false))
-									numbers[3]:animate(tostring(math.floor(combo % 10), false))
+									hitSick = false
 
-									for i = 1, 5 do
-										if ratingTimers[i] then Timer.cancel(ratingTimers[i]) end
-									end
-
-									ratingVisibility[1] = 1
-									rating.y = girlfriend.y - 50
-									for i = 1, 3 do
-										numbers[i].y = girlfriend.y + 50
-									end
-
-									ratingTimers[1] = Timer.tween(2, ratingVisibility, {0})
-									ratingTimers[2] = Timer.tween(2, rating, {y = girlfriend.y - 100}, "out-elastic")
-									ratingTimers[3] = Timer.tween(2, numbers[1], {y = girlfriend.y + love.math.random(-10, 10)}, "out-elastic")
-									ratingTimers[4] = Timer.tween(2, numbers[2], {y = girlfriend.y + love.math.random(-10, 10)}, "out-elastic")
-									ratingTimers[5] = Timer.tween(2, numbers[3], {y = girlfriend.y + love.math.random(-10, 10)}, "out-elastic")
-
-									table.remove(boyfriendNote, i)
-
-									if not settings.ghostTapping or success then
-										boyfriendArrow:animate("confirm", false)
-
-										self:safeAnimate(boyfriend, curAnim, false, 3)
-										doingAnim = false
-
-										health = health + 1
-										noteCounter = noteCounter + 1
-
-										success = true
-									end
-								else
-									break
+									score = score - 10
+									combo = 0
+									health = health - 2
+									missCounter = missCounter + 1
 								end
 							end
 						end
 					end
+				end
 
-					if not success then
-						if not countingDown then
-							audio.playSound(sounds.miss[love.math.random(3)])
+				if not settings.botPlay then
+					if notMissed[noteNum] and #boyfriendNote > 0 and input:down(curInput) and ((not settings.downscroll and boyfriendNote[1].y - musicPos <= -400) or (settings.downscroll and boyfriendNote[1].y - musicPos >= 400)) and (boyfriendNote[1]:getAnimName() == "hold" or boyfriendNote[1]:getAnimName() == "end") then
+						voices:setVolume(1)
 
-							notMissed[noteNum] = false
+						table.remove(boyfriendNote, 1)
 
-							if not pixel then
-								if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
-							end
+						boyfriendArrow:animate("confirm", false)
 
-							self:safeAnimate(boyfriend, "miss " .. curAnim, false, 3)
+						if (not boyfriend:isAnimated()) or boyfriend:getAnimName() == "idle" then self:safeAnimate(boyfriend, curAnim, true, 3) end
 
-							hitSick = false
-
-							score = score - 10
-							combo = 0
-							health = health - 2
-							missCounter = missCounter + 1
-						end
+						health = health + 1
 					end
-				end
 
-				if notMissed[noteNum] and #boyfriendNote > 0 and input:down(curInput) and ((not settings.downscroll and boyfriendNote[1].y - musicPos <= -400) or (settings.downscroll and boyfriendNote[1].y - musicPos >= 400)) and (boyfriendNote[1]:getAnimName() == "hold" or boyfriendNote[1]:getAnimName() == "end") then
-					voices:setVolume(1)
+					if input:released(curInput) then
+						boyfriendArrow:animate("off", false)
+					end
+				else
+					if #boyfriendNote > 0 and ((not settings.downscroll and boyfriendNote[1].y - musicPos <= -400) or (settings.downscroll and boyfriendNote[1].y - musicPos >= 400)) then
+						voices:setVolume(1)
 
-					table.remove(boyfriendNote, 1)
+						boyfriendArrow:animate("confirm", false)
 
-					boyfriendArrow:animate("confirm", false)
+						if boyfriendNote[1]:getAnimName() == "hold" or boyfriendNote[1]:getAnimName() == "end" then
+							if (not boyfriend:isAnimated()) or boyfriend:getAnimName() == "idle" then self:safeAnimate(boyfriend, curAnim, true, 2) end
+						else
+							self:safeAnimate(boyfriend, curAnim, false, 2)
+						end
 
-					if (not boyfriend:isAnimated()) or boyfriend:getAnimName() == "idle" then self:safeAnimate(boyfriend, curAnim, true, 3) end
-
-					health = health + 1
-				end
-
-				if input:released(curInput) then
-					boyfriendArrow:animate("off", false)
+						table.remove(boyfriendNote, 1)
+					end
 				end
 			end
 
@@ -1118,14 +1144,26 @@ return {
 				graphics.setColor(1, 1, 1)
 				boyfriendArrows[i]:draw()
 				if hitSick then
-					if input:pressed("gameLeft") then
-						leftArrowSplash:animate("left")
-					elseif input:pressed("gameRight") then
-						rightArrowSplash:animate("right")
-					elseif input:pressed("gameUp") then
-						upArrowSplash:animate("up")
-					elseif input:pressed("gameDown") then
-						downArrowSplash:animate("down")
+					if not botPlay then
+						if input:pressed("gameLeft") then
+							leftArrowSplash:animate("left")
+						elseif input:pressed("gameRight") then
+							rightArrowSplash:animate("right")
+						elseif input:pressed("gameUp") then
+							upArrowSplash:animate("up")
+						elseif input:pressed("gameDown") then
+							downArrowSplash:animate("down")
+						end
+					else
+						if boyfriendArrows[1]:getAnimName() == "confirm" then
+							leftArrowSplash:animate("left")
+						elseif boyfriendArrows[2]:getAnimName() == "confirm" then
+							downArrowSplash:animate("down")
+						elseif boyfriendArrows[3]:getAnimName() == "confirm" then
+							upArrowSplash:animate("up")
+						elseif boyfriendArrows[4]:getAnimName() == "confirm" then
+							downArrowSplash:animate("down")
+						end
 					end
 				end
 				if leftArrowSplash:isAnimated() then
@@ -1243,109 +1281,113 @@ return {
 				ratingText = "Bruh."
 			end
 			if not pixel then
-				if settings.downscroll then
-					local convertedAcc = string.format(
-						"%.2f%%",
-						(altScore / (noteCounter + missCounter))
-					)
-					if noteCounter + missCounter <= 0 then
-						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, -350, 800, "center")
+				if not settings.botPlay then
+					if settings.downscroll then
+						local convertedAcc = string.format(
+							"%.2f%%",
+							(altScore / (noteCounter + missCounter))
+						)
+						if noteCounter + missCounter <= 0 then
+							if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, -350, 800, "center")
+							else
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, -350, 800, "center")
+							end
 						else
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, -350, 800, "center")
+							if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -385, -350, 800, "center")
+							else
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -385, -350, 800, "center")
+							end
 						end
 					else
-						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -385, -350, 800, "center")
+						local convertedAcc = string.format(
+							"%.2f%%",
+							(altScore / (noteCounter + missCounter))
+						)
+						if noteCounter + missCounter <= 0 then
+							if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, 400, 800, "center")
+							else
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, 400, 800, "center")
+							end
 						else
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -385, -350, 800, "center")
+							if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -385, 400, 800, "center")
+							else
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -385, 400, 800, "center")
+							end
 						end
 					end
-				else
-					local convertedAcc = string.format(
-						"%.2f%%",
-						(altScore / (noteCounter + missCounter))
-					)
-					if noteCounter + missCounter <= 0 then
-						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, 400, 800, "center")
-						else
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -385, 400, 800, "center")
-						end
-					else
-						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -385, 400, 800, "center")
-						else
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -385, 400, 800, "center")
-						end
-					end
-				end
 
-				if settings.sideJudgements then
-					love.graphics.printf(
-						"Sicks: " .. sicks ..
-						"\nGoods: " .. goods ..
-						"\nBads: " .. bads ..
-						"\nShits: " .. shits,
-						-900,  -- to lazy for math lol
-						0, 
-						750, -- annoying limit and i don't want to test if it works with nil 
-						"left"
-					)
+					if settings.sideJudgements then
+						love.graphics.printf(
+							"Sicks: " .. sicks ..
+							"\nGoods: " .. goods ..
+							"\nBads: " .. bads ..
+							"\nShits: " .. shits,
+							-900,  -- to lazy for math lol
+							0, 
+							750, -- annoying limit and i don't want to test if it works with nil 
+							"left"
+						)
+					end
 				end
 			else -- Due to resizing the pixel text, I need to reposition it all
-				if settings.downscroll then
-					local convertedAcc = string.format(
-						"%.2f%%",
-						(altScore / (noteCounter + missCounter))
-					)
-					if noteCounter + missCounter <= 0 then
-						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+				if not settings.botPlay then
+					if settings.downscroll then
+						local convertedAcc = string.format(
+							"%.2f%%",
+							(altScore / (noteCounter + missCounter))
+						)
+						if noteCounter + missCounter <= 0 then
+							if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+							else
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+							end
 						else
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+							if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+							else
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -1750, -350, 1000, "center", nil, 3.5, 3.5)
+							end
 						end
 					else
-						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -1750, -350, 1000, "center", nil, 3.5, 3.5)
+						local convertedAcc = string.format(
+							"%.2f%%",
+							(altScore / (noteCounter + missCounter))
+						)
+						if noteCounter + missCounter <= 0 then
+							if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, 400, 1000, "center", 0, 3.5, 3.5)
+							else
+								love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, 400, 1000, "center", 0, 3.5, 3.5)
+							end
 						else
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -1750, -350, 1000, "center", nil, 3.5, 3.5)
+							if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
+								love.graphics.printf("Score: " .. score .. " Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -1750, 400, 1000, "center", 0, 3.5, 3.5)
+							else
+								love.graphics.printf("Score: " .. score .. " Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -1750, 400, 1000, "center", 0, 3.5, 3.5)
+							end
 						end
 					end
-				else
-					local convertedAcc = string.format(
-						"%.2f%%",
-						(altScore / (noteCounter + missCounter))
-					)
-					if noteCounter + missCounter <= 0 then
-						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, 400, 1000, "center", 0, 3.5, 3.5)
-						else
-							love.graphics.printf("Score: " .. score .. " | Misses: " .. missCounter .. " | Accuracy: 0% | ???", -1750, 400, 1000, "center", 0, 3.5, 3.5)
-						end
-					else
-						if (math.floor((altScore / (noteCounter + missCounter)) / 3.5)) >= 100 then
-							love.graphics.printf("Score: " .. score .. " Misses: " .. missCounter .. " | Accuracy: 100% | PERFECT!!!", -1750, 400, 1000, "center", 0, 3.5, 3.5)
-						else
-							love.graphics.printf("Score: " .. score .. " Misses: " .. missCounter .. " | Accuracy: " .. convertedAcc .. " | " .. ratingText, -1750, 400, 1000, "center", 0, 3.5, 3.5)
-						end
-					end
-				end
 
-				if settings.sideJudgements then
-					love.graphics.printf(
-						"Sicks: " .. sicks ..
-						"\nGoods: " .. goods ..
-						"\nBads: " .. bads ..
-						"\nShits: " .. shits,
-						-900,
-						0, 
-						750, -- annoying limit and i don't want to test if it works with nil 
-						"left",
-						0,
-						3.5,
-						3.5
-					)
+					if settings.sideJudgements then
+						love.graphics.printf(
+							"Sicks: " .. sicks ..
+							"\nGoods: " .. goods ..
+							"\nBads: " .. bads ..
+							"\nShits: " .. shits,
+							-900,
+							0, 
+							750, -- annoying limit and i don't want to test if it works with nil 
+							"left",
+							0,
+							3.5,
+							3.5
+						)
+					end
 				end
 			end
 		love.graphics.pop()

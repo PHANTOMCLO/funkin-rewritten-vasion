@@ -61,7 +61,7 @@ function love.load()
 	gameOver = require "substates.game-over"
 	gameOverPixel = require "substates.game-over-pixel"
 
-	useOriginalPixel = true -- Set this to false to use FNFR's pixel engine
+	useOriginalPixel = false -- Set this to false to use FNFR's pixel engine
 	uiTextColour = {1,1,1}
 
 	-- Load week data
@@ -95,21 +95,20 @@ function love.load()
 		settings.ghostTapping = data.saveSettingsMoment.ghostTapping
 		settings.showDebug = data.saveSettingsMoment.showDebug
 		graphics.setImageType(data.saveSettingsMoment.setImageType)
-		if data.saveSettingsMoment.sideJudgements == nil then
-			data.saveSettingsMoment.sideJudgements = false
-			data.saveSettingsMoment = {
-				hardwareCompression = settings.hardwareCompression,
-				downscroll = settings.downscroll,
-				ghostTapping = settings.ghostTapping,
-				showDebug = settings.showDebug,
-				setImageType = "dds",
-				sideJudgements = settings.sideJudgements
-			}
-			serialized = lume.serialize(data)
-			love.filesystem.write("settings.data", serialized)
-		else
-			settings.sideJudgements = data.saveSettingsMoment.sideJudgements
-		end
+		settings.sideJudgements = data.saveSettingsMoment.sideJudgements
+		settings.botPlay = data.saveSettingsMoment.botPlay
+
+		data.saveSettingsMoment = {
+			hardwareCompression = settings.hardwareCompression,
+			downscroll = settings.downscroll,
+			ghostTapping = settings.ghostTapping,
+			showDebug = settings.showDebug,
+			setImageType = "dds",
+			sideJudgements = settings.sideJudgements,
+			botPlay = settings.botPlay
+		}
+		serialized = lume.serialize(data)
+		love.filesystem.write("settings.data", serialized)
 	else
 		settings.hardwareCompression = true
 		graphics.setImageType("dds")
@@ -117,6 +116,7 @@ function love.load()
 		settings.ghostTapping = false
 		settings.showDebug = false
 		settings.sideJudgements = false
+		settings.botPlay = false
 		data = {}
 		data.saveSettingsMoment = {
 			hardwareCompression = settings.hardwareCompression,
@@ -124,23 +124,9 @@ function love.load()
 			ghostTapping = settings.ghostTapping,
 			showDebug = settings.showDebug,
 			setImageType = "dds",
-			sideJudgements = settings.sideJudgements
+			sideJudgements = settings.sideJudgements,
+			botPlay = settings.botPlay
 		}
-		if data.saveSettingsMoment.sideJudgements == nil then
-			data.saveSettingsMoment.sideJudgements = false
-			data.saveSettingsMoment = {
-				hardwareCompression = settings.hardwareCompression,
-				downscroll = settings.downscroll,
-				ghostTapping = settings.ghostTapping,
-				showDebug = settings.showDebug,
-				setImageType = "dds",
-				sideJudgements = settings.sideJudgements
-			}
-			serialized = lume.serialize(data)
-			love.filesystem.write("settings.data", serialized)
-		else
-			settings.sideJudgements = data.saveSettingsMoment.sideJudgements
-		end
 		serialized = lume.serialize(data)
 		love.filesystem.write("settings.data", serialized)
 		love.window.showMessageBox("SETTING UPDATE!", "Due to FNFR Vasions update. Keybinds/Video modes can be created in settings.ini and settings can now be changed via the settings menu")

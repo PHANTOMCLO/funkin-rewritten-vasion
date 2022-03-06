@@ -429,10 +429,10 @@ return {
 					petals:draw()
 					freaks:draw()
 				end
+				girlfriend:draw()
 			love.graphics.pop()
 			love.graphics.push()
 				love.graphics.translate(cam.x, cam.y)
-				girlfriend:draw()
 
 				enemy:draw()
 				boyfriend:draw()

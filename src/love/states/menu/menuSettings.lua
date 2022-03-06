@@ -30,7 +30,7 @@ newlinesMoment = {
     "\n\n\n\n\n\n\n\n\n\n\n"
 }
 
-settingsDescriptions = { -- The big spaces are so it lines up lol
+settingsDescriptions1 = { -- The big spaces are so it lines up lol
     "Downscroll:" ..
     "\n      \"Downscroll\" makes arrows scroll down instead of up, and also\n      moves some aspects of the UI around",
 
@@ -38,20 +38,23 @@ settingsDescriptions = { -- The big spaces are so it lines up lol
     "\n       \"Ghost Tapping\" disables anti-spam, but counts \"Shit\" inputs as\n       misses" ..
     "\n\n       NOTE: Currently unfinished, some aspects of this input mode\n       still need to be implemented, like mash violations",
 
-    "Hardware Compression:" ..
-    "\n       \"Hardware Compression\" Use hardware-compressed image formats\n       to save RAM, disabling this will make the game eat your RAM\n       for breakfast (and increase load times)" ..
-    "\n\n       WARNING: Don't disable this on 32-bit versions of the game,\n       or the game will quickly run out of memory and crash (thanks\n       to the 2 GB RAM cap)",
-
     "Side Judgements" ..
     "\n       \"Side Judgements\" Shows your Sicks/Goods/Bads/Shits on the left\n       side of the screen." ..
     "\n\n       ONLY FOR WEEKS 1-5",
 
+    "Bot Play" ..
+    "\n       \"Bot Play\" Sit back and relax. Let the bot do all the playing\n       for you."
+}
+settingsDescriptions2 = {
+
+    "Hardware Compression:" ..
+    "\n       \"Hardware Compression\" Use hardware-compressed image formats\n       to save RAM, disabling this will make the game eat your RAM\n       for breakfast (and increase load times)" ..
+    "\n\n       WARNING: Don't disable this on 32-bit versions of the game,\n       or the game will quickly run out of memory and crash (thanks\n       to the 2 GB RAM cap)",
+
     "Show Debug" ..
     "\n       \"Show Debug\" Shows debug info on the screen" ..
     "\n\n       \"fps\" ONLY shows your FPS" ..
-    "\n\n       \"detailed\" shows things for debugging. (E.g. Music time,\n       Health, etc)",
-
-    ""
+    "\n\n       \"detailed\" shows things for debugging. (E.g. Music time,\n       Health, etc)"
 }
 
 local function switchMenu(menu)
@@ -67,6 +70,7 @@ return {
 
 		songNum = 0
         settingSelect = 1
+        settingsMenuState = 0
 
 		cam.sizeX, cam.sizeY = 0.9, 0.9
 		camScale.x, camScale.y = 0.9, 0.9
@@ -91,76 +95,94 @@ return {
 		if not graphics.isFading() then
 			if input:pressed("confirm") then
                 function confirmFunc()
-                    if settingSelect == 1 then
-                        if settings.downscroll then
-                            settings.downscroll = false
-                        else
-                            settings.downscroll = true
-                        end
-                    elseif settingSelect == 2 then
-                        if settings.ghostTapping then
-                            settings.ghostTapping = false
-                        else
-                            settings.ghostTapping = true
-                        end
-                    elseif settingSelect == 3 then
-                        if settings.hardwareCompression then
-                            settings.hardwareCompression = false
-                        else
-                            settings.hardwareCompression = true
-                        end
-                    elseif settingSelect == 4 then
-                        if not settings.sideJudgements then
-                            settings.sideJudgements = true
-                        else
-                            settings.sideJudgements = false
-                        end
-                    elseif settingSelect == 5 then
-                        if not settings.showDebug then
-                            settings.showDebug = "fps"
-                        elseif settings.showDebug == "fps" then
-                            settings.showDebug = "detailed" 
-                        elseif settings.showDebug == "detailed" then
-                            settings.showDebug = false
-                        end
-                    elseif settingSelect == 6 then
-                        if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
-                            data = {}
-                            if settings.hardwareCompression then
-                                imageTyppe = "dds" 
+                    if settingsMenuState == 0 then
+                        if settingSelect == 1 then
+                            settingsMenuState = 1 
+                        elseif settingSelect == 2 then
+                            settingsMenuState = 2
+                        elseif settingSelect == 3 then
+                            if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
+                                data = {}
+                                if settings.hardwareCompression then
+                                    imageTyppe = "dds" 
+                                else
+                                    imageTyppe = "png"
+                                end
+                                data.saveSettingsMoment = {
+                                    hardwareCompression = settings.hardwareCompression,
+                                    downscroll = settings.downscroll,
+                                    ghostTapping = settings.ghostTapping,
+                                    showDebug = settings.showDebug,
+                                    setImageType = imageTyppe,
+                                    sideJudgements = settings.sideJudgements,
+                                    botPlay = settings.botPlay
+                                }
+                                serialized = lume.serialize(data)
+                                love.filesystem.write("settings.data", serialized)
+                                love.window.showMessageBox("Settings Saved!", "Settings saved. Funkin Vasion will now restart to make sure your settings saved")
+                                love.event.quit("restart")
                             else
-                                imageTyppe = "png"
+                                data = {}
+                                if settings.hardwareCompression then
+                                    imageTyppe = "dds" 
+                                else
+                                    imageTyppe = "png"
+                                end
+                                data.saveSettingsMoment = {
+                                    hardwareCompression = settings.hardwareCompression,
+                                    downscroll = settings.downscroll,
+                                    ghostTapping = settings.ghostTapping,
+                                    showDebug = settings.showDebug,
+                                    setImageType = imageTyppe,
+                                    sideJudgements = settings.sideJudgements,
+                                    botPlay = settings.botPlay
+                                }
+                                serialized = lume.serialize(data)
+                                love.filesystem.write("settings.data", serialized)
+                                Gamestate.switch(menuSelect)
                             end
-                            data.saveSettingsMoment = {
-                                hardwareCompression = settings.hardwareCompression,
-                                downscroll = settings.downscroll,
-                                ghostTapping = settings.ghostTapping,
-                                showDebug = settings.showDebug,
-                                setImageType = imageTyppe,
-                                sideJudgements = settings.sideJudgements
-                            }
-                            serialized = lume.serialize(data)
-                            love.filesystem.write("settings.data", serialized)
-                            love.window.showMessageBox("Settings Saved!", "Settings saved. Funkin Vasion will now restart to make sure your settings saved")
-                            love.event.quit("restart")
-                        else
-                            data = {}
-                            if settings.hardwareCompression then
-                                imageTyppe = "dds" 
+                        end
+                    elseif settingsMenuState == 1 then
+                        if settingSelect == 1 then
+                            if settings.downscroll then
+                                settings.downscroll = false
                             else
-                                imageTyppe = "png"
+                                settings.downscroll = true
                             end
-                            data.saveSettingsMoment = {
-                                hardwareCompression = settings.hardwareCompression,
-                                downscroll = settings.downscroll,
-                                ghostTapping = settings.ghostTapping,
-                                showDebug = settings.showDebug,
-                                setImageType = imageTyppe,
-                                sideJudgements = settings.sideJudgements
-                            }
-                            serialized = lume.serialize(data)
-                            love.filesystem.write("settings.data", serialized)
-                            Gamestate.switch(menuSelect)
+                        elseif settingSelect == 2 then
+                            if settings.ghostTapping then
+                                settings.ghostTapping = false
+                            else
+                                settings.ghostTapping = true
+                            end
+                        elseif settingSelect == 3 then
+                            if not settings.sideJudgements then
+                                settings.sideJudgements = true
+                            else
+                                settings.sideJudgements = false
+                            end
+                        elseif settingSelect == 4 then
+                            if not settings.botPlay then
+                                settings.botPlay = true
+                            else
+                                settings.botPlay = false
+                            end
+                        end
+                    elseif settingsMenuState == 2 then
+                        if settingSelect == 1 then
+                            if settings.hardwareCompression then
+                                settings.hardwareCompression = false
+                            else
+                                settings.hardwareCompression = true
+                            end
+                        elseif settingSelect == 2 then
+                            if not settings.showDebug then
+                                settings.showDebug = "fps"
+                            elseif settings.showDebug == "fps" then
+                                settings.showDebug = "detailed" 
+                            elseif settings.showDebug == "detailed" then
+                                settings.showDebug = false
+                            end
                         end
                     end
                 end
@@ -170,18 +192,51 @@ return {
 			elseif input:pressed("back") then
 				audio.playSound(selectSound)
 
-				backFunc()
-            elseif input:pressed("up") then
-                if settingSelect ~= 1 then
-                    settingSelect = settingSelect - 1
+                if settingsMenuState == 0 then
+			    	backFunc()
                 else
-                    settingSelect = 6
+                    settingsMenuState = 0
+                    settingSelect = 1
+                end
+            elseif input:pressed("up") then
+                if settingsMenuState == 0 then
+                    if settingSelect ~= 1 then
+                        settingSelect = settingSelect - 1
+                    else
+                        settingSelect = 3
+                    end
+                elseif settingsMenuState == 1 then
+                    if settingSelect ~= 1 then
+                        settingSelect = settingSelect - 1
+                    else
+                        settingSelect = 4
+                    end
+                elseif settingsMenuState == 2 then
+                    if settingSelect ~= 1 then
+                        settingSelect = settingSelect - 1
+                    else
+                        settingSelect = 2
+                    end
                 end
             elseif input:pressed("down") then
-                if settingSelect ~= 6 then
-                    settingSelect = settingSelect + 1
-                else
-                    settingSelect = 1
+                if settingsMenuState == 0 then
+                    if settingSelect ~= 4 then
+                        settingSelect = settingSelect + 1
+                    else
+                        settingSelect = 1
+                    end
+                elseif settingsMenuState == 1 then
+                    if settingSelect ~= 4 then
+                        settingSelect = settingSelect + 1
+                    else
+                        settingSelect = 1
+                    end
+                elseif settingsMenuState == 2 then
+                    if settingSelect ~= 2 then
+                        settingSelect = settingSelect + 1
+                    else
+                        settingSelect = 1
+                    end
                 end
 			end
 		end
@@ -200,23 +255,35 @@ return {
                 menuBG:draw()
 
                 graphics.setColor(1,1,0)
-                love.graphics.print("Downscroll = " .. tostring(settings.downscroll), -628, -100)
-                love.graphics.print("\n\nGhost Tapping = " .. tostring(settings.ghostTapping), -628, -100)
-                love.graphics.print("\n\n\n\nHardware Compression = " .. tostring(settings.hardwareCompression) .. " " .. isRestartNeeded, -628, -100) 
-                love.graphics.print("\n\n\n\n\n\nSide Judgements = " .. tostring(settings.sideJudgements), -628, -100)
-                love.graphics.print("\n\n\n\n\n\n\n\nShow Debug = " .. tostring(settings.showDebug), -628, -100)
-                love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -100)
-                if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
-                    love.graphics.print("\n\n\n\n\n\n\n\n\n\n\nSave settings & Restart", -628, -100)
-                else
-                    love.graphics.print("\n\n\n\n\n\n\n\n\n\n\nSave settings", -628, -100)
+                if settingsMenuState == 0 then
+                    love.graphics.print("Gameplay", -628, -100)
+                    love.graphics.print("\n\nMisc.", -628, -100)
+                    if settings.hardwareCompression ~= data.saveSettingsMoment.hardwareCompression then
+                        love.graphics.print("\n\n\n\nSave settings & Restart", -628, -100)
+                    else
+                        love.graphics.print("\n\n\n\nSave settings", -628, -100)
+                    end
+                elseif settingsMenuState == 1 then
+                    love.graphics.print("Downscroll = " .. tostring(settings.downscroll), -628, -100)
+                    love.graphics.print("\n\nGhost Tapping = " .. tostring(settings.ghostTapping), -628, -100)
+                    love.graphics.print("\n\n\n\nSide Judgements = " .. tostring(settings.sideJudgements), -628, -100)
+                    love.graphics.print("\n\n\n\n\n\nBot Play = " .. tostring(settings.botPlay), -628, -100)
+                elseif settingsMenuState == 2 then
+                    love.graphics.print("Hardware Compression = " .. tostring(settings.hardwareCompression) .. " " .. isRestartNeeded, -628, -100) 
+                    love.graphics.print("\n\nShow Debug = " .. tostring(settings.showDebug), -628, -100)
                 end
+                love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -100)
+                
 
-                if settingSelect ~= 6 then
+                if settingsMenuState ~= 0 then
                     love.graphics.setColor(0,0,0,0.4)
                     love.graphics.rectangle("fill", -400, 175, 800, 300)
                     love.graphics.setColor(1,1,1)
-                    love.graphics.printf(settingsDescriptions[settingSelect], -390, 185, 1000, "left", nil, 0.8, 0.8)
+                    if settingsMenuState == 1 then
+                        love.graphics.printf(settingsDescriptions1[settingSelect], -390, 185, 1000, "left", nil, 0.8, 0.8)
+                    elseif settingsMenuState == 2 then
+                        love.graphics.printf(settingsDescriptions2[settingSelect], -390, 185, 1000, "left", nil, 0.8, 0.8)
+                    end
                 end
 
 				love.graphics.scale(cam.sizeX, cam.sizeY)
