@@ -61,7 +61,7 @@ function love.load()
 	gameOver = require "substates.game-over"
 	gameOverPixel = require "substates.game-over-pixel"
 
-	useOriginalPixel = false -- Set this to false to use FNFR's pixel engine
+	useOriginalPixel = true -- Set this to false to use FNFR's pixel engine
 	uiTextColour = {1,1,1}
 
 	-- Load week data
