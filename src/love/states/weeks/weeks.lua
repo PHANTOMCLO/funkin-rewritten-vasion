@@ -94,7 +94,7 @@ return {
 		end
 		enemyIcon.sizeX, enemyIcon.sizeY = 1.5, 1.5
 		boyfriendIcon.sizeX, boyfriendIcon.sizeY = -1.5, 1.5
-healthBarColorPlayer = {49,176,209}
+		healthBarColorPlayer = {49,176,209}
 		
 
 		countdownFade = {}
@@ -1323,10 +1323,10 @@ healthBarColorPlayer = {49,176,209}
 					if settings.sideJudgements then
 						love.graphics.printf(
 							"Sicks: " .. sicks ..
-							"\nGoods: " .. goods ..
-							"\nBads: " .. bads ..
-							"\nShits: " .. shits,
-							-900,  -- to lazy for math lol
+							"\n\nGoods: " .. goods ..
+							"\n\nBads: " .. bads ..
+							"\n\nShits: " .. shits,
+							-900,
 							0, 
 							750, -- annoying limit and i don't want to test if it works with nil 
 							"left"
@@ -1376,9 +1376,9 @@ healthBarColorPlayer = {49,176,209}
 					if settings.sideJudgements then
 						love.graphics.printf(
 							"Sicks: " .. sicks ..
-							"\nGoods: " .. goods ..
-							"\nBads: " .. bads ..
-							"\nShits: " .. shits,
+							"\n\nGoods: " .. goods ..
+							"\n\nBads: " .. bads ..
+							"\n\nShits: " .. shits,
 							-900,
 							0, 
 							750, -- annoying limit and i don't want to test if it works with nil 
