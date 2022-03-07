@@ -32,7 +32,7 @@ return {
 
 		doingWeek4 = true
 
-		sounds = {
+		sounds = { -- Since week4 does not use weeks:load, all of the load stuff is here
 			countdown = {
 				three = love.audio.newSource("sounds/countdown-3.ogg", "static"),
 				two = love.audio.newSource("sounds/countdown-2.ogg", "static"),

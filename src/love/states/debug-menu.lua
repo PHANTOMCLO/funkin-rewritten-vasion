@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ------------------------------------------------------------------------------]]
 
+-- You do not need to mess with this file. You just need to press 7 when loaded into the game
+
 local menuID, selection
 local curDir, dirTable
 local sprite, spriteAnims, overlaySprite

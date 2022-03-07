@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ------------------------------------------------------------------------------]]
-if love.system.getOS() == "Windows" and love.filesystem.isFused() then
+if love.system.getOS() == "Windows" and love.filesystem.isFused() then -- Delete this if statement if you don't want Discord RPC
 	useDiscordRPC = true
 	discordRPC = require "lib.discordRPC"
 	appId = require "lib.applicationID"
@@ -62,7 +62,11 @@ function love.load()
 	gameOverPixel = require "substates.game-over-pixel"
 
 	useOriginalPixel = true -- Set this to false to use FNFR's pixel engine
-	uiTextColour = {1,1,1}
+	uiTextColour = {1,1,1} -- Set a custom UI colour (Put it in the weeks file to change it for only that week)
+
+	-- When adding custom colour for the health bar. Make sure to use 255 RGB values. It will automatically convert it for you.
+	healthBarColorPlayer = {49,176,209} -- BF's icon colour
+	healthBarColorEnemy = {165,0,77} -- GF's icon colour
 
 	-- Load week data
 	if useOriginalPixel then
@@ -87,7 +91,8 @@ function love.load()
 		}
 	end
 
-	if love.filesystem.getInfo("settings.data") then
+	-- You don't need to mess with this unless you are adding a custom setting (Will nil be default (AKA. False)) --
+	if love.filesystem.getInfo("settings.data") then 
 		file = love.filesystem.read("settings.data")
         data = lume.deserialize(file)
 		settings.hardwareCompression = data.saveSettingsMoment.hardwareCompression
@@ -133,6 +138,7 @@ function love.load()
 	
 		love.filesystem.write("settings.data", serialized)
 	end
+	--                                                                      --
 
 	-- LÖVE init
 	if curOS == "OS X" then
@@ -164,7 +170,7 @@ function love.load()
 
 	musicTime = 0
 	health = 0
-	if useDiscordRPC then
+	if useDiscordRPC then 
 		discordRPC.initialize(appId, true)
 		local now = os.time(os.date("*t"))
 		presence = {

@@ -83,7 +83,7 @@ return {
                     menuButton = menuButton - 1
                 else
                     menuButton = 3
-                end
+                end -- change 3 to the amount of options there are.
 
                 if menuButton == 1 then
                     story:animate("story hover", true)

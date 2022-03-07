@@ -35,7 +35,7 @@ return {
 		missCounter = 0
 		noteCounter = 0
 		altScore = 0
-		uiTextColour = {0,0,0}
+		uiTextColour = {0,0,0} -- Changed the UI colour to black
 
 		week5Playing = true
 
@@ -45,7 +45,7 @@ return {
 		enemyFrameTimer = 0
 		boyfriendFrameTimer = 0
 
-		sounds = {
+		sounds = { -- Since week5 doesn't use weeks:load, all of the load stuff was added here
 			countdown = {
 				three = love.audio.newSource("sounds/countdown-3.ogg", "static"),
 				two = love.audio.newSource("sounds/countdown-2.ogg", "static"),

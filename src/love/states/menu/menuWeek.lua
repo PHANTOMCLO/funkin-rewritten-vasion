@@ -39,7 +39,7 @@ local gfDanceLines = love.filesystem.load("sprites/menu/storymenu/idlelines.lua"
 
 local tutorial, week1, week2, week3, week4, week5, week6
 
-local weekDesc = {
+local weekDesc = { -- Add your week description here
 	"LEARN TO FUNK",
 	"DADDY DEAREST",
 	"SPOOKY MONTH",
@@ -48,12 +48,13 @@ local weekDesc = {
 	"RED SNOW",
 	"HATING SIMULATOR FT. MOAWLING"
 }
-local difficultyStrs = {
+local difficultyStrs = { 
 	"-easy",
 	"",
 	"-hard"
 }
 
+-- Week Images
 tutorial = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week0")))
 week1 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week1")))
 week2 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week2")))
@@ -88,13 +89,13 @@ return {
 		enemyDanceLines:animate("week1", true)
 		songNum = 0
 		weekNum = 1
-		trackNames = "\nTutorial"
+		trackNames = "\nTutorial" -- Default track names and weeks description
 		menuDesc = "LEARN TO FUNK"
 
 		cam.sizeX, cam.sizeY = 0.9, 0.9
 		camScale.x, camScale.y = 0.9, 0.9
 
-		if useDiscordRPC then
+		if useDiscordRPC then -- Set a custom RPC here
 			presence = {
 				state = "Choosing A Week",
 				details = "In the Week Select Menu",
@@ -156,13 +157,13 @@ return {
 
 
 		function menuFunc()
-			if weekNum ~= 7 then
+			if weekNum ~= 7 then -- Due to senpais idlelines being smaller than the rest, we resize it
 				enemyDanceLines.sizeX, enemyDanceLines.sizeY = 0.5, 0.5
 			elseif weekNum == 7 then
 				enemyDanceLines.sizeX, enemyDanceLines.sizeY = 1, 1
 			end
 
-			if weekNum == 1 then
+			if weekNum == 1 then -- When adding a song make sure to add \n before the song name
 				trackNames = "\nTutorial"
 			elseif weekNum == 2 then
 				trackNames = "\nBopeebo\nFresh\nDad-Battle"
@@ -199,7 +200,7 @@ return {
 			if input:pressed("down") then
 				audio.playSound(selectSound)
 
-				if weekNum ~= 7 then
+				if weekNum ~= 7 then -- change 7 to the ammount of weeks there is (tutorial-6)
 					weekNum = weekNum + 1
 				else
 					weekNum = 1
@@ -263,7 +264,7 @@ return {
 				bfDanceLines:draw()
 				gfDanceLines:draw()
 
-				if weekNum == 1 then
+				if weekNum == 1 then -- Hard to explain this, just look at it for a min ig
 					tutorial.x, tutorial.y = 0, 220
 					week1.y = 320
 

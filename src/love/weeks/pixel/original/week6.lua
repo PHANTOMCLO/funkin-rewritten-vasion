@@ -93,6 +93,7 @@ return {
 
 		girlfriend = love.filesystem.load("sprites/pixel/girlfriend.lua")()
 		boyfriend = love.filesystem.load("sprites/pixel/boyfriend.lua")()
+		fakeBoyfriend = love.filesystem.load("sprites/pixel/boyfriend-dead.lua")()
 
 		pixel = true
 

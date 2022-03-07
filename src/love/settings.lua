@@ -19,7 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 local curOS = love.system.getOS()
 
-local settingsStr = (curOS == "NX" and [[
+-- This usually doesn't need to be messed with
+local settingsStr = (curOS == "NX" and [[ 
 ; Friday Night Funkin' Rewritten Settings (Switch)
 
 [Audio]

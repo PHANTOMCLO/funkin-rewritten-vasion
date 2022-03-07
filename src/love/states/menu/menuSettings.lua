@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ------------------------------------------------------------------------------]]
 
+-- This file doesn't need to be messed with unless you are adding a new setting
+
 local selectSound = love.audio.newSource("sounds/menu/select.ogg", "static")
 local confirmSound = love.audio.newSource("sounds/menu/confirm.ogg", "static")
 local menuBG = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/title-bg")))

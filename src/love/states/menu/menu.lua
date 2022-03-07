@@ -27,7 +27,7 @@ local weekNum = 1
 local songNum, songAppend
 local songDifficulty = 2
 
-local logo = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/logo")))
+local logo = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/logo"))) 
 
 local girlfriendTitle = love.filesystem.load("sprites/menu/girlfriend-title.lua")()
 local titleEnter = love.filesystem.load("sprites/menu/titleEnter.lua")()

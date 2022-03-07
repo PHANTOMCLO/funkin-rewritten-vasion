@@ -94,8 +94,8 @@ return {
 		end
 		enemyIcon.sizeX, enemyIcon.sizeY = 1.5, 1.5
 		boyfriendIcon.sizeX, boyfriendIcon.sizeY = -1.5, 1.5
-
-		healthBarColorPlayer = {49,176,209}
+healthBarColorPlayer = {49,176,209}
+		
 
 		countdownFade = {}
 		countdown = love.filesystem.load("sprites/countdown.lua")()
@@ -1396,6 +1396,7 @@ return {
 	leave = function(self)
 		if inst then inst:stop() end
 		voices:stop()
+		uiTextColour = {1,1,1}
 
 		Timer.clear()
 

@@ -36,7 +36,7 @@ local menuNames = {
 	"Options"
 }
 
-local weekMeta = {
+local weekMeta = { -- Add/remove weeks here
 	{
 		"Tutorial",
 		{

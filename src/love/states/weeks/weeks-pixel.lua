@@ -1054,6 +1054,7 @@ return {
 	leave = function(self)
 		if inst then inst:stop() end
 		voices:stop()
+		uiTextColour = {1,1,1}
 
 		Timer.clear()
 
