@@ -32,6 +32,7 @@ function love.load()
 	Gamestate = require "lib.gamestate"
 	Timer = require "lib.timer"
 	lume = require "lib.lume"
+	flux = require "lib.flux"
 
 	-- Load modules
 	status = require "modules.status"
@@ -61,12 +62,12 @@ function love.load()
 	gameOver = require "substates.game-over"
 	gameOverPixel = require "substates.game-over-pixel"
 
-	useOriginalPixel = true -- Set this to false to use FNFR's pixel engine
 	uiTextColour = {1,1,1} -- Set a custom UI colour (Put it in the weeks file to change it for only that week)
-
 	-- When adding custom colour for the health bar. Make sure to use 255 RGB values. It will automatically convert it for you.
 	healthBarColorPlayer = {49,176,209} -- BF's icon colour
 	healthBarColorEnemy = {165,0,77} -- GF's icon colour
+
+	useOriginalPixel = true -- Set this to false to use FNFR's pixel engine
 
 	-- Load week data
 	if useOriginalPixel then
