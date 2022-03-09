@@ -100,6 +100,7 @@ For Linux users:
 
 ### Windows (64-bit)
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
+
 For Windows users:
 * Run `make -f mkMsys.mk win64`
 
@@ -108,6 +109,7 @@ For Linux users:
 
 ### Windows (32-bit)
 * Set up dependencies shown in `./resources/win32/dependencies.txt`
+
 For Windows users:
 * Run `make -f mkMsys.mk win32`
 
@@ -116,6 +118,7 @@ For Linux users:
 
 ### macOS
 * Set up dependencies shown in `./resources/macos/dependencies.txt`
+
 For Windows users:
 * Run `make -f mkMsys.mk macos`
 
@@ -126,6 +129,7 @@ For Linux users:
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
+
 For Windows users:
 * Run `make -f mkMsys.mk switch`
 
@@ -136,6 +140,7 @@ For Linux users:
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
 * Set up dependencies shown in `./resources/win32/dependencies.txt`
 * Set up dependencies shown in `./resources/macos/dependencies.txt`
+
 For Windows users:
 * Run `make -f mkMsys.mk desktop`
 
@@ -146,6 +151,7 @@ For Linux users:
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
+
 For Windows users:
 * Run `make -f mkMsys.mk console`
 
@@ -159,6 +165,7 @@ For Linux users:
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
+
 For Windows users:
 * Run `make -f mkMsys.mk`
 
