@@ -1157,11 +1157,14 @@ return {
 					else
 						if boyfriendArrows[1]:getAnimName() == "confirm" then
 							leftArrowSplash:animate("left")
-						elseif boyfriendArrows[2]:getAnimName() == "confirm" then
+						end
+						if boyfriendArrows[2]:getAnimName() == "confirm" then
 							downArrowSplash:animate("down")
-						elseif boyfriendArrows[3]:getAnimName() == "confirm" then
+						end
+						if boyfriendArrows[3]:getAnimName() == "confirm" then
 							upArrowSplash:animate("up")
-						elseif boyfriendArrows[4]:getAnimName() == "confirm" then
+						end
+						if boyfriendArrows[4]:getAnimName() == "confirm" then
 							downArrowSplash:animate("down")
 						end
 					end
