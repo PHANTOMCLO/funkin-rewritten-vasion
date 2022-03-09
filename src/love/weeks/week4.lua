@@ -237,6 +237,8 @@ return {
 		limoDancer = nil
 		limo = nil
 
+		doingWeek4 = false
+
 		weeks:leave()
 	end
 }

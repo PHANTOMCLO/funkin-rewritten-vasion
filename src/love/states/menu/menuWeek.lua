@@ -54,7 +54,44 @@ local difficultyStrs = {
 	"-hard"
 }
 
+trackNames = { -- add your songs here
+	{
+		"\nTutorial"
+	},
+	{
+		"\nBopeebo",
+		"\nFresh",
+		"\nDad-Battle"
+	},
+	{
+		"\nSpookeez",
+		"\nSouth",
+		"\nMonster"
+	},
+	{
+		"\nPico",
+		"\nPhilly",
+		"\nBlammed"
+	},
+	{
+		"\nSatin-Panties",
+		"\nHigh",
+		"\nM.I.L.F"
+	},
+	{
+		"\nCocoa",
+		"\nEggnog",
+		"\nWinter-Horrorland"
+	},
+	{
+		"\nSenpai",
+		"\nRoses",
+		"\nThorns"
+	}
+}
+
 -- Week Images
+-- Just add a new images here
 tutorial = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week0")))
 week1 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week1")))
 week2 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week2")))
@@ -80,7 +117,7 @@ gfDanceLines.sizeX, gfDanceLines.sizeY = 0.5, 0.5
 bfDanceLines.x, bfDanceLines.y = 0, -150
 gfDanceLines.x, gfDanceLines.y = 375, -170
 
-difficultyAnim.x, difficultyAnim.y = 375 + 25, 220
+difficultyAnim.x, difficultyAnim.y = 400, 220
 
 return {
 	enter = function(self, previous)
@@ -88,9 +125,7 @@ return {
 		gfDanceLines:animate("girlfriend", true)
 		enemyDanceLines:animate("week1", true)
 		songNum = 0
-		weekNum = 1
-		trackNames = "\nTutorial" -- Default track names and weeks description
-		menuDesc = "LEARN TO FUNK"
+		weekNum = 1	
 
 		cam.sizeX, cam.sizeY = 0.9, 0.9
 		camScale.x, camScale.y = 0.9, 0.9
@@ -103,6 +138,26 @@ return {
 				startTimestamp = now,
 			}
 			nextPresenceUpdate = 0
+		end
+
+		weekImages = { -- Images are preloaded
+			tutorial,
+			week1,
+			week2,
+			week3,
+			week4,
+			week5,
+			week6
+		}
+
+		if weekNum ~= 1 then
+			weekBefore = weekImages[weekNum - 1]
+			weekBefore.y = 130
+		end
+		weekImages[weekNum].y = 220
+		if weekNum ~= 7 then
+			weekAfter = weekImages[weekNum + 1]
+			weekAfter.y = 320
 		end
 
 		switchMenu(1)
@@ -163,20 +218,15 @@ return {
 				enemyDanceLines.sizeX, enemyDanceLines.sizeY = 1, 1
 			end
 
-			if weekNum == 1 then -- When adding a song make sure to add \n before the song name
-				trackNames = "\nTutorial"
-			elseif weekNum == 2 then
-				trackNames = "\nBopeebo\nFresh\nDad-Battle"
-			elseif weekNum == 3 then
-				trackNames = "\nSpookeez\nSouth\nMonster"
-			elseif weekNum == 4 then
-				trackNames = "\nPico\nPhilly\nBlammed"
-			elseif weekNum == 5 then
-				trackNames = "\nSatin-Panties\nHigh\nM.I.L.F"
-			elseif weekNum == 6 then
-				trackNames = "\nCocoa\nEggnog\nWinter-Horrorland"
-			elseif weekNum == 7 then
-				trackNames = "\nSenpai\nRoses\nThorns"
+			weekBefore = weekImages[weekNum - 1]
+			weekAfter = weekImages[weekNum + 1]
+
+			if weekNum ~= 1 then
+				weekBefore.y = 130
+			end
+			weekImages[weekNum].y = 220
+			if weekNum ~= 7 then
+				weekAfter.y = 320
 			end
 
 			enemyDanceLines:animate("week" .. weekNum, true)
@@ -263,70 +313,21 @@ return {
 				end
 				bfDanceLines:draw()
 				gfDanceLines:draw()
-
-				if weekNum == 1 then -- Hard to explain this, just look at it for a min ig
-					tutorial.x, tutorial.y = 0, 220
-					week1.y = 320
-
-					tutorial:draw()
-					week1:draw()
-
-				elseif weekNum == 2 then
-					tutorial.y = 130
-					week2.y = 320
-					week1.x, week1.y = 0, 220
-
-					tutorial:draw()
-					week1:draw()
-					week2:draw()
-
-				elseif weekNum == 3 then
-					week1.y = 130
-					week3.y = 320
-					week2.x, week2.y = 0, 220
-
-					week1:draw()
-					week2:draw()
-					week3:draw()
-
-				elseif weekNum == 4 then
-					week2.y = 130
-					week4.y = 320
-					week3.x, week3.y = 0, 220
-
-					week2:draw()
-					week3:draw()
-					week4:draw()
-
-				elseif weekNum == 5 then
-					week5.y = 320
-					week3.y = 130
-					week4.x, week4.y = 0, 220
-
-					week3:draw()
-					week4:draw()
-					week5:draw()
-
-				elseif weekNum == 6 then
-					
-					week6.y = 320
-					week4.y = 130
-					week5.x, week5.y = 0, 220
-					week4:draw()
-					week5:draw()
-					week6:draw()
-					
-				elseif weekNum == 7 then
-					week6.x, week6.y = 0, 220
-					week5.y = 130
-
-					week5:draw()
-					week6:draw()
+				if weekNum ~= 1 then
+					weekBefore:draw()
 				end
-				
+				weekImages[weekNum]:draw()
+				if weekNum ~= 7 then
+					weekAfter:draw()
+				end
+
 				love.graphics.printf(weekDesc[weekNum], -585, -395, 853, "right", nil, 1.5, 1.5)
 				graphics.setColor(255 / 255, 117 / 255, 172 / 255)
-				love.graphics.printf("TRACKS" .. trackNames, -1050, 140, 853, "center", nil, 1.5, 1.5)
+				if weekNum ~= 1 then
+					love.graphics.printf("TRACKS" .. trackNames[weekNum][1] .. trackNames[weekNum][2] .. trackNames[weekNum][3], -1050, 140, 853, "center", nil, 1.5, 1.5)
+				else
+					love.graphics.printf("TRACKS" .. trackNames[weekNum][1], -1050, 140, 853, "center", nil, 1.5, 1.5)
+				end
 				graphics.setColor(1,1,1)
 
 			love.graphics.pop()

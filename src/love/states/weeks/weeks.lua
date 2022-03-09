@@ -902,7 +902,7 @@ return {
 
 								table.remove(boyfriendNote, 1)
 
-								if not pixel then
+								if not pixel or doingWeek4 then
 									if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
 								end
 
@@ -1031,7 +1031,7 @@ return {
 
 									notMissed[noteNum] = false
 
-									if not pixel then
+									if not pixel or doingWeek4 then
 										if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end
 									end
 
