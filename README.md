@@ -92,37 +92,58 @@ Web build instructions coming soon! Current method isn't that portable right now
 After running a build method, its release ZIP will be located at `./build/release`.
 
 ### LOVE file
-* Run `make lovefile`
+For Windows users:
+* Run `make -f mkMsys.mk lovefile`
+* For Linux users:
+* Run `make -f mkPacman.mk lovefile`
 
 ### Windows (64-bit)
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
-* Run `make win64`
+For Windows users:
+* Run `make -f mkMsys.mk win64`
+* For Linux users:
+* Run `make -f mkPacman.mk win64`
 
 ### Windows (32-bit)
 * Set up dependencies shown in `./resources/win32/dependencies.txt`
-* Run `make win32`
+For Windows users:
+* Run `make -f mkMsys.mk win32`
+* For Linux users:
+* Run `make -f mkPacman.mk win32`
 
 ### macOS
 * Set up dependencies shown in `./resources/macos/dependencies.txt`
-* Run `make macos`
+For Windows users:
+* Run `make -f mkMsys.mk macos`
+* For Linux users:
+* Run `make -f mkPacman.mk macos`
 
 ### Nintendo Switch
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
-* Run `make switch`
+For Windows users:
+* Run `make -f mkMsys.mk switch`
+* For Linux users:
+* Run `make -f mkPacman.mk switch`
 
 ### Desktop Platforms
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
 * Set up dependencies shown in `./resources/win32/dependencies.txt`
 * Set up dependencies shown in `./resources/macos/dependencies.txt`
-* Run `make desktop`
+For Windows users:
+* Run `make -f mkMsys.mk desktop`
+* For Linux users:
+* Run `make -f mkPacman.mk desktop`
 
 ### Console Platforms
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
-* Run `make console`
+For Windows users:
+* Run `make -f mkMsys.mk console`
+For Linux users:
+* Run `make -f mkPacman.mk console`
 
 ### All Platforms
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
@@ -131,7 +152,10 @@ After running a build method, its release ZIP will be located at `./build/releas
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
-* Run `make`
+For Windows users:
+* Run `make -f mkMsys.mk`
+* For Linux users:
+* Run `make -f mkPacman.mk`
 
 ## Other
 Follow the official instructions for LÖVE game distribution for your platform: https://love2d.org/wiki/Game_Distribution
