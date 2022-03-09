@@ -94,28 +94,28 @@ After running a build method, its release ZIP will be located at `./build/releas
 ### LOVE file
 For Windows users:
 * Run `make -f mkMsys.mk lovefile`
-* For Linux users:
+For Linux users:
 * Run `make -f mkPacman.mk lovefile`
 
 ### Windows (64-bit)
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
 For Windows users:
 * Run `make -f mkMsys.mk win64`
-* For Linux users:
+For Linux users:
 * Run `make -f mkPacman.mk win64`
 
 ### Windows (32-bit)
 * Set up dependencies shown in `./resources/win32/dependencies.txt`
 For Windows users:
 * Run `make -f mkMsys.mk win32`
-* For Linux users:
+For Linux users:
 * Run `make -f mkPacman.mk win32`
 
 ### macOS
 * Set up dependencies shown in `./resources/macos/dependencies.txt`
 For Windows users:
 * Run `make -f mkMsys.mk macos`
-* For Linux users:
+For Linux users:
 * Run `make -f mkPacman.mk macos`
 
 ### Nintendo Switch
@@ -124,7 +124,7 @@ For Windows users:
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
 For Windows users:
 * Run `make -f mkMsys.mk switch`
-* For Linux users:
+For Linux users:
 * Run `make -f mkPacman.mk switch`
 
 ### Desktop Platforms
@@ -133,7 +133,7 @@ For Windows users:
 * Set up dependencies shown in `./resources/macos/dependencies.txt`
 For Windows users:
 * Run `make -f mkMsys.mk desktop`
-* For Linux users:
+For Linux users:
 * Run `make -f mkPacman.mk desktop`
 
 ### Console Platforms
@@ -154,7 +154,7 @@ For Linux users:
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
 For Windows users:
 * Run `make -f mkMsys.mk`
-* For Linux users:
+For Linux users:
 * Run `make -f mkPacman.mk`
 
 ## Other
