@@ -1,5 +1,5 @@
 # ![Logo](images/logo.png)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/GameVasion/funkin-rewritten-vasion?style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/releases/latest) [![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/GameVasion/funkin-rewritten-vasion?include_prereleases&style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/releases) [![GitHub all releases](https://img.shields.io/github/downloads/GameVasion/funkin-rewritten-vasion/total?style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/releases) [![GitHub issues](https://img.shields.io/github/issues/GameVasion/funkin-rewritten-vasion?style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/issues) [![GitHub](https://img.shields.io/github/license/GameVasion/funkin-rewritten-vasion?style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/blob/main/LICENSE) [![Discord](https://img.shields.io/discord/852658576577003550?style=flat-square)](https://discord.gg/tQGzN2Wu48)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/HTV04/funkin-rewritten?style=flat-square)](https://github.com/HTV04/funkin-rewritten/releases/latest) [![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/HTV04/funkin-rewritten?include_prereleases&style=flat-square)](https://github.com/HTV04/funkin-rewritten/releases) [![GitHub all releases](https://img.shields.io/github/downloads/HTV04/funkin-rewritten/total?style=flat-square)](https://github.com/HTV04/funkin-rewritten/releases) [![GitHub issues](https://img.shields.io/github/issues/HTV04/funkin-rewritten?style=flat-square)](https://github.com/HTV04/funkin-rewritten/issues) [![GitHub](https://img.shields.io/github/license/HTV04/funkin-rewritten?style=flat-square)](https://github.com/HTV04/funkin-rewritten/blob/main/LICENSE) [![Discord](https://img.shields.io/discord/852658576577003550?style=flat-square)](https://discord.gg/tQGzN2Wu48)
 
 Friday Night Funkin' Rewritten is a rewrite of [Friday Night Funkin'](https://ninja-muffin24.itch.io/funkin) built on [LÖVE](https://love2d.org/) for Windows, macOS, Linux, and Web platforms, as well as previously unsupported platforms, like the Nintendo Switch!
 
@@ -22,7 +22,7 @@ Friday Night Funkin' Rewritten features:
 * Other cool features, like downscroll
 * And more to come!
 
-Join the Discord server for Funkin' Rewritten updates and discussion: https://discord.gg/tQGzN2Wu48
+Join my Discord server for Funkin' Rewritten updates and discussion: https://discord.gg/tQGzN2Wu48
 
 # Controls
 If using a controller on a PC, a controller with an Xbox button layout is recommended. Controller buttons will be remappable in a future update.
@@ -53,18 +53,18 @@ If using a controller on a PC, a controller with an Xbox button layout is recomm
 ### Keyboard
 * 6 - Take screenshot
   * Screenshot paths:
-    * Windows - `%APPDATA%\funkin-vasion-rewritten\screenshots`
+    * Windows - `%APPDATA%\funkin-rewritten\screenshots`
     * macOS - `~/Library/Application Support/funkin-rewritten/screenshots`
-	* Linux - `~/.local/share/love/funkin-vasion-rewritten/screenshots`
-	* Nintendo Switch - `./funkin-vasion-rewritten/screenshots`
+	* Linux - `~/.local/share/love/funkin-rewritten/screenshots`
+	* Nintendo Switch - `./funkin-rewritten/screenshots`
 * 7 - Open debug menu
 
 # Settings
 The settings file can be found in the following places on the following systems:
-* Windows - `%APPDATA%\funkin-vasion-rewritten\settings.ini` & `%APPDATA%\funkin-vasion-rewritten\settings.data`
-* macOS - `~/Library/Application Support/funkin-vasion-rewritten/settings.ini` & `~/Library/Application Support/funkin-vasion-rewritten/settings.data`
-* Linux - `~/.local/share/love/funkin-vasion-rewritten/settings.ini` & `~/.local/share/love/funkin-vasion-rewritten/settings.data`
-* Nintendo Switch - `./funkin-vasion-rewritten/settings.ini` & `./funkin-vasion-rewritten/settings.data`
+* Windows - `%APPDATA%\funkin-rewritten\settings.ini` & `%APPDATA%\funkin-rewritten\settings.data`
+* macOS - `~/Library/Application Support/funkin-rewritten/settings.ini` & `~/Library/Application Support/funkin-rewritten/settings.data`
+* Linux - `~/.local/share/love/funkin-rewritten/settings.ini` & `~/.local/share/love/funkin-rewritten/settings.data`
+* Nintendo Switch - `./funkin-rewritten/settings.ini` & `./funkin-rewritten/settings.data`
 
 # Progress
 **Menus** - 90% Complete
@@ -92,71 +92,37 @@ Web build instructions coming soon! Current method isn't that portable right now
 After running a build method, its release ZIP will be located at `./build/release`.
 
 ### LOVE file
-For Windows users:
-* Run `make -f mkMsys.mk lovefile`
-
-For Linux users:
-* Run `make -f mkPacman.mk lovefile`
+* Run `make lovefile`
 
 ### Windows (64-bit)
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
-
-For Windows users:
-* Run `make -f mkMsys.mk win64`
-
-For Linux users:
-* Run `make -f mkPacman.mk win64`
+* Run `make win64`
 
 ### Windows (32-bit)
 * Set up dependencies shown in `./resources/win32/dependencies.txt`
-
-For Windows users:
-* Run `make -f mkMsys.mk win32`
-
-For Linux users:
-* Run `make -f mkPacman.mk win32`
+* Run `make win32`
 
 ### macOS
 * Set up dependencies shown in `./resources/macos/dependencies.txt`
-
-For Windows users:
-* Run `make -f mkMsys.mk macos`
-
-For Linux users:
-* Run `make -f mkPacman.mk macos`
+* Run `make macos`
 
 ### Nintendo Switch
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
-
-For Windows users:
-* Run `make -f mkMsys.mk switch`
-
-For Linux users:
-* Run `make -f mkPacman.mk switch`
+* Run `make switch`
 
 ### Desktop Platforms
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
 * Set up dependencies shown in `./resources/win32/dependencies.txt`
 * Set up dependencies shown in `./resources/macos/dependencies.txt`
-
-For Windows users:
-* Run `make -f mkMsys.mk desktop`
-
-For Linux users:
-* Run `make -f mkPacman.mk desktop`
+* Run `make desktop`
 
 ### Console Platforms
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
-
-For Windows users:
-* Run `make -f mkMsys.mk console`
-
-For Linux users:
-* Run `make -f mkPacman.mk console`
+* Run `make console`
 
 ### All Platforms
 * Set up dependencies shown in `./resources/win64/dependencies.txt`
@@ -165,19 +131,14 @@ For Linux users:
 * Set up [devkitPro](https://devkitpro.org/wiki/Getting_Started)
   * Install the `switch-dev` package
 * Set up dependencies shown in `./resources/switch/dependencies.txt`
-
-For Windows users:
-* Run `make -f mkMsys.mk`
-
-For Linux users:
-* Run `make -f mkPacman.mk`
+* Run `make`
 
 ## Other
 Follow the official instructions for LÖVE game distribution for your platform: https://love2d.org/wiki/Game_Distribution
 
 # Special Thanks
 * [PHANTOMCLO](https://twitter.com/PHANTOMCLO) for the pixel note splashes
-* [Keoiki](https://twitter.com/Keoiki_) For the Note splashes used in weeks 1-5
+* [Keoiki](https://twitter.com/Keoiki_) For the Note splashes used in weeks 1-5 (I AM SO SORRY IF THIS IS THE WRONG ACCOUNT)
 * KadeDev for [FNFDataAPI](https://github.com/KadeDev/FNFDataAPI), which was refrenced while developing the chart-reading system
 * The developers of [BeatFever Mania](https://github.com/Sulunia/beatfever) for their music time interpolation code
 * The developers of the [LÖVE](https://love2d.org/) framework, for making Funkin' Rewritten possible
