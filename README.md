@@ -1,3 +1,8 @@
+THIS IS A PORT OF THE MEGAMAN X2 BLASTER MOD TO THE FUNKIN-REWRITTEN-VASION ENGINE. YOU CAN FIND THE ORIGINAL MOD HERE: https://gamebanana.com/mods/357428
+
+ORIGINAL DESCRIPTION: 
+
+
 # ![Logo](images/logo.png)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/GameVasion/funkin-rewritten-vasion?style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/releases/latest) [![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/GameVasion/funkin-rewritten-vasion?include_prereleases&style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/releases) [![GitHub all releases](https://img.shields.io/github/downloads/GameVasion/funkin-rewritten-vasion/total?style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/releases) [![GitHub issues](https://img.shields.io/github/issues/GameVasion/funkin-rewritten-vasion?style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/issues) [![GitHub](https://img.shields.io/github/license/GameVasion/funkin-rewritten-vasion?style=flat-square)](https://github.com/GameVasion/funkin-rewritten-vasion/blob/main/LICENSE) [![Discord](https://img.shields.io/discord/852658576577003550?style=flat-square)](https://discord.gg/tQGzN2Wu48)
 
