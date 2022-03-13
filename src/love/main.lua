@@ -78,8 +78,7 @@ function love.load()
 			require "weeks.week3",
 			require "weeks.week4",
 			require "weeks.week5",
-			require "weeks.pixel.original.week6", -- Use a pixel engine like the original FNF
-			require "weeks.week7"
+			require "weeks.pixel.original.week6" -- Use a pixel engine like the original FNF
 		}
 	else
 		weekData = {
@@ -89,8 +88,7 @@ function love.load()
 			require "weeks.week3",
 			require "weeks.week4",
 			require "weeks.week5",
-			require "weeks.pixel.fnfr.week6", -- Use FNFR's pixel engine
-			require "weeks.week7"
+			require "weeks.pixel.fnfr.week6" -- Use FNFR's pixel engine
 		}
 	end
 
