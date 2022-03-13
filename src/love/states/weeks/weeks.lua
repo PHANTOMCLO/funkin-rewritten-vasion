@@ -94,7 +94,7 @@ return {
 		end
 		enemyIcon.sizeX, enemyIcon.sizeY = 1.5, 1.5
 		boyfriendIcon.sizeX, boyfriendIcon.sizeY = -1.5, 1.5
-		healthBarColorPlayer = {49,176,209}
+		healthBarColorPlayer = {102,204,51}
 		
 
 		countdownFade = {}
@@ -137,7 +137,7 @@ return {
 		end
 		useAltAnims = false
 
-		cam.x, cam.y = -boyfriend.x + 100, -boyfriend.y + 75
+		cam.x, cam.y = -boyfriend.x + 300, -boyfriend.y + 75
 
 		rating.x = girlfriend.x
 		if not pixel then
@@ -785,9 +785,9 @@ return {
 						Timer.cancel(camTimer)
 					end
 					if events[i].mustHitSection then
-						camTimer = Timer.tween(1.25, cam, {x = -boyfriend.x + 100, y = -boyfriend.y + 75}, "out-quad")
+						camTimer = Timer.tween(1.25, cam, {x = -boyfriend.x + 300, y = -boyfriend.y + 25}, "out-quad")
 					else
-						camTimer = Timer.tween(1.25, cam, {x = -enemy.x - 100, y = -enemy.y + 75}, "out-quad")
+						camTimer = Timer.tween(1.25, cam, {x = -enemy.x - 250, y = -enemy.y + 75}, "out-quad")
 					end
 
 					if events[i].altAnim then
@@ -823,10 +823,17 @@ return {
 					girlfriend:setAnimSpeed(14.4 / (60 / bpm))
 				end
 				if spriteTimers[2] == 0 then
-					self:safeAnimate(enemy, "idle", false, 2)
+					if enemy:getAnimName() ~= "down alt" then
+						self:safeAnimate(enemy, "idle", false, 2)
+					end
 				end
 				if spriteTimers[3] == 0 then
-					self:safeAnimate(boyfriend, "idle", false, 3)
+					if boyfriend:getAnimName() ~= "wheelie" then
+						if wheeliebiker:getAnimName() ~= "death" then
+							self:safeAnimate(boyfriend, "idle", false, 3)
+							self:safeAnimate(wheeliebiker, "idle", false, 3)
+						end
+					end
 				end
 			end
 
@@ -1157,14 +1164,11 @@ return {
 					else
 						if boyfriendArrows[1]:getAnimName() == "confirm" then
 							leftArrowSplash:animate("left")
-						end
-						if boyfriendArrows[2]:getAnimName() == "confirm" then
+						elseif boyfriendArrows[2]:getAnimName() == "confirm" then
 							downArrowSplash:animate("down")
-						end
-						if boyfriendArrows[3]:getAnimName() == "confirm" then
+						elseif boyfriendArrows[3]:getAnimName() == "confirm" then
 							upArrowSplash:animate("up")
-						end
-						if boyfriendArrows[4]:getAnimName() == "confirm" then
+						elseif boyfriendArrows[4]:getAnimName() == "confirm" then
 							downArrowSplash:animate("down")
 						end
 					end

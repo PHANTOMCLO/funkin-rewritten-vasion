@@ -67,9 +67,9 @@ function love.load()
 	healthBarColorPlayer = {49,176,209} -- BF's icon colour
 	healthBarColorEnemy = {165,0,77} -- GF's icon colour
 
-	useOriginalPixel = true -- Set this to false to use FNFR's pixel engine
+	useOriginalPixel = false -- Set this to false to use FNFR's pixel engine
 
-	-- Load week data
+
 	if useOriginalPixel then
 		weekData = {
 			require "weeks.tutorial",
@@ -78,7 +78,8 @@ function love.load()
 			require "weeks.week3",
 			require "weeks.week4",
 			require "weeks.week5",
-			require "weeks.pixel.original.week6" -- Use a pixel engine like the original FNF
+			require "weeks.pixel.original.week6", -- Use a pixel engine like the original FNF
+			require "weeks.week7"
 		}
 	else
 		weekData = {
@@ -88,7 +89,8 @@ function love.load()
 			require "weeks.week3",
 			require "weeks.week4",
 			require "weeks.week5",
-			require "weeks.pixel.fnfr.week6" -- Use FNFR's pixel engine
+			require "weeks.pixel.fnfr.week6", -- Use FNFR's pixel engine
+			require "weeks.week7"
 		}
 	end
 

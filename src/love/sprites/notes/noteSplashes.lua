@@ -1,48 +1,50 @@
 return graphics.newSprite(
 	love.graphics.newImage(graphics.imagePath("noteSplashes")),
-	-- Automatically generated from noteSplashes.xml
+	-- Automatically generated from noteSplashes (1).xml
 	{
-		{x = 0, y = 0, width = 194, height = 186, offsetX = -77, offsetY = -87, offsetWidth = 291, offsetHeight = 303}, -- 1: note splash blue 10000
-		{x = 199, y = 0, width = 220, height = 218, offsetX = -61, offsetY = -64, offsetWidth = 291, offsetHeight = 303}, -- 2: note splash blue 10001
-		{x = 424, y = 0, width = 284, height = 293, offsetX = -37, offsetY = -32, offsetWidth = 291, offsetHeight = 303}, -- 3: note splash blue 10002
-		{x = 713, y = 0, width = 291, height = 303, offsetX = -30, offsetY = -30, offsetWidth = 291, offsetHeight = 303}, -- 4: note splash blue 10003
-		{x = 1009, y = 0, width = 202, height = 211, offsetX = -69, offsetY = -68, offsetWidth = 315, offsetHeight = 321}, -- 5: note splash blue 20000
-		{x = 1216, y = 0, width = 235, height = 240, offsetX = -47, offsetY = -45, offsetWidth = 315, offsetHeight = 321}, -- 6: note splash blue 20001
-		{x = 1456, y = 0, width = 298, height = 315, offsetX = -9, offsetY = -6, offsetWidth = 315, offsetHeight = 321}, -- 7: note splash blue 20002
-		{x = 0, y = 320, width = 315, height = 321, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 8: note splash blue 20003
-		{x = 320, y = 320, width = 194, height = 186, offsetX = -77, offsetY = -87, offsetWidth = 291, offsetHeight = 303}, -- 9: note splash green 10000
-		{x = 519, y = 320, width = 220, height = 218, offsetX = -61, offsetY = -64, offsetWidth = 291, offsetHeight = 303}, -- 10: note splash green 10001
-		{x = 744, y = 320, width = 284, height = 293, offsetX = -37, offsetY = -32, offsetWidth = 291, offsetHeight = 303}, -- 11: note splash green 10002
-		{x = 1033, y = 320, width = 291, height = 303, offsetX = -30, offsetY = -30, offsetWidth = 291, offsetHeight = 303}, -- 12: note splash green 10003
-		{x = 1329, y = 320, width = 202, height = 211, offsetX = -69, offsetY = -68, offsetWidth = 315, offsetHeight = 321}, -- 13: note splash green 20000
-		{x = 1536, y = 320, width = 235, height = 240, offsetX = -47, offsetY = -45, offsetWidth = 315, offsetHeight = 321}, -- 14: note splash green 20001
-		{x = 0, y = 646, width = 298, height = 315, offsetX = -9, offsetY = -6, offsetWidth = 315, offsetHeight = 321}, -- 15: note splash green 20002
-		{x = 303, y = 646, width = 315, height = 321, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 16: note splash green 20003
-		{x = 623, y = 646, width = 194, height = 186, offsetX = -77, offsetY = -87, offsetWidth = 291, offsetHeight = 303}, -- 17: note splash purple 10000
-		{x = 822, y = 646, width = 220, height = 218, offsetX = -61, offsetY = -64, offsetWidth = 291, offsetHeight = 303}, -- 18: note splash purple 10001
-		{x = 1047, y = 646, width = 284, height = 293, offsetX = -37, offsetY = -32, offsetWidth = 291, offsetHeight = 303}, -- 19: note splash purple 10002
-		{x = 1336, y = 646, width = 291, height = 303, offsetX = -30, offsetY = -30, offsetWidth = 291, offsetHeight = 303}, -- 20: note splash purple 10003
-		{x = 1632, y = 646, width = 202, height = 211, offsetX = -69, offsetY = -68, offsetWidth = 315, offsetHeight = 321}, -- 21: note splash purple 20000
-		{x = 0, y = 972, width = 235, height = 240, offsetX = -47, offsetY = -45, offsetWidth = 315, offsetHeight = 321}, -- 22: note splash purple 20001
-		{x = 240, y = 972, width = 298, height = 315, offsetX = -9, offsetY = -6, offsetWidth = 315, offsetHeight = 321}, -- 23: note splash purple 20002
-		{x = 543, y = 972, width = 315, height = 321, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 24: note splash purple 20003
-		{x = 863, y = 972, width = 194, height = 186, offsetX = -77, offsetY = -87, offsetWidth = 291, offsetHeight = 303}, -- 25: note splash red 10000
-		{x = 1062, y = 972, width = 220, height = 218, offsetX = -61, offsetY = -64, offsetWidth = 291, offsetHeight = 303}, -- 26: note splash red 10001
-		{x = 1287, y = 972, width = 284, height = 293, offsetX = -37, offsetY = -32, offsetWidth = 291, offsetHeight = 303}, -- 27: note splash red 10002
-		{x = 1576, y = 972, width = 291, height = 303, offsetX = -30, offsetY = -30, offsetWidth = 291, offsetHeight = 303}, -- 28: note splash red 10003
-		{x = 0, y = 1298, width = 202, height = 211, offsetX = -69, offsetY = -68, offsetWidth = 315, offsetHeight = 321}, -- 29: note splash red 20000
-		{x = 207, y = 1298, width = 235, height = 240, offsetX = -47, offsetY = -45, offsetWidth = 315, offsetHeight = 321}, -- 30: note splash red 20001
-		{x = 447, y = 1298, width = 298, height = 315, offsetX = -9, offsetY = -6, offsetWidth = 315, offsetHeight = 321}, -- 31: note splash red 20002
-		{x = 750, y = 1298, width = 315, height = 321, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 32: note splash red 20003
-		{x = 0, y = 0, width = 1, height = 1, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0} -- 33: none
+		{x = 1850, y = 262, width = 189, height = 270, offsetX = -32, offsetY = -12, offsetWidth = 260, offsetHeight = 298}, -- 1: note impact 1  blue0000
+		{x = 1540, y = 556, width = 213, height = 265, offsetX = -27, offsetY = -22, offsetWidth = 260, offsetHeight = 298}, -- 2: note impact 1  blue0001
+		{x = 1056, y = 0, width = 252, height = 291, offsetX = -4, offsetY = -6, offsetWidth = 260, offsetHeight = 298}, -- 3: note impact 1  blue0002
+		{x = 0, y = 0, width = 260, height = 298, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 4: note impact 1  blue0003
+		{x = 0, y = 0, width = 1, height = 1, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 5: note impact 1  blue0004
+		{x = 663, y = 806, width = 189, height = 270, offsetX = -32, offsetY = -12, offsetWidth = 260, offsetHeight = 298}, -- 6: note impact 1 green0000
+		{x = 1757, y = 556, width = 213, height = 265, offsetX = -27, offsetY = -22, offsetWidth = 260, offsetHeight = 298}, -- 7: note impact 1 green0001
+		{x = 1312, y = 0, width = 252, height = 291, offsetX = -4, offsetY = -6, offsetWidth = 260, offsetHeight = 298}, -- 8: note impact 1 green0002
+		{x = 264, y = 0, width = 260, height = 298, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 9: note impact 1 green0003
+		{x = 264, y = 0, width = 1, height = 1, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 10: note impact 1 green0004
+		{x = 1121, y = 818, width = 189, height = 270, offsetX = -32, offsetY = -12, offsetWidth = 260, offsetHeight = 298}, -- 11: note impact 1 purple0000
+		{x = 0, y = 563, width = 213, height = 265, offsetX = -27, offsetY = -22, offsetWidth = 260, offsetHeight = 298}, -- 12: note impact 1 purple0001
+		{x = 1568, y = 0, width = 252, height = 291, offsetX = -4, offsetY = -6, offsetWidth = 260, offsetHeight = 298}, -- 13: note impact 1 purple0002
+		{x = 528, y = 0, width = 260, height = 298, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 14: note impact 1 purple0003
+		{x = 528, y = 0, width = 1, height = 1, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 15: note impact 1 purple0004
+		{x = 1314, y = 818, width = 189, height = 270, offsetX = -32, offsetY = -12, offsetWidth = 260, offsetHeight = 298}, -- 16: note impact 1 red0000
+		{x = 217, y = 563, width = 213, height = 265, offsetX = -27, offsetY = -22, offsetWidth = 260, offsetHeight = 298}, -- 17: note impact 1 red0001
+		{x = 1056, y = 295, width = 252, height = 291, offsetX = -4, offsetY = -6, offsetWidth = 260, offsetHeight = 298}, -- 18: note impact 1 red0002
+		{x = 792, y = 0, width = 260, height = 298, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 19: note impact 1 red0003
+		{x = 792, y = 0, width = 1, height = 1, offsetX = 0, offsetY = 0, offsetWidth = 0, offsetHeight = 0}, -- 20: note impact 1 red0004
+		{x = 1121, y = 590, width = 169, height = 201, offsetX = -45, offsetY = -41, offsetWidth = 274, offsetHeight = 267}, -- 21: note impact 2 blue0000
+		{x = 434, y = 564, width = 225, height = 238, offsetX = -20, offsetY = -19, offsetWidth = 274, offsetHeight = 267}, -- 22: note impact 2 blue0001
+		{x = 1312, y = 295, width = 265, height = 257, offsetX = 0, offsetY = -10, offsetWidth = 274, offsetHeight = 267}, -- 23: note impact 2 blue0002
+		{x = 1824, y = 0, width = 224, height = 258, offsetX = -50, offsetY = 0, offsetWidth = 274, offsetHeight = 267}, -- 24: note impact 2 blue0003
+		{x = 1507, y = 825, width = 169, height = 201, offsetX = -45, offsetY = -41, offsetWidth = 274, offsetHeight = 267}, -- 25: note impact 2 green0000
+		{x = 663, y = 564, width = 225, height = 238, offsetX = -20, offsetY = -19, offsetWidth = 274, offsetHeight = 267}, -- 26: note impact 2 green0001
+		{x = 1581, y = 295, width = 265, height = 257, offsetX = 0, offsetY = -10, offsetWidth = 274, offsetHeight = 267}, -- 27: note impact 2 green0002
+		{x = 538, y = 302, width = 224, height = 258, offsetX = -50, offsetY = 0, offsetWidth = 274, offsetHeight = 267}, -- 28: note impact 2 green0003
+		{x = 1680, y = 825, width = 169, height = 201, offsetX = -45, offsetY = -41, offsetWidth = 274, offsetHeight = 267}, -- 29: note impact 2 purple0000
+		{x = 892, y = 590, width = 225, height = 238, offsetX = -20, offsetY = -19, offsetWidth = 274, offsetHeight = 267}, -- 30: note impact 2 purple0001
+		{x = 0, y = 302, width = 265, height = 257, offsetX = 0, offsetY = -10, offsetWidth = 274, offsetHeight = 267}, -- 31: note impact 2 purple0002
+		{x = 766, y = 302, width = 224, height = 258, offsetX = -50, offsetY = 0, offsetWidth = 274, offsetHeight = 267}, -- 32: note impact 2 purple0003
+		{x = 1853, y = 825, width = 169, height = 201, offsetX = -45, offsetY = -41, offsetWidth = 274, offsetHeight = 267}, -- 33: note impact 2 red0000
+		{x = 434, y = 806, width = 225, height = 238, offsetX = -20, offsetY = -19, offsetWidth = 274, offsetHeight = 267}, -- 34: note impact 2 red0001
+		{x = 269, y = 302, width = 265, height = 257, offsetX = 0, offsetY = -10, offsetWidth = 274, offsetHeight = 267}, -- 35: note impact 2 red0002
+		{x = 1312, y = 556, width = 224, height = 258, offsetX = -50, offsetY = 0, offsetWidth = 274, offsetHeight = 267} -- 36: note impact 2 red0003
 	},
-
     {
-        ["down"] = {start = 1, stop = 4, speed = 24, offsetX = 0, offsetY = 0},
-        ["up"] = {start = 9, stop = 12, speed = 24, offsetX = 0, offsetY = 0},
-        ["left"] = {start = 17, stop = 20, speed = 24, offsetX = 0, offsetY = 0},
-        ["right"] = {start = 25, stop = 28, speed = 24, offsetX = 0, offsetY = 0},
-        ["none"] = {start = 33, stop = 33, speed = 24, offsetX = 0, offsetY = 0}
+        ["down"] = {start = 1, stop = 5, speed = 24, offsetX = -5, offsetY = 0},
+        ["up"] = {start = 6, stop = 10, speed = 24, offsetX = -10, offsetY = 0},
+        ["left"] = {start = 11, stop = 15, speed = 24, offsetX = 0, offsetY = 0},
+        ["right"] = {start = 16, stop = 20, speed = 24, offsetX = -15, offsetY = 0},
+        ["none"] = {start = 5, stop = 5, speed = 24, offsetX = 0, offsetY = 0}
     },
     "none",
     false

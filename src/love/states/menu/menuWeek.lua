@@ -31,13 +31,15 @@ local titleBG = graphics.newImage(love.graphics.newImage(graphics.imagePath("men
 
 local enemyDanceLines = love.filesystem.load("sprites/menu/storymenu/idlelines.lua")()
 
+local tanklines = love.filesystem.load("sprites/menu/storymenu/tankmenu.lua")()
+
 local difficultyAnim = love.filesystem.load("sprites/menu/storymenu/difficulty.lua")()
 
 local bfDanceLines = love.filesystem.load("sprites/menu/storymenu/idlelines.lua")()
 
 local gfDanceLines = love.filesystem.load("sprites/menu/storymenu/idlelines.lua")()
 
-local tutorial, week1, week2, week3, week4, week5, week6
+local tutorial, week1, week2, week3, week4, week5, week6, week7
 
 local weekDesc = { -- Add your week description here
 	"LEARN TO FUNK",
@@ -46,7 +48,8 @@ local weekDesc = { -- Add your week description here
 	"PICO",
 	"MOMMY MUST MURDER",
 	"RED SNOW",
-	"HATING SIMULATOR FT. MOAWLING"
+	"HATING SIMULATOR FT. MOAWLING",
+	"TANKMAN"
 }
 local difficultyStrs = { 
 	"-easy",
@@ -87,6 +90,11 @@ trackNames = { -- add your songs here
 		"\nSenpai",
 		"\nRoses",
 		"\nThorns"
+	},
+	{
+		"\nUgh",
+		"\nGuns",
+		"\nStress"
 	}
 }
 
@@ -99,6 +107,7 @@ week3 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storym
 week4 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week4")))
 week5 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week5")))
 week6 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week6")))
+week7 = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/storymenu/week7")))
 
 enemyDanceLines.sizeX, enemyDanceLines.sizeY = 0.5, 0.5
 
@@ -110,6 +119,7 @@ local function switchMenu(menu)
 end
 
 enemyDanceLines.x, enemyDanceLines.y = -375, -170
+tanklines.x, tanklines.y = -375, -170
 
 bfDanceLines.sizeX, bfDanceLines.sizeY = 0.7, 0.7
 gfDanceLines.sizeX, gfDanceLines.sizeY = 0.5, 0.5
@@ -124,6 +134,7 @@ return {
         bfDanceLines:animate("boyfriend", true)
 		gfDanceLines:animate("girlfriend", true)
 		enemyDanceLines:animate("week1", true)
+		tanklines:animate("anim", true)
 		songNum = 0
 		weekNum = 1	
 
@@ -147,7 +158,8 @@ return {
 			week3,
 			week4,
 			week5,
-			week6
+			week6,
+			week7
 		}
 
 		if weekNum ~= 1 then
@@ -155,7 +167,7 @@ return {
 			weekBefore.y = 130
 		end
 		weekImages[weekNum].y = 220
-		if weekNum ~= 7 then
+		if weekNum ~= 8 then
 			weekAfter = weekImages[weekNum + 1]
 			weekAfter.y = 320
 		end
@@ -225,14 +237,16 @@ return {
 				weekBefore.y = 130
 			end
 			weekImages[weekNum].y = 220
-			if weekNum ~= 7 then
+			if weekNum ~= 8 then
 				weekAfter.y = 320
 			end
 
 			enemyDanceLines:animate("week" .. weekNum, true)
+			tanklines:animate("anim", true)
 		end
 		
 		enemyDanceLines:update(dt)
+		tanklines:update(dt)
 		bfDanceLines:update(dt)
 		gfDanceLines:update(dt)
 
@@ -250,7 +264,7 @@ return {
 			if input:pressed("down") then
 				audio.playSound(selectSound)
 
-				if weekNum ~= 7 then -- change 7 to the ammount of weeks there is (tutorial-6)
+				if weekNum ~= 8 then -- change 7 to the ammount of weeks there is (tutorial-6)
 					weekNum = weekNum + 1
 				else
 					weekNum = 1
@@ -263,7 +277,7 @@ return {
 				if weekNum ~= 1 then
 					weekNum = weekNum - 1
 				else
-					weekNum = 7
+					weekNum = 8
 				end
 				menuFunc()
 
@@ -311,13 +325,16 @@ return {
 				if weekNum ~= 1 then
 					enemyDanceLines:draw()
 				end
+				if weekNum == 8 then
+					tanklines:draw()
+				end
 				bfDanceLines:draw()
 				gfDanceLines:draw()
 				if weekNum ~= 1 then
 					weekBefore:draw()
 				end
 				weekImages[weekNum]:draw()
-				if weekNum ~= 7 then
+				if weekNum ~= 8 then
 					weekAfter:draw()
 				end
 

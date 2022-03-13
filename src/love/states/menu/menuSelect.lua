@@ -21,6 +21,10 @@ local leftFunc, rightFunc, confirmFunc, backFunc, drawFunc
 
 local menuState
 
+local weekNum = 2
+local songNum, songAppend
+local songDifficulty = 2
+
 local titleBG = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/menuBG")))
 
 local options = love.filesystem.load("sprites/menu/menuButtons.lua")()
@@ -32,11 +36,19 @@ local menuButton
 local selectSound = love.audio.newSource("sounds/menu/select.ogg", "static")
 local confirmSound = love.audio.newSource("sounds/menu/confirm.ogg", "static")
 
+local difficultyStrs = { 
+	"-easy",
+	"",
+	"-hard"
+}
+
 
 local function switchMenu(menu)
 	menuState = 1
 end
 
+story.x = -350
+freeplay.x = -350
 story.y = -200
 freeplay.y = 0
 options.y = 200
@@ -82,7 +94,7 @@ return {
                 if menuButton ~= 1 then
                     menuButton = menuButton - 1
                 else
-                    menuButton = 3
+                    menuButton = 2
                 end -- change 3 to the amount of options there are.
 
                 if menuButton == 1 then
@@ -102,7 +114,7 @@ return {
 			elseif input:pressed("down") then
 				audio.playSound(selectSound)
 
-                if menuButton ~= 3 then
+                if menuButton ~= 2 then
                     menuButton = menuButton + 1
                 else
                     menuButton = 1
@@ -127,12 +139,47 @@ return {
 
 				--confirmFunc()
                 if menuButton == 1 then
+                    menu:musicStop()
+                    songNum = 1
+        
                     status.setLoading(true)
-                    Gamestate.switch(menuWeek)
-                    status.setLoading(false)
+        
+                    graphics.fadeOut(
+                        0.5,
+                        function()
+                            if useDiscordRPC then
+                                presence = {
+                                    state = "Selected a week",
+                                    details = "Playing a week",
+                                    largeImageKey = "logo",
+                                    startTimestamp = now,
+                                }
+                                nextPresenceUpdate = 0
+                            end
+        
+                            if weekNum == 6 then
+                                week5Playing = true
+                            else
+                                week5Playing = false
+                            end
+                            if weekNum == 5 then
+                                doingWeek4 = true
+                            else
+                                doingWeek4 = false
+                            end
+                            
+                            songAppend = difficultyStrs[songDifficulty]
+        
+                            storyMode = true
+        
+                            Gamestate.switch(weekData[weekNum], songNum, songAppend)
+        
+                            status.setLoading(false)
+                        end
+                    )
                 elseif menuButton == 2 then
                     status.setLoading(true)
-                    Gamestate.switch(menuFreeplay)
+                    Gamestate.switch(menuSettings)
                     status.setLoading(false)
                 elseif menuButton == 3 then
                     status.setLoading(true)
@@ -154,12 +201,11 @@ return {
 			titleBG:draw()
 
             story:draw()
-            options:draw()
             freeplay:draw()
 
 			love.graphics.push()
 				love.graphics.scale(cam.sizeX, cam.sizeY)
-                love.graphics.printf("Funkin' Vasion: v1.4.0\nFNFR: v1.1.0-beta2", -708, 340, 833, "left", nil, 1, 1)
+                love.graphics.printf("Funkin' Vasion: v1.2.0\nFNFR: v1.1.0-beta2", -708, 340, 833, "left", nil, 1, 1)
 			love.graphics.pop()
 		love.graphics.pop()
 	end,

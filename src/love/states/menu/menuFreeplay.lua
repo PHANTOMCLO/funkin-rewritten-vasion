@@ -90,6 +90,14 @@ local weekMeta = { -- Add/remove weeks here
 			"Roses",
 			"Thorns"
 		}
+	},
+	{
+		"Week 7",
+		{
+			"Ugh",
+			"Guns",
+			"Stress"
+		}
 	}
 }
 local difficultyStrs = {

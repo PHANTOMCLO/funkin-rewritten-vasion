@@ -31,10 +31,10 @@ volume=1.0
 [Keybinds]
 ; Set custom keybinds
 ; Look at https://love2d.org/wiki/KeyConstant for available keys
-left=a
-down=s
-up=w
-right=d
+left=z
+down=x
+up=.
+right=/
 
 ; These variables are read by the game for internal purposes, don't edit these unless you want to risk losing your current settings!
 [Data]

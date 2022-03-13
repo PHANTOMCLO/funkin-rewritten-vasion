@@ -29,7 +29,7 @@ local songDifficulty = 2
 
 local logo = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/logo"))) 
 
-local girlfriendTitle = love.filesystem.load("sprites/menu/girlfriend-title.lua")()
+local girlfriendTitle = love.filesystem.load("sprites/menu/green.lua")()
 local titleEnter = love.filesystem.load("sprites/menu/titleEnter.lua")()
 
 local selectSound = love.audio.newSource("sounds/menu/select.ogg", "static")
@@ -53,7 +53,7 @@ end
 
 logo.x, logo.y = -350, -125
 
-girlfriendTitle.x, girlfriendTitle.y = 325, 65
+girlfriendTitle.sizeX, girlfriendTitle.sizeY = 1.2, 1.2
 
 titleEnter.x, titleEnter.y = 225, 350
 
@@ -116,8 +116,6 @@ return {
 
 			love.graphics.push()
 				love.graphics.scale(cam.sizeX, cam.sizeY)
-
-				logo:draw()
 
 				girlfriendTitle:draw()
 				titleEnter:draw()
