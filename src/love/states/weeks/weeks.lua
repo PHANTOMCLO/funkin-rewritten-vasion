@@ -958,19 +958,19 @@ return {
 
 										voices:setVolume(1)
 
-										if notePos <= 35 then -- "Sick"
+										if notePos <= 55 then -- "Sick"
 											score = score + 350
 											ratingAnim = "sick"
 											altScore = altScore + 100.00
 											sicks = sicks + 1
 											hitSick = true
-										elseif notePos <= 75 then -- "Good"
+										elseif notePos <= 95 then -- "Good"
 											score = score + 200
 											ratingAnim = "good"
 											altScore = altScore + 66.66
 											goods = goods + 1
 											hitSick = false
-										elseif notePos <= 95 then -- "Bad"
+										elseif notePos <= 115 then -- "Bad"
 											score = score + 100
 											ratingAnim = "bad"
 											altScore = altScore + 33.33
